@@ -1,3 +1,51 @@
+<style>
+	/* Overlay loading */
+	#loadingOverlay {
+		display: none;
+		/* default hidden */
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.5);
+		z-index: 9999;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+
+	/* Spinner */
+	.spinner {
+		border: 8px solid #f3f3f3;
+		/* Light grey */
+		border-top: 8px solid #3498db;
+		/* Blue */
+		border-radius: 50%;
+		width: 60px;
+		height: 60px;
+		animation: spin 1s linear infinite;
+		margin-bottom: 15px;
+	}
+
+	@keyframes spin {
+		0% {
+			transform: rotate(0deg);
+		}
+
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
+	.loading-text {
+		color: white;
+		font-size: 20px;
+		font-family: Arial, sans-serif;
+	}
+</style>
+
 <div class="container" style="margin-bottom: 100px;">
 	<h3 class="page-header">Daftar Member Tanpa VA</h3>
 
@@ -38,7 +86,10 @@
 
 		</form>
 
-
+		<div id="loadingOverlay">
+			<div class="spinner"></div>
+			<div class="loading-text">Loading Data...</div>
+		</div>
 		<div class="table-responsive">
 			<table id="membersTable" class="table table-bordered table-striped table-hover">
 				<thead>
@@ -78,6 +129,42 @@
 				</tbody>
 			</table>
 		</div>
+
+		<!-- Loading Overlay -->
+		<div id="loadingOverlay" style="
+    display: none;
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+	
+">
+			<div class="spinner-border" style="
+        width: 80px;
+        height: 80px;
+        border: 10px solid #f3f3f3;
+        border-top: 10px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    "></div>
+		</div>
+
+		<style>
+			@keyframes spin {
+				0% {
+					transform: rotate(0deg);
+				}
+
+				100% {
+					transform: rotate(360deg);
+				}
+			}
+		</style>
 	<?php else : ?>
 		<div class="alert alert-info">
 			<strong>Info!</strong> Tidak ada data member yang belum memiliki VA.
@@ -163,6 +250,9 @@
 				});
 			});
 
+
+			//Show loading
+			$('#loadingOverlay').fadeIn(200);
 			$.ajax({
 				url: $(this).attr("action"),
 				type: "POST",
@@ -170,6 +260,7 @@
 					members: data
 				},
 				success: function(res) {
+					$('#loadingOverlay').fadeOut(200); //Hide loading
 					try {
 						let response = JSON.parse(res);
 						if (response.status === "success") {
@@ -183,7 +274,21 @@
 						Swal.fire("Error", "Respon server tidak valid", "error");
 					}
 				},
+				Error: function() {
+					$('#loadingOverlay').fadeOut(200);
+					Swal.fire("Error", "Terjadi kesalahan pada server", "error");
+				}
 			});
 		});
+	});
+</script>
+
+<script>
+	// Tampilkan overlay saat halaman mulai load
+	document.getElementById('loadingOverlay').style.display = 'flex';
+
+	// Sembunyikan overlay setelah halaman selesai load
+	window.addEventListener('load', function() {
+		document.getElementById('loadingOverlay').style.display = 'none';
 	});
 </script>

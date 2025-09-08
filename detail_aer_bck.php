@@ -64,10 +64,7 @@
 											'ID Card' => function ($d) {
 												if (!empty($d['idcard'])) {
 													$idType = isset($d['idtype']) ? ' (' . $d['idtype'] . ')' : '';
-
-													$downloadUrl = base_url('file_access/' . $d['idfile']);
-
-													$downloadBtn = '<a href="' . $downloadUrl . '" class="btn btn-xs btn-danger" target="_blank" style="margin-left:5px;">
+													$downloadBtn = '<a href="' . base_url('assets/uploads/idcard/' . $d['idcard']) . '" class="btn btn-xs btn-danger" target="_blank" style="margin-left:5px;">
 													<i class="fa fa-arrow-down"></i> Download</a>';
 													return $d['idcard'] . $idType . ' ' . $downloadBtn;
 												}
