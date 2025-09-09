@@ -3,405 +3,288 @@
 
 <head>
 	<meta charset="UTF-8">
-	<meta name="_ci_view" content="<?php echo $_ci_view; ?>">
-	<title>Asean Eng Detail</title>
+
 	<?php $this->load->view('admin/common/meta_tags'); ?>
 	<?php $this->load->view('admin/common/before_head_close'); ?>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+		integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+	<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/bootstrap.css') ?>" />
+	<link rel="stylesheet" type="text/css" href="/assets/css/style.css" />
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="<?php echo base_url('assets/js/bootstrap.js') ?>"></script>
+	<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+
+	<style>
+		.th-yellow thead th {
+			background-color: #ffae00 !important;
+			color: #000 !important;
+			font-weight: bold;
+		}
+
+		/* Overlay Loading Fullscreen */
+		#loadingOverlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(255, 255, 255, 0.8);
+			z-index: 9999;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			font-size: 20px;
+			color: #333;
+		}
+
+		#loadingOverlay i {
+			font-size: 50px;
+			margin-bottom: 10px;
+			animation: spin 1s linear infinite;
+		}
+
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+	</style>
 </head>
 
 <body class="skin-blue">
+
 	<?php $this->load->view('admin/common/after_body_open'); ?>
 	<?php $this->load->view('admin/common/header'); ?>
 
 	<div class="wrapper row-offcanvas row-offcanvas-left">
 		<?php $this->load->view('admin/common/left_side'); ?>
 
+		<?php if ($selesai == 'y') { ?>
+			<div class="container">
+				<div class="alert alert-success fade in">
+					<a href="#" class="close" data-dismiss="alert">&times;</a>
+					Data telah disimpan....
+				</div>
+			</div>
+		<?php } ?>
+
+		<!-- Loading Overlay -->
+		<div id="loadingOverlay">
+			<i class="fa fa-spinner"></i>
+			Loading data, please wait...
+		</div>
+
+		<!-- Right side column -->
 		<aside class="right-side">
-			<!-- Content Header (Page header) -->
 			<section class="content-header">
-				<h1>ASEAN Eng Profile</h1>
+				<h1>ASEAN Eng Management</h1>
 				<ol class="breadcrumb">
 					<li><a href="<?php echo base_url('admin/dashboard'); ?>"><i class="fa fa-dashboard"></i> Home</a></li>
 					<li class="active">Manage Members</li>
 				</ol>
 			</section>
 
-			<?php if (!empty($detail_aer)): ?>
-				<div class="col-md-12 d-flex justify-content-center">
-					<div class="">
-						<!-- Header Detail -->
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<div class="row">
-									<div class="col-xs-6">
-										<h3 class="panel-title"><?= $detail_aer['nama'] ?></h3>
-									</div>
-									<div class="col-xs-6 text-right">
-										<p class="text-muted" style="margin:0;">
-											Member Since: <?= date('d/m/Y', strtotime($detail_aer['created'])) ?>
-										</p>
-									</div>
-								</div>
-							</div>
-							<div class="panel-body">
+			<main class="main">
+				<div class="content">
+					<div class="text-right mb-2">
+						<a href="#" onclick="load_tambah_data()" class="btn btn-primary btn-xs">
+							<i class="fa fa-plus"></i> Tambah Data
+						</a>
+					</div>
 
-								<!-- PHOTO -->
-								<div class="text-center" style="margin-bottom:15px;">
-									<img class="img-thumbnail" width="250"
-										src="https://updmember.pii.or.id/assets/uploads/<?= $detail_aer['photo'] ?>"
-										alt="Foto Profil">
-								</div>
-
-								<!-- PROFILE DETAIL -->
-								<div class="panel panel-default">
-									<div class="panel-body">
-										<?php
-										$profileFields = [
-											'First Name' => 'firstname',
-											'Last Name'  => 'lastname',
-											'Gender'     => 'gender',
-											'Mobile Phone' => 'mobilephone',
-											'ID Card' => function ($d) {
-												if (!empty($d['idcard'])) {
-													$idType = isset($d['idtype']) ? ' (' . $d['idtype'] . ')' : '';
-
-													$downloadUrl = base_url('file_access/' . $d['idfile']);
-
-													$downloadBtn = '<a href="' . $downloadUrl . '" class="btn btn-xs btn-danger" target="_blank" style="margin-left:5px;">
-													<i class="fa fa-arrow-down"></i> Download</a>';
-													return $d['idcard'] . $idType . ' ' . $downloadBtn;
-												}
-												return '-';
-											},
-											'VA' => 'va',
-											'Date of Birth' => function ($d) {
-												return $d['birthplace'] . ', ' . date('d-m-Y', strtotime($d['dob']));
-											},
-											'Website' => 'website',
-											'Bersedia Menerima Bahan Publikasi' => function ($d) {
-												return (isset($d['is_public']) && $d['is_public'] == '1')
-													? 'Bersedia data pribadi diserahkan ke PII'
-													: '';
-											},
-											'Description' => 'description'
-										];
-										?>
-
-										<?php foreach ($profileFields as $label => $key): ?>
-											<div class="row" style="margin-bottom:10px;">
-												<div class="col-xs-4">
-													<label><strong><?= $label ?></strong></label>
-												</div>
-												<div class="col-xs-8">
-													<p class="form-control-static">
-														<?= is_callable($key) ? $key($detail_aer) : ($detail_aer[$key] ?? '-') ?>
-													</p>
-												</div>
-											</div>
-										<?php endforeach; ?>
-									</div>
-								</div>
-
-								<!-- CONTACT -->
-								<div class="panel panel-default">
-									<div class="panel-body">
-										<h5>Phone</h5>
-										<hr>
-										<?php foreach ($detail_aer['addresses'] as $contact): ?>
-											<p><?= $contact['phone'] ?></p>
-										<?php endforeach; ?>
-
-										<h5>Email</h5>
-										<hr>
-										<?php foreach ($detail_aer['addresses'] as $contact): ?>
-											<p><?= $contact['email'] ?></p>
-										<?php endforeach; ?>
-									</div>
-								</div>
-
-								<!-- ADDRESSES -->
-								<div class="panel panel-default">
-									<div class="panel-body">
-										<h5><strong>Address</strong></h5>
-										<table class="table">
-											<tbody>
-												<?php if (!empty($detail_aer['addresses'])): ?>
-													<?php foreach ($detail_aer['addresses'] as $addr): ?>
-														<tr>
-															<td style="width:200px;">
-																<?= $addr['desc'] ?><br>
-																<?php if (!empty($addr['is_mailing']) && $addr['is_mailing'] == 1): ?>
-																	Mailing Address
-																<?php else: ?>
-																	-
-																<?php endif; ?>
-															</td>
-															<td>
-																<?= $addr['address'] ?? '-' ?><br>
-																<?= $addr['city'] ?? '' ?><br>
-																<?= $addr['province'] ?? '' ?><br>
-																<?= $addr['zipcode'] ?? '' ?>
-															</td>
-														</tr>
-													<?php endforeach; ?>
-												<?php else: ?>
-													<tr>
-														<td colspan="2"><em>Tidak ada data alamat</em></td>
-													</tr>
-												<?php endif; ?>
-											</tbody>
-										</table>
-									</div>
-								</div>
-
-								<!-- EXPERIENCE -->
-								<h3 class="text-center"><strong>Pengalaman Kerja/Profesional</strong></h3>
-								<table class="table table-bordered">
-									<thead>
-										<tr>
-											<th>Perusahaan</th>
-											<th>Jabatan/Tugas</th>
-											<th>Lokasi</th>
-											<th>Periode</th>
-											<th>Nama Aktifitas/Kegiatan/Proyek</th>
-											<th>Uraian Singkat Tugas dan Tanggung Jawab Profesional</th>
-											<th>Dokumen pendukung</th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php if (!empty($detail_aer['experiences'])): ?>
-											<?php foreach ($detail_aer['experiences'] as $exp): ?>
-												<tr class="text-dark">
-													<td><?= $exp['company'] ?? '-' ?></td>
-													<td><?= $exp['title'] ?? '' ?></td>
-													<td><?= ($exp['location'] ?? '') . ', ' . ($exp['provinsi'] ?? '') . ', ' . ($exp['negara'] ?? '') ?></td>
-													<?php
-													$startmonth = isset($exp['startmonth']) ? (int)$exp['startmonth'] : 0;
-													$startyear  = $exp['startyear'] ?? '';
-													$endmonth   = isset($exp['endmonth']) ? (int)$exp['endmonth'] : 0;
-													$endyear    = $exp['endyear'] ?? '';
-													$startmonthName = $startmonth > 0 ? date('M', mktime(0, 0, 0, $startmonth, 1)) : '';
-													$endmonthName   = $endmonth > 0 ? date('M', mktime(0, 0, 0, $endmonth, 1)) : '';
-													?>
-													<td><?= trim("$startmonthName $startyear - $endmonthName $endyear") ?></td>
-													<td><?= $exp['actv'] ?? '' ?></td>
-													<td>
-														<?php
-														$description = $exp['description'] ?? '';
-														if (!empty($description)) {
-															$items = preg_split('/\d+\.\s*/', $description, -1, PREG_SPLIT_NO_EMPTY);
-															if (!empty($items)) {
-																echo '<ol>';
-																foreach ($items as $item) {
-																	echo '<li>' . trim($item) . '</li>';
-																}
-																echo '</ol>';
-															} else {
-																echo nl2br(htmlspecialchars($description));
-															}
-														} else {
-															echo '-';
-														}
-														?>
-													</td>
-													<td>
-														<?php if (!empty($exp['attachment'])): ?>
-															<a href="<?= base_url('uploads/attachment/' . $exp['attachment']) ?>"
-																class="btn btn-xs btn-danger" target="_blank">
-																<i class="fa fa-arrow-down"></i> PDF
-															</a>
-														<?php else: ?>
-															-
-														<?php endif; ?>
-													</td>
-												</tr>
-											<?php endforeach; ?>
-										<?php else: ?>
-											<tr>
-												<td colspan="7"><em>Tidak ada pengalaman</em></td>
-											</tr>
-										<?php endif; ?>
-									</tbody>
-								</table>
-
-
-								<!-- PENDIDIKAN -->
-								<h3 class="text-center"><strong>Pendidikan</strong></h3>
-								<table class="table table-bordered">
-									<thead>
-										<tr>
-											<th>Tipe Pendidikan</th>
-											<th>Institusi / Universitas</th>
-											<th>Tahun</th>
-											<th>Tingkat Pendidikan</th>
-											<th>Fakultas</th>
-											<th>Jurusan/Kejuruan/ Nomor Sertifikat</th>
-											<th>IPK/Nilai</th>
-											<th>Gelar</th>
-											<th>Aktivitas dan kegiatan sosial</th>
-											<th>Deskripsi</th>
-											<th>Dokumen pendukung</th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php $hasEducation = false; ?>
-										<?php if (!empty($detail_aer['educations'])): ?>
-											<?php foreach ($detail_aer['educations'] as $edu): ?>
-												<?php if (isset($edu['status']) && $edu['status'] == 1): ?>
-													<?php $hasEducation = true; ?>
-													<tr class="text-dark">
-														<td>
-															<?php $typeMap = ['1' => 'Akademis', '2' => 'Profesi']; ?>
-															<?= $typeMap[$edu['type']] ?? '-' ?>
-														</td>
-														<td><?= $edu['school'] ?? '' ?></td>
-														<td><?= ($edu['startdate'] ?? '') . ' ' . ($edu['enddate'] ?? '') ?></td>
-														<td><?= $edu['degree'] ?? '' ?></td>
-														<td><?= $edu['mayor'] ?? '' ?></td>
-														<td><?= $edu['fieldofstudy'] ?? '' ?></td>
-														<td><?= $edu['score'] ?? '' ?></td>
-														<td><?= $edu['title'] ?? '' ?></td>
-														<td><?= $edu['activities'] ?? '' ?></td>
-														<td>
-															<?php
-															$description = $edu['description'] ?? '';
-															if (!empty($description)) {
-																$items = preg_split('/\d+\.\s*/', $description, -1, PREG_SPLIT_NO_EMPTY);
-																if (!empty($items)) {
-																	echo '<ol>';
-																	foreach ($items as $item) {
-																		echo '<li>' . trim($item) . '</li>';
-																	}
-																	echo '</ol>';
-																} else {
-																	echo nl2br(htmlspecialchars($description));
-																}
-															} else {
-																echo '-';
-															}
-															?>
-														</td>
-														<td>
-															<?php if (!empty($edu['attachment'])): ?>
-																<a href="<?= base_url('uploads/attachment/' . $edu['attachment']) ?>"
-																	class="btn btn-xs btn-danger" target="_blank">
-																	<i class="fa fa-arrow-down"></i> PDF
-																</a>
-															<?php else: ?>
-																-
-															<?php endif; ?>
-														</td>
-													</tr>
-												<?php endif; ?>
-											<?php endforeach; ?>
-										<?php endif; ?>
-
-										<?php if (!$hasEducation): ?>
-											<tr>
-												<td colspan="11"><em>Tidak ada pendidikan dengan status aktif</em></td>
-											</tr>
-										<?php endif; ?>
-									</tbody>
-								</table>
-
-
-								<!-- CERTIFICATIONS -->
-
-								<h3 class="text-center"><strong>Sertifikasi Profesional</strong></h3>
-								<table class="table table-bordered text text-dark">
-									<thead>
-										<tr>
-											<th>Nama Sertifikasi</th>
-											<th>Otoritas Sertifikasi</th>
-											<th>Nomor lisensi</th>
-											<th>URL sertifikasi</th>
-											<th>Kualifikasi</th>
-											<th>Tanggal</th>
-											<th>Deskripsi</th>
-											<th>Dokumen pendukung</th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php $hasCert = false; ?>
-										<?php if (!empty($detail_aer['certifications'])): ?>
-											<?php foreach ($detail_aer['certifications'] as $cert): ?>
-												<?php if (isset($cert['status']) && $cert['status'] == 1): ?>
-													<?php $hasCert = true; ?>
-													<tr class="text-dark">
-														<td><?= $cert['cert_name'] ?? '-' ?></td>
-														<td><?= $cert['cert_auth'] ?? '' ?></td>
-														<td><?= $cert['lic_num'] ?? '' ?></td>
-														<td><?= $cert['cert_url'] ?? '' ?></td>
-														<td><?= $cert['cert_title'] ?? '' ?></td>
-														<td>
-															<?php
-															$startYear  = $cert['startyear'] ?? '';
-															$startMonth = !empty($cert['startmonth']) ? date('M', mktime(0, 0, 0, (int)$cert['startmonth'], 1)) : '';
-															echo trim($startMonth . ' ' . $startYear);
-															echo ' - ';
-															if (!empty($cert['is_present']) && $cert['is_present'] == '1') {
-																echo 'Present';
-															} else {
-																$endYear  = $cert['endyear'] ?? '';
-																$endMonth = !empty($cert['endmonth']) ? date('M', mktime(0, 0, 0, (int)$cert['endmonth'], 1)) : '';
-																echo trim($endMonth . ' ' . $endYear);
-															}
-															?>
-														</td>
-														<td>
-															<?php
-															$description = $cert['description'] ?? '';
-															if (!empty($description)) {
-																$items = preg_split('/\d+\.\s*/', $description, -1, PREG_SPLIT_NO_EMPTY);
-																if (!empty($items)) {
-																	echo '<ol>';
-																	foreach ($items as $item) {
-																		echo '<li>' . trim($item) . '</li>';
-																	}
-																	echo '</ol>';
-																} else {
-																	echo nl2br(htmlspecialchars($description));
-																}
-															} else {
-																echo '-';
-															}
-															?>
-														</td>
-														<td>
-															<?php if (!empty($cert['attachment'])): ?>
-																<a href="<?= base_url('uploads/attachment/' . $cert['attachment']) ?>"
-																	class="btn btn-xs btn-danger" target="_blank">
-																	<i class="fa fa-arrow-down"></i> PDF
-																</a>
-															<?php else: ?>
-																-
-															<?php endif; ?>
-														</td>
-													</tr>
-												<?php endif; ?>
-											<?php endforeach; ?>
-										<?php endif; ?>
-
-										<?php if (!$hasCert): ?>
-											<tr>
-												<td colspan="8"><em>Tidak ada sertifikasi dengan status aktif</em></td>
-											</tr>
-										<?php endif; ?>
-									</tbody>
-								</table>
-
-
-							</div><!-- panel-body -->
-						</div><!-- panel -->
-					</div><!-- container -->
+					<table id="datatables" class="display th-yellow" width="100%">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>NO. AER</th>
+								<th>NAMA</th>
+								<th>GRADE</th>
+								<th>NO KTA</th>
+								<th>DOI</th>
+								<th>URL FILE</th>
+								<th>ACTION</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+							if (isset($list_aer) && !empty($list_aer)) {
+								$no = 1;
+								foreach ($list_aer as $isinya) {
+									echo '<tr>';
+									echo '<td class="text-center">' . $no++ . '</td>';
+									echo '<td>' . $isinya->no_aer . '</td>';
+									echo '<td><a href="' . base_url('admin/aer/detail_aer/' . $isinya->kta) . '"><h5>' . $isinya->nama . '</h5></a></td>';
+									echo '<td>' . $isinya->grade . '</td>';
+									echo '<td>' . $isinya->kta . '</td>';
+									echo '<td>' . $isinya->doi . '</td>';
+									echo '<td>';
+									if (!empty($isinya->url_aer)) {
+										echo '<a href="' . $isinya->url_aer . '" target="_blank" class="btn btn-info btn-xs"><i class="fa fa-file"></i> Lihat File</a>';
+									} else {
+										echo '<span class="text-danger">File tidak tersedia</span>';
+									}
+									echo '</td>';
+									echo '<td class="text-center">
+                                        <a href="#" onclick="load_edit_data(' . $isinya->id . ')" class="btn btn-primary btn-xs">
+                                            <i class="fa fa-edit"></i>Edit
+                                        </a>
+                                      </td>';
+									echo '</tr>';
+								}
+							}
+							?>
+						</tbody>
+					</table>
 				</div>
-			<?php else: ?>
-				<div class="alert alert-warning">Data tidak ditemukan.</div>
-			<?php endif; ?>
+			</main>
 		</aside>
 	</div>
 
-	<?php $this->load->view('admin/common/footer'); ?>
+	<!-- Modal Tambah Data -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h3 class="modal-title">Tambah Data ASEAN Eng.</h3>
+				</div>
+				<div class="modal-body">
+					<form id="form_add_aer" class="form-horizontal" action="<?= base_url('/admin/aer/tambah_aer') ?>" method="post">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Nomor</label>
+							<div class="col-sm-9"><input type="text" name="add_noaer" id="add_noaer" class="form-control" placeholder="Masukkan Nomor"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Nomor KTA</label>
+							<div class="col-sm-9"><input type="text" name="add_kta" id="add_kta" class="form-control" placeholder="Masukkan Nomor KTA"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Nama</label>
+							<div class="col-sm-9"><input type="text" name="add_nama" id="add_nama" class="form-control" placeholder="Masukkan Nama"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Grade</label>
+							<div class="col-sm-9"><input type="text" name="add_grade" id="add_grade" class="form-control" placeholder="Masukkan Grade"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">DOI</label>
+							<div class="col-sm-9"><input type="text" name="add_doi" id="add_doi" class="form-control" placeholder="Masukkan DOI"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">URL</label>
+							<div class="col-sm-9"><input type="text" name="add_url" id="add_url" class="form-control" placeholder="Masukkan URL"></div>
+						</div>
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Simpan</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i> Batal</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal Edit Data -->
+	<div class="modal fade" id="quick_upload_skip" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h3 class="modal-title">Ubah Data ASEAN Eng.</h3>
+				</div>
+				<div class="modal-body">
+					<form id="form_edit_aer" class="form-horizontal" action="<?= base_url('/admin/aer/update_aer') ?>" method="post">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Nomor</label>
+							<div class="col-sm-9"><input type="text" name="edit_noaer" id="edit_noaer" class="form-control"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Nomor KTA</label>
+							<div class="col-sm-9"><input type="text" name="edit_kta" id="edit_kta" class="form-control"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Nama</label>
+							<div class="col-sm-9"><input type="text" name="edit_nama" id="edit_nama" class="form-control"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Grade</label>
+							<div class="col-sm-9"><input type="text" name="edit_grade" id="edit_grade" class="form-control"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">DOI</label>
+							<div class="col-sm-9"><input type="text" name="edit_doi" id="edit_doi" class="form-control"></div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">URL</label>
+							<div class="col-sm-9"><input type="text" name="edit_url" id="edit_url" class="form-control"></div>
+						</div>
+						<input type="hidden" name="edit_id" id="edit_id">
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Simpan</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i> Batal</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		$(document).ready(function() {
+			var table = $('#datatables').DataTable({
+				responsive: true,
+				initComplete: function() {
+					$('#loadingOverlay').fadeOut();
+				}
+			});
+		});
+
+		function load_tambah_data() {
+			$('#add_noaer').val('');
+			$('#add_kta').val('');
+			$('#add_nama').val('');
+			$('#add_grade').val('');
+			$('#add_doi').val('');
+			$('#add_url').val('');
+			$('.modal-title').html('Tambah Data ASEAN Eng');
+			$('#myModal').modal('show');
+		}
+
+		function load_edit_data(id) {
+			$.ajax({
+				url: '<?php echo base_url('admin/aer/get_aer_by_id'); ?>',
+				type: 'POST',
+				data: {
+					id: id
+				},
+				dataType: 'json',
+				success: function(x) {
+					$('#edit_id').val(x.id);
+					$('#edit_noaer').val(x.no_aer);
+					$('#edit_kta').val(x.kta);
+					$('#edit_nama').val(x.nama);
+					$('#edit_grade').val(x.grade);
+					$('#edit_doi').val(x.doi);
+					$('#edit_url').val(x.url_aer);
+					$('.modal-title').html('Ubah Data ASEAN Eng');
+					$('#quick_upload_skip').modal('show');
+				}
+			});
+		}
+	</script>
+
 </body>
 
 </html>
