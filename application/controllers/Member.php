@@ -5727,6 +5727,9 @@ EOD;
 			}
 		}
 
+		$test = $this->db->query("SELECT * FROM members_certificate WHERE  no_kta = '37496' ");
+		print_r($test);
+
 		$this->load->view('member/sertifikat_aplikan', $data);
 	}
 
