@@ -5864,7 +5864,7 @@ EOD;
 		
 	}
 
-public function member_serti(){
+	public function member_serti(){
     if (!$this->session->userdata('user_id')) {
         redirect('auth/login');
     }
@@ -5893,9 +5893,7 @@ public function member_serti(){
         if (strlen($nokta1) >= 4) $variants[] = substr($nokta1, 2, 4);
     }
     // bersihkan dan unikkan varian
-    $variants = array_values(array_unique(array_filter($variants, function($v){ 
-        return $v !== '' && $v !== null; 
-    })));
+    $variants = array_values(array_unique(array_filter($variants, function($v){ return $v !== '' && $v !== null; })));
 
     // ambil nama (coba pake nokta1 dulu, lalu nokta original)
     $cari_nama = null;
@@ -5915,10 +5913,9 @@ public function member_serti(){
         'kode_apec' => '', 'nosip' => '', 'noreg' => '',
         'kode_acpe' => '', 'doi' => '', 'new_pe' => '', 'bk_acpe' => '',
         'no_aer' => '', 'grade' => '', 'url_aer' => '',
-        // skip & stri default = null
-        'sk_skip' => null, 'skip_from' => null, 'skip_thru' => null, 'skip_id' => null,
-        'cert_type' => null, 'cert_ket' => null,
-        'stri_id' => null, 'stri_sk' => null, 'stri_tipe' => null, 'stri_from' => null, 'stri_thru' => null
+        'sk_skip' => '', 'skip_from' => '', 'skip_thru' => '', 'skip_id' => '',
+        'cert_type' => '', 'cert_ket' => '',
+        'stri_id' => '', 'stri_sk' => '', 'stri_tipe' => '', 'stri_from' => '', 'stri_thru' => ''
     ]);
 
     // helper: cari dengan varian sampai ketemu (mengembalikan object hasil atau null)
@@ -5960,26 +5957,25 @@ public function member_serti(){
     // SKIP & STRI (sertifikat terakhir)
     $c = $try_find('cari_di_member_serti_akhir');
     if ($c) {
-        $data['sk_skip']   = $c->skip_sk ?? null;
-        $data['skip_from'] = $c->skip_from_date ?? null;
-        $data['skip_thru'] = $c->skip_thru_date ?? null;
-        $data['skip_id']   = $c->skip_id ?? null;
-        $data['cert_type'] = $c->certificate_type ?? null;
+        $data['sk_skip'] = $c->skip_sk ?? '';
+        $data['skip_from'] = $c->skip_from_date ?? '';
+        $data['skip_thru'] = $c->skip_thru_date ?? '';
+        $data['skip_id'] = $c->skip_id ?? '';
+        $data['cert_type'] = $c->certificate_type ?? '';
 
-        // mapping tipe sertifikat
+        // maping tipe sertifikat
         $ct = $data['cert_type'];
-        $data['cert_ket'] = ($ct == 1) ? 'IPP' : (($ct == 2) ? 'IPM' : (($ct == 3) ? 'IPU' : null));
+        $data['cert_ket'] = ($ct == 1) ? 'IPP' : (($ct == 2) ? 'IPM' : (($ct == 3) ? 'IPU' : ''));
 
-        $data['stri_id']   = $c->stri_id ?? null;
-        $data['stri_sk']   = $c->stri_sk ?? null;
-        $data['stri_tipe'] = $c->stri_tipe ?? null;
-        $data['stri_from'] = $c->stri_from_date ?? null;
-        $data['stri_thru'] = $c->stri_thru_date ?? null;
+        $data['stri_id'] = $c->stri_id ?? '';
+        $data['stri_sk'] = $c->stri_sk ?? '';
+        $data['stri_tipe'] = $c->stri_tipe ?? '';
+        $data['stri_from'] = $c->stri_from_date ?? '';
+        $data['stri_thru'] = $c->stri_thru_date ?? '';
     }
 
     $this->load->view('member/sertifikat_aplikan', $data);
 }
-
 
 	
 	function skill(){

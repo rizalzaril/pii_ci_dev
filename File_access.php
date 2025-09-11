@@ -24,11 +24,137 @@ class File_access extends CI_Controller
 		// Jika bukan type yang diizinkan
 		if (!in_array($type, $akses)) {
 
-			redirect('https://www.google.com');
+			//redirect('https://www.google.com');
+
+			return $this->load->view('errors/file_denied');
 			exit;
 		} else {
 
 
+			// --- Proses download hanya sampai sini kalau lolos validasi akses ---
+
+			// Cegah path traversal
+			$filename = basename($filename);
+
+			// Path file di server
+			$filepath = FCPATH . 'assets/uploads/' . $filename;
+
+			if (file_exists($filepath)) {
+				// Tentukan MIME type
+				$mime = mime_content_type($filepath);
+
+				header('Content-Type: ' . $mime);
+				header('Content-Length: ' . filesize($filepath));
+				header('Cache-Control: private');
+				header('Content-Disposition: inline; filename="' . $filename . '"');
+
+				readfile($filepath);
+				exit;
+			} else {
+				show_404();
+			}
+		}
+	}
+
+
+	// Fungsi untuk melihat file Experience
+	public function exp_file($filename = '')
+	{
+		// Daftar role/akses yang diizinkan
+		$akses = array("0", "1", "2", "9", "10", "11", "14", "15");
+
+		$admin_id = $this->session->userdata('admin_id');
+		$type     = $this->session->userdata('type');
+
+		// Jika bukan type yang diizinkan
+		if (!in_array($type, $akses)) {
+
+			//redirect('https://www.google.com');
+
+			return $this->load->view('errors/file_denied');
+			exit;
+		} else {
+			// --- Proses download hanya sampai sini kalau lolos validasi akses ---
+
+			// Cegah path traversal
+			$filename = basename($filename);
+
+			// Path file di server
+			$filepath = FCPATH . 'assets/uploads/' . $filename;
+
+			if (file_exists($filepath)) {
+				// Tentukan MIME type
+				$mime = mime_content_type($filepath);
+
+				header('Content-Type: ' . $mime);
+				header('Content-Length: ' . filesize($filepath));
+				header('Cache-Control: private');
+				header('Content-Disposition: inline; filename="' . $filename . '"');
+
+				readfile($filepath);
+				exit;
+			} else {
+				show_404();
+			}
+		}
+	}
+
+	// Fungsi untuk melihat file Education
+	public function edu_file($filename = '')
+	{
+		// Daftar role/akses yang diizinkan
+		$akses = array("0", "1", "2", "9", "10", "11", "14", "15");
+
+		$admin_id = $this->session->userdata('admin_id');
+		$type     = $this->session->userdata('type');
+
+		// Jika bukan type yang diizinkan
+		if (!in_array($type, $akses)) {
+
+			return $this->load->view('errors/file_denied');
+			exit;
+		} else {
+			// --- Proses download hanya sampai sini kalau lolos validasi akses ---
+
+			// Cegah path traversal
+			$filename = basename($filename);
+
+			// Path file di server
+			$filepath = FCPATH . 'assets/uploads/' . $filename;
+
+			if (file_exists($filepath)) {
+				// Tentukan MIME type
+				$mime = mime_content_type($filepath);
+
+				header('Content-Type: ' . $mime);
+				header('Content-Length: ' . filesize($filepath));
+				header('Cache-Control: private');
+				header('Content-Disposition: inline; filename="' . $filename . '"');
+
+				readfile($filepath);
+				exit;
+			} else {
+				show_404();
+			}
+		}
+	}
+
+
+	// Fungsi untuk melihat file Certificate
+	public function cert_file($filename = '')
+	{
+		// Daftar role/akses yang diizinkan
+		$akses = array("0", "1", "2", "9", "10", "11", "14", "15");
+
+		$admin_id = $this->session->userdata('admin_id');
+		$type     = $this->session->userdata('type');
+
+		// Jika bukan type yang diizinkan
+		if (!in_array($type, $akses)) {
+
+			return $this->load->view('errors/file_denied');
+			exit;
+		} else {
 			// --- Proses download hanya sampai sini kalau lolos validasi akses ---
 
 			// Cegah path traversal

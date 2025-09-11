@@ -96,10 +96,6 @@
       opacity: 0.9;
       transition: opacity 0.3s ease-in-out;
     }
-
-    .logo-img:hover {
-      opacity: 1;
-    }
   </style>
 </head>
 
@@ -120,9 +116,11 @@
             alt="Logo" class="logo-img img-responsive center-block">
 
           <div class="error-actions">
-            <a href="<?php echo base_url(); ?>" class="btn btn-dark btn-lg">
+            <a onclick="window.location.href='<?php echo base_url('admin/home'); ?>'"
+              class="btn btn-dark btn-lg">
               <span class="glyphicon glyphicon-key"></span> Akses Login
             </a>
+
             <a href="javascript:history.back()" class="btn btn-default btn-lg">
               <span class="glyphicon glyphicon-arrow-left"></span> Kembali
             </a>
