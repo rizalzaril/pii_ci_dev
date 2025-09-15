@@ -2088,412 +2088,484 @@
 					</div> -->
 
             <!-- NEW UI UPLOAD KTP & PHOTO -->
-            <div class="">
+            <!-- <div class="">
               <div class="row">
                 <!-- Upload KTP -->
-                <div class="col-md-6 col-md-offset-3">
-                  <div class="panel panel-default">
-                    <div class="panel-heading text-center">
-                      <h4><b>Upload KTP / Passport</b></h4>
-                      <small class="text-danger">(Ukuran Max. 700KB, Format: Gambar atau PDF)</small>
-                    </div>
-                    <div class="panel-body text-center">
-                      <div id="avatar" class="mb-10">
-                        <?php echo ($row->id_file != '')
-                          ? "<a href='" . base_url() . "/assets/uploads/" . $row->id_file . "' target='_blank' class='btn btn-link'>" . $row->id_file . "</a>"
-                          : "<p class='text-muted'>Belum ada file diupload</p>"; ?>
-                      </div>
-                      <input type="file" class="form-control" name="ktp" id="ktp" onchange="previewFile(this, 'avatarPreview')">
-                      <div id="errUpload" class="text-danger small mt-5"></div>
-
-                      <!-- Preview KTP -->
-                      <div id="avatarPreview" class="mt-10"></div>
-                    </div>
-                  </div>
+            <div class="col-md-6 col-md-offset-3">
+              <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                  <h4><b>Upload KTP / Passport</b></h4>
+                  <small class="text-danger">(Ukuran Max. 700KB, Format: Gambar atau PDF)</small>
                 </div>
-
-                <!-- Upload Photo -->
-                <div class="col-md-6 col-md-offset-3">
-                  <div class="panel panel-default">
-                    <div class="panel-heading text-center">
-                      <h4><b>Upload Photo</b></h4>
-                      <small class="text-danger">(Ukuran Max. 700KB, Format: PNG / JPG / JPEG)</small>
-                    </div>
-                    <div class="panel-body text-center">
-                      <div id="avatar2" class="mb-10">
-                        <?php echo ($row->photo != '')
-                          ? "<a href='" . base_url() . "/assets/uploads/" . $row->photo . "' target='_blank' class='btn btn-link'>" . $row->photo . "</a>"
-                          : "<p class='text-muted'>Belum ada foto diupload</p>"; ?>
-                      </div>
-                      <input type="file" class="form-control" name="photo" id="photo" onchange="previewFile(this, 'photoPreview')">
-                      <div id="errUpload2" class="text-danger small mt-5"></div>
-
-                      <!-- Preview Photo -->
-                      <div id="photoPreview" class="mt-10"></div>
-                    </div>
+                <div class="panel-body text-center">
+                  <div id="avatar" class="mb-10">
+                    <?php echo ($row->id_file != '')
+                      ? "<a href='" . base_url() . "/assets/uploads/" . $row->id_file . "' target='_blank' class='btn btn-link'>" . $row->id_file . "</a>"
+                      : "<p class='text-muted'>Belum ada file diupload</p>"; ?>
                   </div>
+                  <input type="file" class="form-control" name="ktp" id="ktp" onchange="previewFile(this, 'avatarPreview')">
+                  <div id="errUpload" class="text-danger small mt-5"></div>
+
+                  <!-- Preview KTP -->
+                  <div id="avatarPreview" class="mt-10"></div>
                 </div>
               </div>
             </div>
 
+            <!-- Upload Photo -->
+            <div class="col-md-6 col-md-offset-3">
+              <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                  <h4><b>Upload Photo</b></h4>
+                  <small class="text-danger">(Ukuran Max. 700KB, Format: PNG / JPG / JPEG)</small>
+                </div>
+                <div class="panel-body text-center">
+                  <div id="avatar2" class="mb-10">
+                    <?php echo ($row->photo != '')
+                      ? "<a href='" . base_url() . "/assets/uploads/" . $row->photo . "' target='_blank' class='btn btn-link'>" . $row->photo . "</a>"
+                      : "<p class='text-muted'>Belum ada foto diupload</p>"; ?>
+                  </div>
+                  <input type="file" class="form-control" name="photo" id="photo" onchange="previewFile(this, 'photoPreview')">
+                  <div id="errUpload2" class="text-danger small mt-5"></div>
 
-            <div class="wizard-buttons" style="text-align:center;">
-              <button type="button" class="btn btn-previous">Kembali</button>
-              <button type="button" class="btn btn-next">Simpan & Lanjut</button>
+                  <!-- Preview Photo -->
+                  <div id="photoPreview" class="mt-10"></div>
+                </div>
+              </div>
             </div>
-          </fieldset>
-          <fieldset id="fi_5">
-            <div class="jumbotron text-center">
-              <h1>Terima kasih!</h1>
-              <h4>Proses pemutakhiran data telah selesai. Kapan saja silakan login kembali dan update data anda.</h4>
+      </div>
+  </div> -->
 
-              <!--Ada Kesulitan? Contact us-->
-            </div>
-            <div class="wizard-buttons" style="text-align:center;">
-              <button type="button" class="btn btn-previous">Kembali</button>
-              <button type="button" name="home" onclick="return tohome();" class="btn btn-primary">Display Profile</button>
-            </div>
-          </fieldset>
+  <!-- SCRIPT ASLINYA -->
+  <div class="col-md-12">
+    <div class="col-sm-4 col-md-offset-4">
+      <h4><b>Upload KTP (or PASSPORT)</b></h4> <span class="red">(Ukuran Max. 700KB, Format file: gambar atau PDF)</span>
+      <div class="form-group">
+        <div id="avatar"> <?php echo ($row->id_file != '') ? "<a href='" . base_url() . "/assets/uploads/" . $row->id_file . "' target='_blank' class='ava_discus'>" . $row->id_file . "</a>" : ''; ?> </div> <br /><br />
+        <div id="errUpload" class="red"></div> <input type="file" name="ktp" id="ktp" onchange="upload_ktp()">
+      </div>
+    </div>
+    <div class="col-sm-4 col-md-offset-4">
+      <h4><b>Upload Photo</b></h4> <span class="red">(Ukuran Max. 700KB, Format file: PNG atau JPG/JPEG)</span>
+      <div class="form-group">
+        <div id="avatar2"> <?php //echo ($row->photo!='')?"<img src='".base_url()."/assets/uploads/".$row->photo."' class='ava_discus' width='150'>":''; 
+                            ?> <?php echo ($row->photo != '') ? "<a href='" . base_url() . "/assets/uploads/" . $row->photo . "' target='_blank' class='ava_discus'>" . $row->photo . "</a>" : ''; ?> </div> <br /><br />
+        <div id="errUpload2" class="red"></div> <input type="file" name="photo" id="photo" onchange="upload_photo()">
+      </div>
+    </div>
+  </div>
 
-        </form>
+
+  <!-- SCRIPT ASLI UI MODIFICATION -->
+  <div class="container">
+    <div class="row">
+      <!-- Upload KTP -->
+      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-default">
+          <div class="panel-heading text-center">
+            <h4><b>Upload KTP (or PASSPORT)</b></h4>
+            <small class="text-danger">(Ukuran Max. 700KB, Format file: gambar atau PDF)</small>
+          </div>
+          <div class="panel-body text-center">
+            <div id="avatar">
+              <?php echo ($row->id_file != '')
+                ? "<a href='" . base_url() . "/assets/uploads/" . $row->id_file . "' target='_blank' class='btn btn-link'><i class='glyphicon glyphicon-file'></i> " . $row->id_file . "</a>"
+                : '<p class="text-muted">Belum ada file diupload</p>'; ?>
+            </div>
+            <br />
+            <div id="errUpload" class="text-danger"></div>
+            <label class="btn btn-primary btn-file">
+              <i class="glyphicon glyphicon-upload"></i> Pilih File
+              <input type="file" name="ktp" id="ktp" onchange="upload_ktp()" style="display: none;">
+            </label>
+          </div>
+        </div>
       </div>
 
-      <script src="<?php echo base_url(); ?>assets/ada/wizard/js/jquery.min.js"></script>
-      <script src="<?php echo base_url(); ?>assets/ada/wizard/js/popper.min.js"></script>
-      <script src="<?php echo base_url(); ?>assets/ada/wizard/js/bootstrap.min.js"></script>
-      <script src="<?php echo base_url(); ?>assets/ada/wizard/script.js"></script>
+      <!-- Upload Photo -->
+      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-default">
+          <div class="panel-heading text-center">
+            <h4><b>Upload Foto</b></h4>
+            <small class="text-danger">(Ukuran Max. 700KB, Format file: PNG atau JPG/JPEG)</small>
+          </div>
+          <div class="panel-body text-center">
+            <div id="avatar2">
+              <?php echo ($row->photo != '')
+                ? "<a href='" . base_url() . "/assets/uploads/" . $row->photo . "' target='_blank' class='btn btn-link'><i class='glyphicon glyphicon-picture'></i> " . $row->photo . "</a>"
+                : '<p class="text-muted">Belum ada foto diupload</p>'; ?>
+            </div>
+            <br />
+            <div id="errUpload2" class="text-danger"></div>
+            <label class="btn btn-success btn-file">
+              <i class="glyphicon glyphicon-camera"></i> Pilih Foto
+              <input type="file" name="photo" id="photo" onchange="upload_photo()" style="display: none;">
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
-    </aside>
-    <!-- /.right-side -->
-    <?php $this->load->view('member/common/footer'); ?>
+  <div class="wizard-buttons" style="text-align:center;">
+    <button type="button" class="btn btn-previous">Kembali</button>
+    <button type="button" class="btn btn-next">Simpan & Lanjut</button>
+  </div>
+  </fieldset>
+  <fieldset id="fi_5">
+    <div class="jumbotron text-center">
+      <h1>Terima kasih!</h1>
+      <h4>Proses pemutakhiran data telah selesai. Kapan saja silakan login kembali dan update data anda.</h4>
+
+      <!--Ada Kesulitan? Contact us-->
+    </div>
+    <div class="wizard-buttons" style="text-align:center;">
+      <button type="button" class="btn btn-previous">Kembali</button>
+      <button type="button" name="home" onclick="return tohome();" class="btn btn-primary">Display Profile</button>
+    </div>
+  </fieldset>
+
+  </form>
+  </div>
+
+  <script src="<?php echo base_url(); ?>assets/ada/wizard/js/jquery.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/ada/wizard/js/popper.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/ada/wizard/js/bootstrap.min.js"></script>
+  <script src="<?php echo base_url(); ?>assets/ada/wizard/script.js"></script>
+
+
+
+  </aside>
+  <!-- /.right-side -->
+  <?php $this->load->view('member/common/footer'); ?>
 
 
 
 
-    <script src="<?php echo base_url(); ?>assets/js/typeahead.bundle.min.js"></script>
-    <script>
-      function addAddress(tableID) {
-        var currentNumber = 1;
-        if ($('.address-item').length > 0) {
-          currentNumber = $('.address-item').last().data('id') + 1
-        }
-
-        $('#' + tableID).append(
-          '<tr class="row address-item" data-id="' + currentNumber + '" >' +
-          '<td><table class="table" style="margin-left:5px;">' +
-          '<tr class="row">' +
-          '<td class="col-md-4">' +
-          '<select id="typeaddress' + currentNumber + '" name="typeaddress[]" class="form-control input-md" required="">' +
-          '<option value="">--Choose--</option>'
-          <?php
-          if (isset($m_address)) {
-            foreach ($m_address as $val) {
-          ?> +
-              '<option value="<?php echo $val->id; ?>" ><?php echo $val->desc; ?></option>'
-
-          <?php
-            }
-          }
-          ?> +
-          '</select><input type="hidden" name="addressid[]" id="addressid' + currentNumber + '" value="" />' +
-          '</td>' +
-          '<td class="col-md-8">' +
-          '<input id="address' + currentNumber + '" name="address[]" type="text" placeholder="Address" class="form-control input-md" required="">' +
-          '</td>' +
-          '<td class="td-action">' +
-          '<button type="button" class="btn btn-danger btn-xs address-item-remove-button" data-id="' + currentNumber + '">' +
-          '<i class="fa fa-trash-o fa-fw"></i>X' +
-          '</button>' +
-          '</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '<td class="col-md-4">' +
-          '<label class="form-check-label"><input type="radio" name="mailingaddr" value="' + currentNumber + '">Alamat Surat</label>' +
-          '</td>' +
-          '<td class="col-md-8">' +
-          '<input id="addresscity' + currentNumber + '" name="addresscity[]" type="text" placeholder="City" class="form-control input-md w400"  required="">' +
-          '</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '<td class="col-md-4">' +
-          '</td>' +
-          '<td class="col-md-8">' +
-          '<input id="addressprovince' + currentNumber + '" name="addressprovince[]" type="text" placeholder="Province" class="form-control input-md w400"  required="">' +
-          '</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '<td class="col-md-4">' +
-          '</td>' +
-          '<td class="col-md-8">' +
-          '<input id="addresszip' + currentNumber + '" name="addresszip[]" type="text" placeholder="Zip Code" class="form-control input-md number w400" required="" >' +
-          '</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '<td class="col-md-4">' +
-          '</td>' +
-          '<td class="col-md-8">' +
-          '<input id="email' + currentNumber + '" name="email[]" type="email" placeholder="Email" class="form-control input-md">' +
-          '</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '<td class="col-md-4">' +
-          '</td>' +
-          '<td class="col-md-8">' +
-          '<input id="addressphone' + currentNumber + '" name="addressphone[]" type="text" placeholder="Contoh +627911123456" class="form-control input-md number w400" >' +
-          '</td>' +
-          '</tr>' +
-          '</table></td></tr>'
-        );
-
-        var regions = new Bloodhound({
-          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-          queryTokenizer: Bloodhound.tokenizers.whitespace,
-          remote: {
-            cache: false,
-            url: '<?php echo base_url(); ?>/welcome/searchregion?q=%QUERY%',
-            wildcard: '%QUERY%',
-            filter: function(list) {
-              return $.map(list, function(company) {
-                return {
-                  name: company.name
-                };
-              });
-            }
-          }
-        });
-        var provinces = new Bloodhound({
-          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-          queryTokenizer: Bloodhound.tokenizers.whitespace,
-          remote: {
-            cache: false,
-            url: '<?php echo base_url(); ?>/welcome/searchprovince?q=%QUERY%',
-            wildcard: '%QUERY%',
-            filter: function(list) {
-              return $.map(list, function(company) {
-                return {
-                  name: company.name
-                };
-              });
-            }
-          }
-        });
-        $('#' + tableID).find("input[id^='addresscity']").typeahead(null, {
-          name: 'regions',
-          display: 'name',
-          source: regions,
-          hint: true,
-          highlight: true,
-          minLength: 2,
-          limit: Infinity,
-          templates: {}
-        });
-        $('#' + tableID).find("input[id^='addressprovince']").typeahead(null, {
-          name: 'provinces',
-          display: 'name',
-          source: provinces,
-          hint: true,
-          highlight: true,
-          minLength: 2,
-          limit: Infinity,
-          templates: {}
-        });
-
-        var input = document.querySelector("#addressphone" + currentNumber);
-        window.intlTelInput(input, {
-          autoHideDialCode: true,
-          nationalMode: false,
-          preferredCountries: ['id'],
-          utilsScript: "<?php echo base_url(); ?>assets/ada/phone/js/utils.js",
-        });
-
-        document.getElementById('addressphone' + currentNumber).addEventListener('input', function() {
-          let start = this.selectionStart;
-          let end = this.selectionEnd;
-
-          const current = this.value
-          const corrected = current.replace(/[^-+\d]/g, '');
-          this.value = corrected;
-
-          if (corrected.length < current.length) --end;
-          this.setSelectionRange(start, end);
-        });
-
+  <script src="<?php echo base_url(); ?>assets/js/typeahead.bundle.min.js"></script>
+  <script>
+    function addAddress(tableID) {
+      var currentNumber = 1;
+      if ($('.address-item').length > 0) {
+        currentNumber = $('.address-item').last().data('id') + 1
       }
 
-      function addSchool(tableID) {
-        var currentNumber = 1;
-        if ($('.school-item').length > 0) {
-          currentNumber = $('.school-item').last().data('id') + 1
+      $('#' + tableID).append(
+        '<tr class="row address-item" data-id="' + currentNumber + '" >' +
+        '<td><table class="table" style="margin-left:5px;">' +
+        '<tr class="row">' +
+        '<td class="col-md-4">' +
+        '<select id="typeaddress' + currentNumber + '" name="typeaddress[]" class="form-control input-md" required="">' +
+        '<option value="">--Choose--</option>'
+        <?php
+        if (isset($m_address)) {
+          foreach ($m_address as $val) {
+        ?> +
+            '<option value="<?php echo $val->id; ?>" ><?php echo $val->desc; ?></option>'
+
+        <?php
+          }
         }
+        ?> +
+        '</select><input type="hidden" name="addressid[]" id="addressid' + currentNumber + '" value="" />' +
+        '</td>' +
+        '<td class="col-md-8">' +
+        '<input id="address' + currentNumber + '" name="address[]" type="text" placeholder="Address" class="form-control input-md" required="">' +
+        '</td>' +
+        '<td class="td-action">' +
+        '<button type="button" class="btn btn-danger btn-xs address-item-remove-button" data-id="' + currentNumber + '">' +
+        '<i class="fa fa-trash-o fa-fw"></i>X' +
+        '</button>' +
+        '</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '<td class="col-md-4">' +
+        '<label class="form-check-label"><input type="radio" name="mailingaddr" value="' + currentNumber + '">Alamat Surat</label>' +
+        '</td>' +
+        '<td class="col-md-8">' +
+        '<input id="addresscity' + currentNumber + '" name="addresscity[]" type="text" placeholder="City" class="form-control input-md w400"  required="">' +
+        '</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '<td class="col-md-4">' +
+        '</td>' +
+        '<td class="col-md-8">' +
+        '<input id="addressprovince' + currentNumber + '" name="addressprovince[]" type="text" placeholder="Province" class="form-control input-md w400"  required="">' +
+        '</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '<td class="col-md-4">' +
+        '</td>' +
+        '<td class="col-md-8">' +
+        '<input id="addresszip' + currentNumber + '" name="addresszip[]" type="text" placeholder="Zip Code" class="form-control input-md number w400" required="" >' +
+        '</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '<td class="col-md-4">' +
+        '</td>' +
+        '<td class="col-md-8">' +
+        '<input id="email' + currentNumber + '" name="email[]" type="email" placeholder="Email" class="form-control input-md">' +
+        '</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '<td class="col-md-4">' +
+        '</td>' +
+        '<td class="col-md-8">' +
+        '<input id="addressphone' + currentNumber + '" name="addressphone[]" type="text" placeholder="Contoh +627911123456" class="form-control input-md number w400" >' +
+        '</td>' +
+        '</tr>' +
+        '</table></td></tr>'
+      );
 
-        $('#' + tableID).append(
-          '<tr class="row school-item" data-id="' + currentNumber + '" >' +
-          '<td><table class="table" border="1" style="margin-left:5px;">'
+      var regions = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+          cache: false,
+          url: '<?php echo base_url(); ?>/welcome/searchregion?q=%QUERY%',
+          wildcard: '%QUERY%',
+          filter: function(list) {
+            return $.map(list, function(company) {
+              return {
+                name: company.name
+              };
+            });
+          }
+        }
+      });
+      var provinces = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+          cache: false,
+          url: '<?php echo base_url(); ?>/welcome/searchprovince?q=%QUERY%',
+          wildcard: '%QUERY%',
+          filter: function(list) {
+            return $.map(list, function(company) {
+              return {
+                name: company.name
+              };
+            });
+          }
+        }
+      });
+      $('#' + tableID).find("input[id^='addresscity']").typeahead(null, {
+        name: 'regions',
+        display: 'name',
+        source: regions,
+        hint: true,
+        highlight: true,
+        minLength: 2,
+        limit: Infinity,
+        templates: {}
+      });
+      $('#' + tableID).find("input[id^='addressprovince']").typeahead(null, {
+        name: 'provinces',
+        display: 'name',
+        source: provinces,
+        hint: true,
+        highlight: true,
+        minLength: 2,
+        limit: Infinity,
+        templates: {}
+      });
+
+      var input = document.querySelector("#addressphone" + currentNumber);
+      window.intlTelInput(input, {
+        autoHideDialCode: true,
+        nationalMode: false,
+        preferredCountries: ['id'],
+        utilsScript: "<?php echo base_url(); ?>assets/ada/phone/js/utils.js",
+      });
+
+      document.getElementById('addressphone' + currentNumber).addEventListener('input', function() {
+        let start = this.selectionStart;
+        let end = this.selectionEnd;
+
+        const current = this.value
+        const corrected = current.replace(/[^-+\d]/g, '');
+        this.value = corrected;
+
+        if (corrected.length < current.length) --end;
+        this.setSelectionRange(start, end);
+      });
+
+    }
+
+    function addSchool(tableID) {
+      var currentNumber = 1;
+      if ($('.school-item').length > 0) {
+        currentNumber = $('.school-item').last().data('id') + 1
+      }
+
+      $('#' + tableID).append(
+        '<tr class="row school-item" data-id="' + currentNumber + '" >' +
+        '<td><table class="table" border="1" style="margin-left:5px;">'
 
 
-          +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-6 control-label">Tipe Pendidikan<span class="red"> *</span></label>  ' +
-          '	</td>' +
-          '	<td class="col-md-8">' +
-          '	<select id="c_school_type' + currentNumber + '" name="c_school_type[]" class="form-control input-md" required="" onchange="tipe_school(' + currentNumber + ')">' +
-          '<option value="">--Choose--</option>'
-          <?php
-          if (isset($m_school_type)) {
-            foreach ($m_school_type as $val) {
-          ?> +
-              '<option value="<?php echo $val->id; ?>" ><?php echo $val->desc; ?></option>'
+        +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-6 control-label">Tipe Pendidikan<span class="red"> *</span></label>  ' +
+        '	</td>' +
+        '	<td class="col-md-8">' +
+        '	<select id="c_school_type' + currentNumber + '" name="c_school_type[]" class="form-control input-md" required="" onchange="tipe_school(' + currentNumber + ')">' +
+        '<option value="">--Choose--</option>'
+        <?php
+        if (isset($m_school_type)) {
+          foreach ($m_school_type as $val) {
+        ?> +
+            '<option value="<?php echo $val->id; ?>" ><?php echo $val->desc; ?></option>'
 
-          <?php
+        <?php
+          }
+        }
+        ?> +
+        '	</select>' +
+        '	</td>' +
+        '<td class="td-action">' +
+        '<button type="button" class="btn btn-danger btn-xs school-item-remove-button" data-id="' + currentNumber + '">' +
+        '<i class="fa fa-trash-o fa-fw"></i>X' +
+        '</button>' +
+        '</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-8 control-label">Institusi / Universitas<span class="red"> *</span></label> ' +
+        '	</td>' +
+        '	<td class="col-md-6" colspan="2">' +
+        '	<input id="c_school' + currentNumber + '" name="c_school[]" type="text" placeholder="School" class="form-control input-md" required="">' +
+        ' <input type="hidden" name="schoolid[]" id="schoolid' + currentNumber + '" value="" />' +
+        '	</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-6 control-label" id="label_c_tahun' + currentNumber + '">Tahun<span class="red"> *</span></label>  ' +
+        '	</td>' +
+        '	<td class="col-md-6" colspan="2">'
+
+        +
+        '<input style="width:28%;float:left;" id="c_dateattendstart' + currentNumber + '" name="c_dateattendstart[]" type="text" placeholder="Year" class="form-control input-md datepickeryear" required="">' +
+        '<div style="float:left;padding-left:2%;padding-right:2%;">-</div>' +
+        '<input style="width:27.5%;float:left;" id="c_dateattendend' + currentNumber + '" name="c_dateattendend[]" type="text" placeholder="Year" class="form-control input-md datepickeryear" required="">'
+
+        +
+        '	</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-8 control-label" id="label_c_tingkat' + currentNumber + '">Tingkat Pendidikan<span class="red"> *</span></label>  ' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">' +
+        '	<select id="c_degree' + currentNumber + '" name="c_degree[]" class="form-control input-md" required="">' +
+        '<option value="">--Choose--</option>'
+        /*<?php
+          if (isset($m_degree)) {
+            foreach ($m_degree as $val) {
+          ?>
+        + '<option value="<?php echo $val->EDUCATION_TYPE_ID; ?>" ><?php echo $val->DESCRIPTION; ?></option>'
+        
+        <?php
             }
           }
-          ?> +
-          '	</select>' +
-          '	</td>' +
-          '<td class="td-action">' +
-          '<button type="button" class="btn btn-danger btn-xs school-item-remove-button" data-id="' + currentNumber + '">' +
-          '<i class="fa fa-trash-o fa-fw"></i>X' +
-          '</button>' +
-          '</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-8 control-label">Institusi / Universitas<span class="red"> *</span></label> ' +
-          '	</td>' +
-          '	<td class="col-md-6" colspan="2">' +
-          '	<input id="c_school' + currentNumber + '" name="c_school[]" type="text" placeholder="School" class="form-control input-md" required="">' +
-          ' <input type="hidden" name="schoolid[]" id="schoolid' + currentNumber + '" value="" />' +
-          '	</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-6 control-label" id="label_c_tahun' + currentNumber + '">Tahun<span class="red"> *</span></label>  ' +
-          '	</td>' +
-          '	<td class="col-md-6" colspan="2">'
+        ?>*/
+        +
+        '	</select>' +
+        '	</td>' +
+        '</tr>'
+        /*+ '<tr class="row">'
+        + '	<td class="col-md-4">'
+        + '		<label class="col-md-6 control-label">Jurusan<span class="red"> *</span></label> '
+        + '	</td>'
+        + '	<td class="col-md-8">'
+        + '	<input id="c_mayor' + currentNumber + '" name="c_mayor[]" type="text" placeholder="Jurusan" class="form-control input-md" required="">'
+        + '	</td>'
+        + '</tr>'*/
+        +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-6 control-label" id="label_c_fos' + currentNumber + '">Jurusan/Kejuruan<span class="red"> *</span></label> ' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">' +
+        '	<input id="c_fos' + currentNumber + '" name="c_fos[]" type="text" placeholder="" class="form-control input-md" required="">' +
+        '	</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-3 control-label" id="label_c_score' + currentNumber + '">IPK<span class="red"> *</span></label>' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">' +
+        '	<input id="c_score' + currentNumber + '" name="c_score[]" type="text" placeholder="" class="form-control input-md" required="">' +
+        '	</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-3 control-label">Gelar<span class="red"> *</span></label>  ' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">'
+        //+ '	<input id="c_title' + currentNumber + '" name="c_title[]" type="text" placeholder="Gelar" class="form-control input-md w400" required="" >'
 
-          +
-          '<input style="width:28%;float:left;" id="c_dateattendstart' + currentNumber + '" name="c_dateattendstart[]" type="text" placeholder="Year" class="form-control input-md datepickeryear" required="">' +
-          '<div style="float:left;padding-left:2%;padding-right:2%;">-</div>' +
-          '<input style="width:27.5%;float:left;" id="c_dateattendend' + currentNumber + '" name="c_dateattendend[]" type="text" placeholder="Year" class="form-control input-md datepickeryear" required="">'
-
-          +
-          '	</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-8 control-label" id="label_c_tingkat' + currentNumber + '">Tingkat Pendidikan<span class="red"> *</span></label>  ' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">' +
-          '	<select id="c_degree' + currentNumber + '" name="c_degree[]" class="form-control input-md" required="">' +
-          '<option value="">--Choose--</option>'
-          /*<?php
-            if (isset($m_degree)) {
-              foreach ($m_degree as $val) {
-            ?>
-          + '<option value="<?php echo $val->EDUCATION_TYPE_ID; ?>" ><?php echo $val->DESCRIPTION; ?></option>'
-          
-          <?php
-              }
-            }
-          ?>*/
-          +
-          '	</select>' +
-          '	</td>' +
-          '</tr>'
-          /*+ '<tr class="row">'
-          + '	<td class="col-md-4">'
-          + '		<label class="col-md-6 control-label">Jurusan<span class="red"> *</span></label> '
-          + '	</td>'
-          + '	<td class="col-md-8">'
-          + '	<input id="c_mayor' + currentNumber + '" name="c_mayor[]" type="text" placeholder="Jurusan" class="form-control input-md" required="">'
-          + '	</td>'
-          + '</tr>'*/
-          +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-6 control-label" id="label_c_fos' + currentNumber + '">Jurusan/Kejuruan<span class="red"> *</span></label> ' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">' +
-          '	<input id="c_fos' + currentNumber + '" name="c_fos[]" type="text" placeholder="" class="form-control input-md" required="">' +
-          '	</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-3 control-label" id="label_c_score' + currentNumber + '">IPK<span class="red"> *</span></label>' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">' +
-          '	<input id="c_score' + currentNumber + '" name="c_score[]" type="text" placeholder="" class="form-control input-md" required="">' +
-          '	</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-3 control-label">Gelar<span class="red"> *</span></label>  ' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">'
-          //+ '	<input id="c_title' + currentNumber + '" name="c_title[]" type="text" placeholder="Gelar" class="form-control input-md w400" required="" >'
-
-          +
-          '<div style="width:25%;float:left;">' +
-          '	<b>Gelar depan</b> (contoh: Drs.)<br />' +
-          '	<input id="c_prefix_title' + currentNumber + '" name="c_prefix_title[]" type="text" placeholder="Gelar Depan" ' +
-          ' class="form-control input-md w400" value="" style="width:100%">' +
-          '</div>' +
-          '<div style="width:3%;float:left;text-align:center;">' +
-          '	/ ' +
-          '</div>' +
-          '<div style="width:32%;float:left;">' +
-          '	<b>Gelar belakang</b> (contoh:  M.M.)<br />' +
-          '	<input id="c_title' + currentNumber + '" name="c_title[]" type="text" placeholder="Gelar Belakang" class="form-control input-md w400" value="" style="width:100%">' +
-          '</div>'
+        +
+        '<div style="width:25%;float:left;">' +
+        '	<b>Gelar depan</b> (contoh: Drs.)<br />' +
+        '	<input id="c_prefix_title' + currentNumber + '" name="c_prefix_title[]" type="text" placeholder="Gelar Depan" ' +
+        ' class="form-control input-md w400" value="" style="width:100%">' +
+        '</div>' +
+        '<div style="width:3%;float:left;text-align:center;">' +
+        '	/ ' +
+        '</div>' +
+        '<div style="width:32%;float:left;">' +
+        '	<b>Gelar belakang</b> (contoh:  M.M.)<br />' +
+        '	<input id="c_title' + currentNumber + '" name="c_title[]" type="text" placeholder="Gelar Belakang" class="form-control input-md w400" value="" style="width:100%">' +
+        '</div>'
 
 
-          +
-          '	</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-8 control-label">Judul Tugas Akhir/Skripsi/Tesis/Disertasi</label>    ' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">' +
-          '	<input id="c_actv' + currentNumber + '" name="c_actv[]" type="text" placeholder="Judul Tugas Akhir/Skripsi/Tesis/Disertasi" class="form-control input-md" >' +
-          '	</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-8 control-label">Uraian Singkat Tentang Materi Tugas Akhir/ Skripsi/Tesis/ Disertasi</label>  ' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">' +
-          '		<textarea class="form-control" rows="5" id="c_descedu' + currentNumber + '" name="c_descedu[]"></textarea>' +
-          '	</td>' +
-          '</tr>'
+        +
+        '	</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-8 control-label">Judul Tugas Akhir/Skripsi/Tesis/Disertasi</label>    ' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">' +
+        '	<input id="c_actv' + currentNumber + '" name="c_actv[]" type="text" placeholder="Judul Tugas Akhir/Skripsi/Tesis/Disertasi" class="form-control input-md" >' +
+        '	</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-8 control-label">Uraian Singkat Tentang Materi Tugas Akhir/ Skripsi/Tesis/ Disertasi</label>  ' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">' +
+        '		<textarea class="form-control" rows="5" id="c_descedu' + currentNumber + '" name="c_descedu[]"></textarea>' +
+        '	</td>' +
+        '</tr>'
 
-          +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-8 control-label">Dokumen pendukung <br /> <span class="red">(Max. 700KB, image atau PDF)</span></label>  ' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">' +
-          '		<div class="form-group">' +
-          '			<div id="avatarattedu' + currentNumber + '">' +
-          '			<input type="hidden" name="edu_image_url[]" value="" style="display: inline-block;">'
+        +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-8 control-label">Dokumen pendukung <br /> <span class="red">(Max. 700KB, image atau PDF)</span></label>  ' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">' +
+        '		<div class="form-group">' +
+        '			<div id="avatarattedu' + currentNumber + '">' +
+        '			<input type="hidden" name="edu_image_url[]" value="" style="display: inline-block;">'
 
-          +
-          '			</div>' +
-          '			<div id="errUploadattedu' + currentNumber + '" class="red"></div>' +
-          '			<input type="file" name="attedu' + currentNumber + '" class="form-control input-md" id="attedu' + currentNumber + '" onchange="upload_edu(\'attedu' + currentNumber + '\')">' +
-          '		</div>' +
-          '	</td>' +
-          '</tr>'
+        +
+        '			</div>' +
+        '			<div id="errUploadattedu' + currentNumber + '" class="red"></div>' +
+        '			<input type="file" name="attedu' + currentNumber + '" class="form-control input-md" id="attedu' + currentNumber + '" onchange="upload_edu(\'attedu' + currentNumber + '\')">' +
+        '		</div>' +
+        '	</td>' +
+        '</tr>'
 
 
-          +
-          '</table></td></tr>'
-        );
+        +
+        '</table></td></tr>'
+      );
 
-        /*var titles = new Bloodhound({
+      /*var titles = new Bloodhound({
 			datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
 			queryTokenizer: Bloodhound.tokenizers.whitespace,
 			remote: {
@@ -2522,661 +2594,661 @@
         });*/
 
 
-        $('#' + tableID).find("input[id^='c_title']").autocomplete({
-          source: function(request, response) {
-            var x = $(this.element).prop("id");
-            x = x.replace("c_title", "");
-            $.ajax({
-              url: '<?php echo base_url(); ?>/welcome/searchtitlev2_s',
-              dataType: "JSON",
-              data: {
-                term: request.term,
-                edu: $("#c_degree" + x).val()
-              },
-              success: function(data) {
-                response(data);
-              }
+      $('#' + tableID).find("input[id^='c_title']").autocomplete({
+        source: function(request, response) {
+          var x = $(this.element).prop("id");
+          x = x.replace("c_title", "");
+          $.ajax({
+            url: '<?php echo base_url(); ?>/welcome/searchtitlev2_s',
+            dataType: "JSON",
+            data: {
+              term: request.term,
+              edu: $("#c_degree" + x).val()
+            },
+            success: function(data) {
+              response(data);
+            }
+          });
+        },
+        minLength: 0,
+        select: function(event, ui) {
+          //log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+        }
+      });
+
+      $('#' + tableID).find("input[id^='c_prefix_title']").autocomplete({
+        source: function(request, response) {
+          var x = $(this.element).prop("id");
+          x = x.replace("c_prefix_title", "");
+          $.ajax({
+            url: '<?php echo base_url(); ?>/welcome/searchtitlev2_p',
+            dataType: "JSON",
+            data: {
+              term: request.term,
+              edu: $("#c_degree" + x).val()
+            },
+            success: function(data) {
+              response(data);
+            }
+          });
+        },
+        minLength: 0,
+        select: function(event, ui) {
+          //log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+        }
+      });
+
+      $('#' + tableID).find("select[id^='c_degree']").change(function(e) {
+        var c = ($(this).attr('id'));
+        c = c.replace("c_degree", "");
+
+        $("#c_title" + c).val('');
+        $("#c_prefix_title" + c).val('');
+      });
+
+    }
+
+    function addCert(tableID) {
+      var currentNumber = 1;
+      if ($('.cert-item').length > 0) {
+        currentNumber = $('.cert-item').last().data('id') + 1
+      }
+
+      $('#' + tableID).append(
+        '<tr class="row cert-item" data-id="' + currentNumber + '" >' +
+        '<td><table class="table" border="1" style="margin-left:5px;">'
+
+
+
+        +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-6 control-label">Nama Sertifikasi<span class="red"> *</span></label> ' +
+        '	</td>' +
+        '	<td class="col-md-6">' +
+        '	<input id="c_certname' + currentNumber + '" name="c_certname[]" type="text" placeholder="Nama Sertifikasi" class="form-control input-md" required="">' +
+        '<input type="hidden" name="certid[]" id="certid' + currentNumber + '" value="" />' +
+        '	</td>' +
+        '<td class="td-action">' +
+        '<button type="button" class="btn btn-danger btn-xs cert-item-remove-button" data-id="' + currentNumber + '">' +
+        '<i class="fa fa-trash-o fa-fw"></i>X' +
+        '</button>' +
+        '</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-6 control-label">Otoritas Sertifikasi<span class="red"> *</span></label> ' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">' +
+        '	<input id="c_certauth' + currentNumber + '" name="c_certauth[]" type="text" placeholder="Otoritas Sertifikasi" class="form-control input-md" required="">' +
+        '	</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-6 control-label">Nomor lisensi<span class="red"> *</span></label>' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">' +
+        '	<input id="c_lic' + currentNumber + '" name="c_lic[]" type="text" placeholder="Nomor lisensi" class="form-control input-md" required="">' +
+        '	</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-6 control-label">URL sertifikasi</label>  ' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">' +
+        '	<input id="c_url' + currentNumber + '" name="c_url[]" type="text" placeholder="URL sertifikasi" class="form-control input-md" >' +
+        '	</td>' +
+        '</tr>'
+
+        +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-3 control-label">Kualifikasi<span class="red"> *</span></label>  ' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">' +
+        '	<!--<b>Kualifikasi</b> (contoh: IPM.)<br />-->' +
+        '	<input id="c_cert_title' + currentNumber + '" name="c_cert_title[]" type="text" placeholder="Kualifikasi" class="form-control input-md w400" required=""  value="">' +
+        '	</td>' +
+        '</tr>'
+
+        +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-6 control-label">Tanggal<span class="red"> *</span></label>  ' +
+        '	</td>' +
+        '	<td class="col-md-6" colspan="2">' +
+        '	<div class="col-md-3" style="width: 180px;padding-left: 0px;">' +
+        '	<select id="c_certdate' + currentNumber + '" name="c_certdate[]" class="form-control input-md" required="">' +
+        '		<option value="">---</option>' +
+        '		<option value="1">Januari</option>' +
+        '		<option value="2">Pebruari</option>' +
+        '		<option value="3">Maret</option>' +
+        '		<option value="4">April</option>' +
+        '		<option value="5">Mei</option>' +
+        '		<option value="6">Juni</option>' +
+        '		<option value="7">Juli</option>' +
+        '		<option value="8">Agustus</option>' +
+        '		<option value="9">September</option>' +
+        '		<option value="10">Oktober</option>' +
+        '		<option value="11">Nopember</option>' +
+        '		<option value="12">Desember</option>' +
+        '	</select>' +
+        '	<input id="c_certyear' + currentNumber + '" name="c_certyear[]" type="text" placeholder="Year" class="form-control input-md number datepickeryear" required="">' +
+        '	</div>' +
+        '	<div class="col-md-1" id="is_presentcert1' + currentNumber + '">-</div>' +
+        '	<div class="col-md-3" id="is_presentcert2' + currentNumber + '" style="width: 180px;padding-left: 0px;">' +
+        '	<select id="c_certdate2' + currentNumber + '" name="c_certdate2[]" class="form-control input-md">' +
+        '		<option value="">---</option>' +
+        '		<option value="1">Januari</option>' +
+        '		<option value="2">Pebruari</option>' +
+        '		<option value="3">Maret</option>' +
+        '		<option value="4">April</option>' +
+        '		<option value="5">Mei</option>' +
+        '		<option value="6">Juni</option>' +
+        '		<option value="7">Juli</option>' +
+        '		<option value="8">Agustus</option>' +
+        '		<option value="9">September</option>' +
+        '		<option value="10">Oktober</option>' +
+        '		<option value="11">Nopember</option>' +
+        '		<option value="12">Desember</option>' +
+        '	</select>' +
+        '	<input id="c_certyear2' + currentNumber + '" name="c_certyear2[]" type="text" placeholder="Year" class="form-control input-md number datepickeryear" >' +
+        '	</div>' +
+        '	</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-6 control-label"></label>  ' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">' +
+        '	<label class="form-check-label"><input type="checkbox" id="c_certwork' + currentNumber + '" name="c_certwork[]" class="form-check-input" value="1" data-id="' + currentNumber + '">Sampai saat ini</label>' +
+        '	</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-6 control-label">Deskripsi</label>  ' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">' +
+        '		<textarea class="form-control" rows="5" id="c_certdesc' + currentNumber + '" name="c_certdesc[]"></textarea>' +
+        '	</td>' +
+        '</tr>'
+
+        +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-8 control-label">Dokumen pendukung <br /> <span class="red">(Max. 700KB, image atau PDF)</span></label>  ' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">' +
+        '		<div class="form-group">' +
+        '			<div id="avatarattcert' + currentNumber + '">' +
+        '			<input type="hidden" name="cert_image_url[]" value="" style="display: inline-block;">'
+
+        +
+        '			</div>' +
+        '			<div id="errUploadattcert' + currentNumber + '" class="red"></div>' +
+        '			<input type="file" name="attcert' + currentNumber + '" class="form-control input-md" id="attcert' + currentNumber + '" onchange="upload_cert(\'attcert' + currentNumber + '\')">' +
+        '		</div>' +
+        '	</td>' +
+        '</tr>'
+
+        +
+        '</table></td></tr>'
+      );
+
+      var titles = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+          cache: false,
+          url: '<?php echo base_url(); ?>/welcome/searchtitle?q=%QUERY%',
+          wildcard: '%QUERY%',
+          filter: function(list) {
+            return $.map(list, function(company) {
+              return {
+                name: company.name
+              };
             });
-          },
-          minLength: 0,
-          select: function(event, ui) {
-            //log( "Selected: " + ui.item.value + " aka " + ui.item.id );
           }
-        });
+        }
+      });
 
-        $('#' + tableID).find("input[id^='c_prefix_title']").autocomplete({
-          source: function(request, response) {
-            var x = $(this.element).prop("id");
-            x = x.replace("c_prefix_title", "");
-            $.ajax({
-              url: '<?php echo base_url(); ?>/welcome/searchtitlev2_p',
-              dataType: "JSON",
-              data: {
-                term: request.term,
-                edu: $("#c_degree" + x).val()
-              },
-              success: function(data) {
-                response(data);
-              }
+
+      $('#' + tableID).find("input[id^='c_title']").typeahead(null, {
+        name: 'titles',
+        display: 'name',
+        source: titles,
+        hint: true,
+        highlight: true,
+        minLength: 2,
+        limit: Infinity,
+        templates: {}
+      });
+
+
+      /*$('#'+tableID).find("input[id^='c_cert_title']").autocomplete({
+      	source: function( request, response ) {
+      	var x = $(this.element).prop("id");
+      	x = x.replace("c_cert_title", "");
+      	$.ajax( {
+      	  url: '<?php echo base_url(); ?>/welcome/searchtitlev3',
+      	  dataType: "JSON",
+      	  data: {
+      		term: request.term
+      	  },
+      	  success: function( data ) {
+      	    response( data );
+      	  }
+      	} );},
+      	minLength: 0,
+      	select: function( event, ui ) {
+      		//log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+      	}
+      });*/
+
+    }
+
+    function addExp(tableID) {
+      var currentNumber = 1;
+      if ($('.exp-item').length > 0) {
+        currentNumber = $('.exp-item').last().data('id') + 1
+      }
+
+      $('#' + tableID).append(
+        '<tr class="row exp-item" data-id="' + currentNumber + '" >' +
+        '<td><table class="table" border="1" style="margin-left:5px;">'
+
+
+
+        +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-6 control-label">Perusahaan<span class="red"> *</span></label> ' +
+        '	</td>' +
+        '	<td class="col-md-6">' +
+        '	<input id="c_company' + currentNumber + '" name="c_company[]" type="text" placeholder="Perusahaan" class="form-control input-md" required="">' +
+        ' <input type="hidden" name="expid[]" id="expid' + currentNumber + '" value="" />' +
+        '	</td>' +
+        '<td class="td-action">' +
+        '<button type="button" class="btn btn-danger btn-xs exp-item-remove-button" data-id="' + currentNumber + '">' +
+        '<i class="fa fa-trash-o fa-fw"></i>X' +
+        '</button>' +
+        '</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-6 control-label">Jabatan/Tugas<span class="red"> *</span></label> ' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">' +
+        '	<input id="c_exptitle' + currentNumber + '" name="c_exptitle[]" type="text" placeholder="Jabatan/Tugas" class="form-control input-md" required="">' +
+        '	</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-6 control-label">Kabupaten/Kota<span class="red"> *</span></label>' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">' +
+        '	<input id="c_loc' + currentNumber + '" name="c_loc[]" type="text" placeholder="Lokasi" class="form-control input-md w400" required="" >' +
+        '	</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-6 control-label">Provinsi<span class="red"> *</span></label>' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">' +
+        '	<input id="c_provinsi' + currentNumber + '" name="c_provinsi[]" type="text" placeholder="Provinsi" class="form-control input-md w400" required="" >' +
+        '	</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-6 control-label">Negara<span class="red"> *</span></label>' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">' +
+        '	<input id="c_negara' + currentNumber + '" name="c_negara[]" type="text" placeholder="Negara" class="form-control input-md w400" required="" >' +
+        '	</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-6 control-label">Periode<span class="red"> *</span></label>  ' +
+        '	</td>' +
+        '	<td class="col-md-6" colspan="2">' +
+        '	<div class="col-md-3"  style="width: 180px;padding-left: 0px;">' +
+        '	<select id="c_typetimeperiod' + currentNumber + '" name="c_typetimeperiod[]" class="form-control input-md" required="">' +
+        '		<option value="">---</option>' +
+        '		<option value="1">Januari</option>' +
+        '		<option value="2">Pebruari</option>' +
+        '		<option value="3">Maret</option>' +
+        '		<option value="4">April</option>' +
+        '		<option value="5">Mei</option>' +
+        '		<option value="6">Juni</option>' +
+        '		<option value="7">Juli</option>' +
+        '		<option value="8">Agustus</option>' +
+        '		<option value="9">September</option>' +
+        '		<option value="10">Oktober</option>' +
+        '		<option value="11">Nopember</option>' +
+        '		<option value="12">Desember</option>' +
+        '	</select>' +
+        '	<input id="c_year' + currentNumber + '" name="c_year[]" type="text" placeholder="Year" class="form-control input-md number datepickeryear" required="">' +
+        '	</div>' +
+        '	<div class="col-md-1" id="is_presentwork1' + currentNumber + '">-</div>' +
+        '	<div class="col-md-3"  style="width: 180px;padding-left: 0px;" id="is_presentwork2' + currentNumber + '">' +
+        '	<select id="c_typetimeperiod2' + currentNumber + '" name="c_typetimeperiod2[]" class="form-control input-md">' +
+        '		<option value="">---</option>' +
+        '		<option value="1">Januari</option>' +
+        '		<option value="2">Pebruari</option>' +
+        '		<option value="3">Maret</option>' +
+        '		<option value="4">April</option>' +
+        '		<option value="5">Mei</option>' +
+        '		<option value="6">Juni</option>' +
+        '		<option value="7">Juli</option>' +
+        '		<option value="8">Agustus</option>' +
+        '		<option value="9">September</option>' +
+        '		<option value="10">Oktober</option>' +
+        '		<option value="11">Nopember</option>' +
+        '		<option value="12">Desember</option>' +
+        '	</select>' +
+        '	<input id="c_year2' + currentNumber + '" name="c_year2[]" type="text" placeholder="Year" class="form-control input-md number datepickeryear" >' +
+        '	</div>' +
+        '	</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-6 control-label"></label>  ' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">' +
+        '	<label class="form-check-label"><input type="checkbox" id="c_work' + currentNumber + '" name="c_work[]" class="form-check-input" value="1" data-id="' + currentNumber + '">Sampai saat ini</label>' +
+        '	</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-8 control-label">Nama Aktifitas/Kegiatan/Proyek</label>  ' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">' +
+        '		<textarea class="form-control" rows="5" id="c_actv' + currentNumber + '" name="c_actv[]"></textarea>' +
+        '	</td>' +
+        '</tr>' +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-8 control-label">Uraian Singkat Tugas dan Tanggung Jawab Profesional</label>  ' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">' +
+        '		<textarea class="form-control" rows="5" id="c_desc' + currentNumber + '" name="c_desc[]"></textarea>' +
+        '	</td>' +
+        '</tr>'
+
+        +
+        '<tr class="row">' +
+        '	<td class="col-md-4">' +
+        '		<label class="col-md-8 control-label">Dokumen pendukung <br /> <span class="red">(Max. 700KB, image atau PDF)</span></label>  ' +
+        '	</td>' +
+        '	<td class="col-md-8" colspan="2">' +
+        '		<div class="form-group">' +
+        '			<div id="avatarattexp' + currentNumber + '">' +
+        '			<input type="hidden" name="exp_image_url[]" value="" style="display: inline-block;">'
+
+        +
+        '			</div>' +
+        '			<div id="errUploadattexp' + currentNumber + '" class="red"></div>' +
+        '			<input type="file" name="attexp' + currentNumber + '" class="form-control input-md" id="attexp' + currentNumber + '" onchange="upload_exp(\'attexp' + currentNumber + '\')">' +
+        '		</div>' +
+        '	</td>' +
+        '</tr>'
+
+        +
+        '</table></td></tr>'
+      );
+
+      var titles = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+          cache: false,
+          url: '<?php echo base_url(); ?>/welcome/searchtitle?q=%QUERY%',
+          wildcard: '%QUERY%',
+          filter: function(list) {
+            return $.map(list, function(company) {
+              return {
+                name: company.name
+              };
             });
-          },
-          minLength: 0,
-          select: function(event, ui) {
-            //log( "Selected: " + ui.item.value + " aka " + ui.item.id );
           }
-        });
-
-        $('#' + tableID).find("select[id^='c_degree']").change(function(e) {
-          var c = ($(this).attr('id'));
-          c = c.replace("c_degree", "");
-
-          $("#c_title" + c).val('');
-          $("#c_prefix_title" + c).val('');
-        });
-
-      }
-
-      function addCert(tableID) {
-        var currentNumber = 1;
-        if ($('.cert-item').length > 0) {
-          currentNumber = $('.cert-item').last().data('id') + 1
         }
-
-        $('#' + tableID).append(
-          '<tr class="row cert-item" data-id="' + currentNumber + '" >' +
-          '<td><table class="table" border="1" style="margin-left:5px;">'
+      });
 
 
+      $('#' + tableID).find("input[id^='c_title']").typeahead(null, {
+        name: 'titles',
+        display: 'name',
+        source: titles,
+        hint: true,
+        highlight: true,
+        minLength: 2,
+        limit: Infinity,
+        templates: {}
+      });
 
-          +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-6 control-label">Nama Sertifikasi<span class="red"> *</span></label> ' +
-          '	</td>' +
-          '	<td class="col-md-6">' +
-          '	<input id="c_certname' + currentNumber + '" name="c_certname[]" type="text" placeholder="Nama Sertifikasi" class="form-control input-md" required="">' +
-          '<input type="hidden" name="certid[]" id="certid' + currentNumber + '" value="" />' +
-          '	</td>' +
-          '<td class="td-action">' +
-          '<button type="button" class="btn btn-danger btn-xs cert-item-remove-button" data-id="' + currentNumber + '">' +
-          '<i class="fa fa-trash-o fa-fw"></i>X' +
-          '</button>' +
-          '</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-6 control-label">Otoritas Sertifikasi<span class="red"> *</span></label> ' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">' +
-          '	<input id="c_certauth' + currentNumber + '" name="c_certauth[]" type="text" placeholder="Otoritas Sertifikasi" class="form-control input-md" required="">' +
-          '	</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-6 control-label">Nomor lisensi<span class="red"> *</span></label>' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">' +
-          '	<input id="c_lic' + currentNumber + '" name="c_lic[]" type="text" placeholder="Nomor lisensi" class="form-control input-md" required="">' +
-          '	</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-6 control-label">URL sertifikasi</label>  ' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">' +
-          '	<input id="c_url' + currentNumber + '" name="c_url[]" type="text" placeholder="URL sertifikasi" class="form-control input-md" >' +
-          '	</td>' +
-          '</tr>'
 
-          +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-3 control-label">Kualifikasi<span class="red"> *</span></label>  ' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">' +
-          '	<!--<b>Kualifikasi</b> (contoh: IPM.)<br />-->' +
-          '	<input id="c_cert_title' + currentNumber + '" name="c_cert_title[]" type="text" placeholder="Kualifikasi" class="form-control input-md w400" required=""  value="">' +
-          '	</td>' +
-          '</tr>'
 
-          +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-6 control-label">Tanggal<span class="red"> *</span></label>  ' +
-          '	</td>' +
-          '	<td class="col-md-6" colspan="2">' +
-          '	<div class="col-md-3" style="width: 180px;padding-left: 0px;">' +
-          '	<select id="c_certdate' + currentNumber + '" name="c_certdate[]" class="form-control input-md" required="">' +
-          '		<option value="">---</option>' +
-          '		<option value="1">Januari</option>' +
-          '		<option value="2">Pebruari</option>' +
-          '		<option value="3">Maret</option>' +
-          '		<option value="4">April</option>' +
-          '		<option value="5">Mei</option>' +
-          '		<option value="6">Juni</option>' +
-          '		<option value="7">Juli</option>' +
-          '		<option value="8">Agustus</option>' +
-          '		<option value="9">September</option>' +
-          '		<option value="10">Oktober</option>' +
-          '		<option value="11">Nopember</option>' +
-          '		<option value="12">Desember</option>' +
-          '	</select>' +
-          '	<input id="c_certyear' + currentNumber + '" name="c_certyear[]" type="text" placeholder="Year" class="form-control input-md number datepickeryear" required="">' +
-          '	</div>' +
-          '	<div class="col-md-1" id="is_presentcert1' + currentNumber + '">-</div>' +
-          '	<div class="col-md-3" id="is_presentcert2' + currentNumber + '" style="width: 180px;padding-left: 0px;">' +
-          '	<select id="c_certdate2' + currentNumber + '" name="c_certdate2[]" class="form-control input-md">' +
-          '		<option value="">---</option>' +
-          '		<option value="1">Januari</option>' +
-          '		<option value="2">Pebruari</option>' +
-          '		<option value="3">Maret</option>' +
-          '		<option value="4">April</option>' +
-          '		<option value="5">Mei</option>' +
-          '		<option value="6">Juni</option>' +
-          '		<option value="7">Juli</option>' +
-          '		<option value="8">Agustus</option>' +
-          '		<option value="9">September</option>' +
-          '		<option value="10">Oktober</option>' +
-          '		<option value="11">Nopember</option>' +
-          '		<option value="12">Desember</option>' +
-          '	</select>' +
-          '	<input id="c_certyear2' + currentNumber + '" name="c_certyear2[]" type="text" placeholder="Year" class="form-control input-md number datepickeryear" >' +
-          '	</div>' +
-          '	</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-6 control-label"></label>  ' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">' +
-          '	<label class="form-check-label"><input type="checkbox" id="c_certwork' + currentNumber + '" name="c_certwork[]" class="form-check-input" value="1" data-id="' + currentNumber + '">Sampai saat ini</label>' +
-          '	</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-6 control-label">Deskripsi</label>  ' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">' +
-          '		<textarea class="form-control" rows="5" id="c_certdesc' + currentNumber + '" name="c_certdesc[]"></textarea>' +
-          '	</td>' +
-          '</tr>'
 
-          +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-8 control-label">Dokumen pendukung <br /> <span class="red">(Max. 700KB, image atau PDF)</span></label>  ' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">' +
-          '		<div class="form-group">' +
-          '			<div id="avatarattcert' + currentNumber + '">' +
-          '			<input type="hidden" name="cert_image_url[]" value="" style="display: inline-block;">'
 
-          +
-          '			</div>' +
-          '			<div id="errUploadattcert' + currentNumber + '" class="red"></div>' +
-          '			<input type="file" name="attcert' + currentNumber + '" class="form-control input-md" id="attcert' + currentNumber + '" onchange="upload_cert(\'attcert' + currentNumber + '\')">' +
-          '		</div>' +
-          '	</td>' +
-          '</tr>'
 
-          +
-          '</table></td></tr>'
-        );
 
-        var titles = new Bloodhound({
-          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-          queryTokenizer: Bloodhound.tokenizers.whitespace,
-          remote: {
-            cache: false,
-            url: '<?php echo base_url(); ?>/welcome/searchtitle?q=%QUERY%',
-            wildcard: '%QUERY%',
-            filter: function(list) {
-              return $.map(list, function(company) {
-                return {
-                  name: company.name
-                };
-              });
-            }
+      var regions = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+          cache: false,
+          url: '<?php echo base_url(); ?>/welcome/searchregion?q=%QUERY%',
+          wildcard: '%QUERY%',
+          filter: function(list) {
+            return $.map(list, function(company) {
+              return {
+                name: company.name
+              };
+            });
           }
-        });
-
-
-        $('#' + tableID).find("input[id^='c_title']").typeahead(null, {
-          name: 'titles',
-          display: 'name',
-          source: titles,
-          hint: true,
-          highlight: true,
-          minLength: 2,
-          limit: Infinity,
-          templates: {}
-        });
-
-
-        /*$('#'+tableID).find("input[id^='c_cert_title']").autocomplete({
-        	source: function( request, response ) {
-        	var x = $(this.element).prop("id");
-        	x = x.replace("c_cert_title", "");
-        	$.ajax( {
-        	  url: '<?php echo base_url(); ?>/welcome/searchtitlev3',
-        	  dataType: "JSON",
-        	  data: {
-        		term: request.term
-        	  },
-        	  success: function( data ) {
-        	    response( data );
-        	  }
-        	} );},
-        	minLength: 0,
-        	select: function( event, ui ) {
-        		//log( "Selected: " + ui.item.value + " aka " + ui.item.id );
-        	}
-        });*/
-
-      }
-
-      function addExp(tableID) {
-        var currentNumber = 1;
-        if ($('.exp-item').length > 0) {
-          currentNumber = $('.exp-item').last().data('id') + 1
         }
-
-        $('#' + tableID).append(
-          '<tr class="row exp-item" data-id="' + currentNumber + '" >' +
-          '<td><table class="table" border="1" style="margin-left:5px;">'
-
-
-
-          +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-6 control-label">Perusahaan<span class="red"> *</span></label> ' +
-          '	</td>' +
-          '	<td class="col-md-6">' +
-          '	<input id="c_company' + currentNumber + '" name="c_company[]" type="text" placeholder="Perusahaan" class="form-control input-md" required="">' +
-          ' <input type="hidden" name="expid[]" id="expid' + currentNumber + '" value="" />' +
-          '	</td>' +
-          '<td class="td-action">' +
-          '<button type="button" class="btn btn-danger btn-xs exp-item-remove-button" data-id="' + currentNumber + '">' +
-          '<i class="fa fa-trash-o fa-fw"></i>X' +
-          '</button>' +
-          '</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-6 control-label">Jabatan/Tugas<span class="red"> *</span></label> ' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">' +
-          '	<input id="c_exptitle' + currentNumber + '" name="c_exptitle[]" type="text" placeholder="Jabatan/Tugas" class="form-control input-md" required="">' +
-          '	</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-6 control-label">Kabupaten/Kota<span class="red"> *</span></label>' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">' +
-          '	<input id="c_loc' + currentNumber + '" name="c_loc[]" type="text" placeholder="Lokasi" class="form-control input-md w400" required="" >' +
-          '	</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-6 control-label">Provinsi<span class="red"> *</span></label>' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">' +
-          '	<input id="c_provinsi' + currentNumber + '" name="c_provinsi[]" type="text" placeholder="Provinsi" class="form-control input-md w400" required="" >' +
-          '	</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-6 control-label">Negara<span class="red"> *</span></label>' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">' +
-          '	<input id="c_negara' + currentNumber + '" name="c_negara[]" type="text" placeholder="Negara" class="form-control input-md w400" required="" >' +
-          '	</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-6 control-label">Periode<span class="red"> *</span></label>  ' +
-          '	</td>' +
-          '	<td class="col-md-6" colspan="2">' +
-          '	<div class="col-md-3"  style="width: 180px;padding-left: 0px;">' +
-          '	<select id="c_typetimeperiod' + currentNumber + '" name="c_typetimeperiod[]" class="form-control input-md" required="">' +
-          '		<option value="">---</option>' +
-          '		<option value="1">Januari</option>' +
-          '		<option value="2">Pebruari</option>' +
-          '		<option value="3">Maret</option>' +
-          '		<option value="4">April</option>' +
-          '		<option value="5">Mei</option>' +
-          '		<option value="6">Juni</option>' +
-          '		<option value="7">Juli</option>' +
-          '		<option value="8">Agustus</option>' +
-          '		<option value="9">September</option>' +
-          '		<option value="10">Oktober</option>' +
-          '		<option value="11">Nopember</option>' +
-          '		<option value="12">Desember</option>' +
-          '	</select>' +
-          '	<input id="c_year' + currentNumber + '" name="c_year[]" type="text" placeholder="Year" class="form-control input-md number datepickeryear" required="">' +
-          '	</div>' +
-          '	<div class="col-md-1" id="is_presentwork1' + currentNumber + '">-</div>' +
-          '	<div class="col-md-3"  style="width: 180px;padding-left: 0px;" id="is_presentwork2' + currentNumber + '">' +
-          '	<select id="c_typetimeperiod2' + currentNumber + '" name="c_typetimeperiod2[]" class="form-control input-md">' +
-          '		<option value="">---</option>' +
-          '		<option value="1">Januari</option>' +
-          '		<option value="2">Pebruari</option>' +
-          '		<option value="3">Maret</option>' +
-          '		<option value="4">April</option>' +
-          '		<option value="5">Mei</option>' +
-          '		<option value="6">Juni</option>' +
-          '		<option value="7">Juli</option>' +
-          '		<option value="8">Agustus</option>' +
-          '		<option value="9">September</option>' +
-          '		<option value="10">Oktober</option>' +
-          '		<option value="11">Nopember</option>' +
-          '		<option value="12">Desember</option>' +
-          '	</select>' +
-          '	<input id="c_year2' + currentNumber + '" name="c_year2[]" type="text" placeholder="Year" class="form-control input-md number datepickeryear" >' +
-          '	</div>' +
-          '	</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-6 control-label"></label>  ' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">' +
-          '	<label class="form-check-label"><input type="checkbox" id="c_work' + currentNumber + '" name="c_work[]" class="form-check-input" value="1" data-id="' + currentNumber + '">Sampai saat ini</label>' +
-          '	</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-8 control-label">Nama Aktifitas/Kegiatan/Proyek</label>  ' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">' +
-          '		<textarea class="form-control" rows="5" id="c_actv' + currentNumber + '" name="c_actv[]"></textarea>' +
-          '	</td>' +
-          '</tr>' +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-8 control-label">Uraian Singkat Tugas dan Tanggung Jawab Profesional</label>  ' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">' +
-          '		<textarea class="form-control" rows="5" id="c_desc' + currentNumber + '" name="c_desc[]"></textarea>' +
-          '	</td>' +
-          '</tr>'
-
-          +
-          '<tr class="row">' +
-          '	<td class="col-md-4">' +
-          '		<label class="col-md-8 control-label">Dokumen pendukung <br /> <span class="red">(Max. 700KB, image atau PDF)</span></label>  ' +
-          '	</td>' +
-          '	<td class="col-md-8" colspan="2">' +
-          '		<div class="form-group">' +
-          '			<div id="avatarattexp' + currentNumber + '">' +
-          '			<input type="hidden" name="exp_image_url[]" value="" style="display: inline-block;">'
-
-          +
-          '			</div>' +
-          '			<div id="errUploadattexp' + currentNumber + '" class="red"></div>' +
-          '			<input type="file" name="attexp' + currentNumber + '" class="form-control input-md" id="attexp' + currentNumber + '" onchange="upload_exp(\'attexp' + currentNumber + '\')">' +
-          '		</div>' +
-          '	</td>' +
-          '</tr>'
-
-          +
-          '</table></td></tr>'
-        );
-
-        var titles = new Bloodhound({
-          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-          queryTokenizer: Bloodhound.tokenizers.whitespace,
-          remote: {
-            cache: false,
-            url: '<?php echo base_url(); ?>/welcome/searchtitle?q=%QUERY%',
-            wildcard: '%QUERY%',
-            filter: function(list) {
-              return $.map(list, function(company) {
-                return {
-                  name: company.name
-                };
-              });
-            }
-          }
-        });
-
-
-        $('#' + tableID).find("input[id^='c_title']").typeahead(null, {
-          name: 'titles',
-          display: 'name',
-          source: titles,
-          hint: true,
-          highlight: true,
-          minLength: 2,
-          limit: Infinity,
-          templates: {}
-        });
+      });
+      $('#' + tableID).find("input[id^='c_loc']").typeahead(null, {
+        name: 'regions',
+        display: 'name',
+        source: regions,
+        hint: true,
+        highlight: true,
+        minLength: 2,
+        limit: Infinity,
+        templates: {}
+      });
 
 
 
 
+    }
 
-
-
-        var regions = new Bloodhound({
-          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-          queryTokenizer: Bloodhound.tokenizers.whitespace,
-          remote: {
-            cache: false,
-            url: '<?php echo base_url(); ?>/welcome/searchregion?q=%QUERY%',
-            wildcard: '%QUERY%',
-            filter: function(list) {
-              return $.map(list, function(company) {
-                return {
-                  name: company.name
-                };
-              });
-            }
-          }
-        });
-        $('#' + tableID).find("input[id^='c_loc']").typeahead(null, {
-          name: 'regions',
-          display: 'name',
-          source: regions,
-          hint: true,
-          highlight: true,
-          minLength: 2,
-          limit: Infinity,
-          templates: {}
-        });
-
-
-
-
+    function addEmail(tableID) {
+      var currentNumber = 1;
+      if ($('.email-item').length > 0) {
+        currentNumber = $('.email-item').last().data('id') + 1
       }
 
-      function addEmail(tableID) {
-        var currentNumber = 1;
-        if ($('.email-item').length > 0) {
-          currentNumber = $('.email-item').last().data('id') + 1
+      $('#' + tableID).append(
+        '<tr class="row email-item" data-id="' + currentNumber + '" >' +
+        '<td><table class="table" style="margin-left:5px;">' +
+        '<tr class="row">' +
+        '<td class="col-md-4">' +
+        '<select id="typeemail' + currentNumber + '" name="typeemail[]" class="form-control input-md">' +
+        '<option value="">--Choose--</option>'
+        <?php
+        if (isset($m_email)) {
+          foreach ($m_email as $val) {
+        ?> +
+            '<option value="<?php echo $val->type; ?>" ><?php echo $val->desc; ?></option>'
+
+        <?php
+          }
         }
-
-        $('#' + tableID).append(
-          '<tr class="row email-item" data-id="' + currentNumber + '" >' +
-          '<td><table class="table" style="margin-left:5px;">' +
-          '<tr class="row">' +
-          '<td class="col-md-4">' +
-          '<select id="typeemail' + currentNumber + '" name="typeemail[]" class="form-control input-md">' +
-          '<option value="">--Choose--</option>'
-          <?php
-          if (isset($m_email)) {
-            foreach ($m_email as $val) {
-          ?> +
-              '<option value="<?php echo $val->type; ?>" ><?php echo $val->desc; ?></option>'
-
-          <?php
-            }
-          }
-          ?> +
-          '</select><input type="hidden" name="emailid[]" id="emailid' + currentNumber + '" value="" />' +
-          '</td>' +
-          '<td class="col-md-8">' +
-          '<input id="emailm' + currentNumber + '" name="emailm[]" type="text" placeholder="Email" class="form-control input-md">' +
-          '</td>' +
-          '<td class="td-action">' +
-          '<button type="button" class="btn btn-danger btn-xs email-item-remove-button" data-id="' + currentNumber + '">' +
-          '<i class="fa fa-trash-o fa-fw"></i>X' +
-          '</button>' +
-          '</td>' +
-          '</tr>' +
-          '</table></td></tr>'
-        );
+        ?> +
+        '</select><input type="hidden" name="emailid[]" id="emailid' + currentNumber + '" value="" />' +
+        '</td>' +
+        '<td class="col-md-8">' +
+        '<input id="emailm' + currentNumber + '" name="emailm[]" type="text" placeholder="Email" class="form-control input-md">' +
+        '</td>' +
+        '<td class="td-action">' +
+        '<button type="button" class="btn btn-danger btn-xs email-item-remove-button" data-id="' + currentNumber + '">' +
+        '<i class="fa fa-trash-o fa-fw"></i>X' +
+        '</button>' +
+        '</td>' +
+        '</tr>' +
+        '</table></td></tr>'
+      );
 
 
 
+    }
+
+    function addPhone(tableID) {
+      var currentNumber = 1;
+      if ($('.phone-item').length > 0) {
+        currentNumber = $('.phone-item').last().data('id') + 1
       }
 
-      function addPhone(tableID) {
-        var currentNumber = 1;
-        if ($('.phone-item').length > 0) {
-          currentNumber = $('.phone-item').last().data('id') + 1
+      $('#' + tableID).append(
+        '<tr class="row phone-item" data-id="' + currentNumber + '" >' +
+        '<td><table class="table" style="margin-left:5px;">' +
+        '<tr class="row">' +
+        '<td class="col-md-4">' +
+        '<select id="typephone' + currentNumber + '" name="typephone[]" class="form-control input-md">' +
+        '<option value="">--Choose--</option>'
+        <?php
+        if (isset($m_phone)) {
+          foreach ($m_phone as $val) {
+        ?> +
+            '<option value="<?php echo $val->type; ?>" ><?php echo $val->desc; ?></option>'
+
+        <?php
+          }
         }
+        ?> +
+        '</select><input type="hidden" name="phoneid[]" id="phoneid' + currentNumber + '" value="" />' +
+        '</td>' +
+        '<td class="col-md-8">' +
+        '<input id="phonem' + currentNumber + '" name="phonem[]" type="text" placeholder="Contoh +627911123456" class="form-control input-md w400" >' +
+        '</td>' +
+        '<td class="td-action">' +
+        '<button type="button" class="btn btn-danger btn-xs phone-item-remove-button" data-id="' + currentNumber + '">' +
+        '<i class="fa fa-trash-o fa-fw"></i>X' +
+        '</button>' +
+        '</td>' +
+        '</tr>' +
+        '</table></td></tr>'
+      );
 
-        $('#' + tableID).append(
-          '<tr class="row phone-item" data-id="' + currentNumber + '" >' +
-          '<td><table class="table" style="margin-left:5px;">' +
-          '<tr class="row">' +
-          '<td class="col-md-4">' +
-          '<select id="typephone' + currentNumber + '" name="typephone[]" class="form-control input-md">' +
-          '<option value="">--Choose--</option>'
-          <?php
-          if (isset($m_phone)) {
-            foreach ($m_phone as $val) {
-          ?> +
-              '<option value="<?php echo $val->type; ?>" ><?php echo $val->desc; ?></option>'
+      var input = document.querySelector("#phonem" + currentNumber);
+      window.intlTelInput(input, {
+        autoHideDialCode: true,
+        nationalMode: false,
+        preferredCountries: ['id'],
+        utilsScript: "<?php echo base_url(); ?>assets/ada/phone/js/utils.js",
+      });
 
-          <?php
-            }
+      document.getElementById('phonem' + currentNumber).addEventListener('input', function() {
+        let start = this.selectionStart;
+        let end = this.selectionEnd;
+
+        const current = this.value
+        const corrected = current.replace(/[^-+\d]/g, '');
+        this.value = corrected;
+
+        if (corrected.length < current.length) --end;
+        this.setSelectionRange(start, end);
+      });
+
+    }
+
+    function tohome() {
+      window.location.href = '<?php echo base_url(); ?>/member/profile';
+    }
+
+    $(document).ready(function() {
+      var regions = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+          url: '<?php echo base_url(); ?>/welcome/searchregion?q=%QUERY%',
+          wildcard: '%QUERY%',
+          filter: function(list) {
+            return $.map(list, function(company) {
+              return {
+                name: company.name
+              };
+            });
           }
-          ?> +
-          '</select><input type="hidden" name="phoneid[]" id="phoneid' + currentNumber + '" value="" />' +
-          '</td>' +
-          '<td class="col-md-8">' +
-          '<input id="phonem' + currentNumber + '" name="phonem[]" type="text" placeholder="Contoh +627911123456" class="form-control input-md w400" >' +
-          '</td>' +
-          '<td class="td-action">' +
-          '<button type="button" class="btn btn-danger btn-xs phone-item-remove-button" data-id="' + currentNumber + '">' +
-          '<i class="fa fa-trash-o fa-fw"></i>X' +
-          '</button>' +
-          '</td>' +
-          '</tr>' +
-          '</table></td></tr>'
-        );
-
-        var input = document.querySelector("#phonem" + currentNumber);
-        window.intlTelInput(input, {
-          autoHideDialCode: true,
-          nationalMode: false,
-          preferredCountries: ['id'],
-          utilsScript: "<?php echo base_url(); ?>assets/ada/phone/js/utils.js",
-        });
-
-        document.getElementById('phonem' + currentNumber).addEventListener('input', function() {
-          let start = this.selectionStart;
-          let end = this.selectionEnd;
-
-          const current = this.value
-          const corrected = current.replace(/[^-+\d]/g, '');
-          this.value = corrected;
-
-          if (corrected.length < current.length) --end;
-          this.setSelectionRange(start, end);
-        });
-
-      }
-
-      function tohome() {
-        window.location.href = '<?php echo base_url(); ?>/member/profile';
-      }
-
-      $(document).ready(function() {
-        var regions = new Bloodhound({
-          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-          queryTokenizer: Bloodhound.tokenizers.whitespace,
-          remote: {
-            url: '<?php echo base_url(); ?>/welcome/searchregion?q=%QUERY%',
-            wildcard: '%QUERY%',
-            filter: function(list) {
-              return $.map(list, function(company) {
-                return {
-                  name: company.name
-                };
-              });
-            }
+        }
+      });
+      var provinces = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+          cache: false,
+          url: '<?php echo base_url(); ?>/welcome/searchprovince?q=%QUERY%',
+          wildcard: '%QUERY%',
+          filter: function(list) {
+            return $.map(list, function(company) {
+              return {
+                name: company.name
+              };
+            });
           }
-        });
-        var provinces = new Bloodhound({
-          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-          queryTokenizer: Bloodhound.tokenizers.whitespace,
-          remote: {
-            cache: false,
-            url: '<?php echo base_url(); ?>/welcome/searchprovince?q=%QUERY%',
-            wildcard: '%QUERY%',
-            filter: function(list) {
-              return $.map(list, function(company) {
-                return {
-                  name: company.name
-                };
-              });
-            }
+        }
+      });
+      /*var titles = new Bloodhound({
+      	datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+      	queryTokenizer: Bloodhound.tokenizers.whitespace,
+      	remote: {
+      		cache: false,
+      		url: '<?php echo base_url(); ?>/welcome/searchtitle?q=%QUERY%',
+      		wildcard: '%QUERY%',
+      		filter: function(list) {
+      			return $.map(list, function(company) {
+      				return { name: company.name };
+      			});
+      		}
+      	}
+      });*/
+      var kodepos = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+          cache: false,
+          url: '<?php echo base_url(); ?>/welcome/searchzipcode?q=%QUERY%',
+          wildcard: '%QUERY%',
+          filter: function(list) {
+            return $.map(list, function(company) {
+              return {
+                name: company.name
+              };
+            });
           }
-        });
-        /*var titles = new Bloodhound({
-        	datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-        	queryTokenizer: Bloodhound.tokenizers.whitespace,
-        	remote: {
-        		cache: false,
-        		url: '<?php echo base_url(); ?>/welcome/searchtitle?q=%QUERY%',
-        		wildcard: '%QUERY%',
-        		filter: function(list) {
-        			return $.map(list, function(company) {
-        				return { name: company.name };
-        			});
-        		}
-        	}
-        });*/
-        var kodepos = new Bloodhound({
-          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-          queryTokenizer: Bloodhound.tokenizers.whitespace,
-          remote: {
-            cache: false,
-            url: '<?php echo base_url(); ?>/welcome/searchzipcode?q=%QUERY%',
-            wildcard: '%QUERY%',
-            filter: function(list) {
-              return $.map(list, function(company) {
-                return {
-                  name: company.name
-                };
-              });
-            }
-          }
-        });
+        }
+      });
 
-        $('#birthplace').typeahead(null, {
-          name: 'regions',
-          display: 'name',
-          source: regions,
-          hint: true,
-          highlight: true,
-          minLength: 2,
-          limit: Infinity,
-          templates: {
-            /*empty: [
-                '<div class="tt-empty-message">',
-                    'No Companies matched your input',
-                '</div>'
-            ].join('\n'),*/
-          }
-        });
+      $('#birthplace').typeahead(null, {
+        name: 'regions',
+        display: 'name',
+        source: regions,
+        hint: true,
+        highlight: true,
+        minLength: 2,
+        limit: Infinity,
+        templates: {
+          /*empty: [
+              '<div class="tt-empty-message">',
+                  'No Companies matched your input',
+              '</div>'
+          ].join('\n'),*/
+        }
+      });
 
-        /*$("input[id^='c_title']").typeahead(null, {
+      /*$("input[id^='c_title']").typeahead(null, {
             name: 'titles',
             display: 'name',
             source: titles,
@@ -3189,1540 +3261,1544 @@
             }
         });*/
 
-        $("input[id^='c_title']").autocomplete({
-          source: function(request, response) {
-            var x = $(this.element).prop("id");
-            x = x.replace("c_title", "");
-            $.ajax({
-              url: '<?php echo base_url(); ?>/welcome/searchtitlev2_s',
-              dataType: "JSON",
-              data: {
-                term: request.term,
-                edu: $("#c_degree" + x).val()
-              },
-              success: function(data) {
-                response(data);
-              }
-            });
-          },
-          minLength: 0,
-          select: function(event, ui) {
-            //log( "Selected: " + ui.item.value + " aka " + ui.item.id );
-          }
-        });
-
-        $("input[id^='c_prefix_title']").autocomplete({
-          source: function(request, response) {
-            var x = $(this.element).prop("id");
-            x = x.replace("c_prefix_title", "");
-            $.ajax({
-              url: '<?php echo base_url(); ?>/welcome/searchtitlev2_p',
-              dataType: "JSON",
-              data: {
-                term: request.term,
-                edu: $("#c_degree" + x).val()
-              },
-              success: function(data) {
-                response(data);
-              }
-            });
-          },
-          minLength: 0,
-          select: function(event, ui) {
-            //log( "Selected: " + ui.item.value + " aka " + ui.item.id );
-          }
-        });
-
-        $("input[id^='c_loc']").typeahead(null, {
-          name: 'regions',
-          display: 'name',
-          source: regions,
-          hint: true,
-          highlight: true,
-          minLength: 2,
-          limit: Infinity,
-          templates: {
-            /*empty: [
-                '<div class="tt-empty-message">',
-                    'No Companies matched your input',
-                '</div>'
-            ].join('\n'),*/
-          }
-        });
-
-
-        /*$( "input[id^='c_cert_title']" ).autocomplete({
-        	source: function( request, response ) {
-        	var x = $(this.element).prop("id");
-        	x = x.replace("c_cert_title", "");
-        	$.ajax( {
-        	  url: '<?php echo base_url(); ?>/welcome/searchtitlev3',
-        	  dataType: "JSON",
-        	  data: {
-        		term: request.term
-        	  },
-        	  success: function( data ) {
-        	    response( data );
-        	  }
-        	} );},
-        	minLength: 0,
-        	select: function( event, ui ) {
-        		//log( "Selected: " + ui.item.value + " aka " + ui.item.id );
-        	}
-        });*/
-
-
-        //Address
-
-        $(document).on('click', '.address-item-remove-button', function() {
-          var changeConfirmation = confirm("Apakah anda yakin ingin menghapus?");
-          if (changeConfirmation) {
-            var targetId = $(this).data('id');
-            if (targetId != '1') {
-              var addressid = $('#addressid' + targetId).val();
-              if (addressid != '') {
-                $.ajax({
-                  url: '<?php echo site_url('member/del_address') ?>',
-                  dataType: "html",
-                  type: "POST",
-                  async: true, //false
-                  data: {
-                    id: addressid
-                  },
-                  success: function(jsonObject, status) {
-                    console.log(jsonObject);
-                    if ((jsonObject != 'not valid')) {
-                      dataHTML = jsonObject;
-                    }
-
-                    if (dataHTML == 'not valid')
-                      alert('not valid');
-                  }
-                });
-
-              }
-              $('.address-item[data-id="' + targetId + '"]').remove();
-            }
-
-
-          } else {
-            return false;
-          }
-        });
-
-        $(document).on('click', '.school-item-remove-button', function() {
-          var changeConfirmation = confirm("Apakah anda yakin ingin menghapus?");
-          if (changeConfirmation) {
-            var targetId = $(this).data('id');
-            if (targetId != '1') {
-              var schoolid = $('#schoolid' + targetId).val();
-              if (schoolid != '') {
-                $.ajax({
-                  url: '<?php echo site_url('member/del_edu') ?>',
-                  dataType: "html",
-                  type: "POST",
-                  async: true, //false
-                  data: {
-                    id: schoolid
-                  },
-                  success: function(jsonObject, status) {
-                    console.log(jsonObject);
-                    if ((jsonObject != 'not valid')) {
-                      dataHTML = jsonObject;
-                    }
-
-                    if (dataHTML == 'not valid')
-                      alert('not valid');
-                  }
-                });
-
-              }
-              $('.school-item[data-id="' + targetId + '"]').remove();
-            }
-          } else {
-            return false;
-          }
-        });
-
-        $(document).on('click', '.cert-item-remove-button', function() {
-          var changeConfirmation = confirm("Apakah anda yakin ingin menghapus?");
-          if (changeConfirmation) {
-            var targetId = $(this).data('id');
-            if (targetId != '1') {
-              var certid = $('#certid' + targetId).val();
-              if (certid != '') {
-                $.ajax({
-                  url: '<?php echo site_url('member/del_cert') ?>',
-                  dataType: "html",
-                  type: "POST",
-                  async: true, //false
-                  data: {
-                    id: certid
-                  },
-                  success: function(jsonObject, status) {
-                    console.log(jsonObject);
-                    if ((jsonObject != 'not valid')) {
-                      dataHTML = jsonObject;
-                    }
-
-                    if (dataHTML == 'not valid')
-                      alert('not valid');
-                  }
-                });
-
-              }
-              $('.cert-item[data-id="' + targetId + '"]').remove();
-            }
-
-          } else {
-            return false;
-          }
-
-
-        });
-
-        $(document).on('click', '.exp-item-remove-button', function() {
-          var changeConfirmation = confirm("Apakah anda yakin ingin menghapus?");
-          if (changeConfirmation) {
-            var targetId = $(this).data('id');
-            if (targetId != '1') {
-              var expid = $('#expid' + targetId).val();
-              if (expid != '') {
-                $.ajax({
-                  url: '<?php echo site_url('member/del_exp') ?>',
-                  dataType: "html",
-                  type: "POST",
-                  async: true, //false
-                  data: {
-                    id: expid
-                  },
-                  success: function(jsonObject, status) {
-                    console.log(jsonObject);
-                    if ((jsonObject != 'not valid')) {
-                      dataHTML = jsonObject;
-                    }
-
-                    if (dataHTML == 'not valid')
-                      alert('not valid');
-                  }
-                });
-
-              }
-              $('.exp-item[data-id="' + targetId + '"]').remove();
-            }
-          } else {
-            return false;
-          }
-
-        });
-
-
-        $(document).on('click', '.email-item-remove-button', function() {
-          var changeConfirmation = confirm("Apakah anda yakin ingin menghapus?");
-          if (changeConfirmation) {
-            var targetId = $(this).data('id');
-            if (targetId != '1') {
-              var emailid = $('#emailid' + targetId).val();
-              if (emailid != '') {
-                $.ajax({
-                  url: '<?php echo site_url('member/del_email') ?>',
-                  dataType: "html",
-                  type: "POST",
-                  async: true, //false
-                  data: {
-                    id: emailid
-                  },
-                  success: function(jsonObject, status) {
-                    console.log(jsonObject);
-                    if ((jsonObject != 'not valid')) {
-                      dataHTML = jsonObject;
-                    }
-
-                    if (dataHTML == 'not valid')
-                      alert('not valid');
-                  }
-                });
-
-              }
-              $('.email-item[data-id="' + targetId + '"]').remove();
-            }
-
-
-          } else {
-            return false;
-          }
-        });
-
-        $(document).on('click', '.phone-item-remove-button', function() {
-          var changeConfirmation = confirm("Apakah anda yakin ingin menghapus?");
-          if (changeConfirmation) {
-            var targetId = $(this).data('id');
-            if (targetId != '1') {
-              var phoneid = $('#phoneid' + targetId).val();
-              if (phoneid != '') {
-                $.ajax({
-                  url: '<?php echo site_url('member/del_phone') ?>',
-                  dataType: "html",
-                  type: "POST",
-                  async: true, //false
-                  data: {
-                    id: phoneid
-                  },
-                  success: function(jsonObject, status) {
-                    console.log(jsonObject);
-                    if ((jsonObject != 'not valid')) {
-                      dataHTML = jsonObject;
-                    }
-
-                    if (dataHTML == 'not valid')
-                      alert('not valid');
-                  }
-                });
-
-              }
-              $('.phone-item[data-id="' + targetId + '"]').remove();
-            }
-
-
-          } else {
-            return false;
-          }
-        });
-
-
-        $(document).on('click', "input[id^='c_certwork']", function() {
-          //alert('a');
-          //var a = document.getElementById("c_certwork").checked;
-
-          var a = $(this).is(':checked');
-          var targetId = $(this).attr('data-id');
-          var temp = "";
-          if (targetId != 1)
-            temp = targetId;
-
-          if (a == true) {
-            $('#is_presentcert1' + temp).css('display', 'none');
-            $('#is_presentcert2' + temp).css('display', 'none');
-          } else {
-            $('#is_presentcert1' + temp).css('display', 'block');
-            $('#is_presentcert2' + temp).css('display', 'block');
-          }
-        });
-
-        $(document).on('click', "input[id^='c_work']", function() {
-          //alert('a');
-          //var a = document.getElementById("c_certwork").checked;
-
-          var a = $(this).is(':checked');
-          var targetId = $(this).attr('data-id');
-          var temp = "";
-          if (targetId != 1)
-            temp = targetId;
-
-          if (a == true) {
-            $('#is_presentwork1' + temp).css('display', 'none');
-            $('#is_presentwork2' + temp).css('display', 'none');
-          } else {
-            $('#is_presentwork1' + temp).css('display', 'block');
-            $('#is_presentwork2' + temp).css('display', 'block');
-          }
-        });
-
-        $("input[id^='addresscity']").typeahead(null, {
-          name: 'regions',
-          display: 'name',
-          source: regions,
-          limit: 10,
-          minLength: 0,
-          templates: {
-            /*empty: [
-                '<div class="tt-empty-message">',
-                    'No Companies matched your input',
-                '</div>'
-            ].join('\n'),*/
-          }
-        }).bind('change blur', function() {
-          var text = $(this).val();
-          var id = $(this).prop('id');
-          id = id.replace("city", "province");
-
+      $("input[id^='c_title']").autocomplete({
+        source: function(request, response) {
+          var x = $(this.element).prop("id");
+          x = x.replace("c_title", "");
           $.ajax({
-            url: "<?php echo base_url(); ?>welcome/fxsearchprovince?q=" + text,
-            success: function(result) {
-
-              if (result != "false") {
-                var x = JSON.parse(result);
-                $('#' + id).val(x[0].name);
-                //console.log($('#'+id));
-              }
-              //else updateTotalEstimatedChargeByFlag(text);
-              //console.log(result);
+            url: '<?php echo base_url(); ?>/welcome/searchtitlev2_s',
+            dataType: "JSON",
+            data: {
+              term: request.term,
+              edu: $("#c_degree" + x).val()
+            },
+            success: function(data) {
+              response(data);
             }
           });
+        },
+        minLength: 0,
+        select: function(event, ui) {
+          //log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+        }
+      });
 
-
-        });
-
-        $("input[id^='addressprovince']").typeahead(null, {
-          name: 'provinces',
-          display: 'name',
-          source: provinces,
-          limit: 10,
-          minLength: 0,
-          templates: {
-            /*empty: [
-                '<div class="tt-empty-message">',
-                    'No Companies matched your input',
-                '</div>'
-            ].join('\n'),*/
-          }
-        });
-
-        $("input[id^='addresszip']").typeahead(null, {
-          name: 'kodepos',
-          display: 'name',
-          source: kodepos,
-          limit: 10,
-          minLength: 0,
-          templates: {
-            /*empty: [
-                '<div class="tt-empty-message">',
-                    'No Companies matched your input',
-                '</div>'
-            ].join('\n'),*/
-          }
-        }).bind('change blur', function() {
-          var text = $(this).val();
-          var id = $(this).prop('id');
-          var city = id.replace("zip", "city");
-          var province = id.replace("zip", "province");
-
+      $("input[id^='c_prefix_title']").autocomplete({
+        source: function(request, response) {
+          var x = $(this.element).prop("id");
+          x = x.replace("c_prefix_title", "");
           $.ajax({
-            url: "<?php echo base_url(); ?>welcome/fxsearchcityprovincebyzip?q=" + text,
-            success: function(result) {
-
-              if (result != "false") {
-                var x = JSON.parse(result);
-                $('#' + city).val(x[0].city);
-                $('#' + province).val(x[0].province);
-                //console.log(x);
-              }
+            url: '<?php echo base_url(); ?>/welcome/searchtitlev2_p',
+            dataType: "JSON",
+            data: {
+              term: request.term,
+              edu: $("#c_degree" + x).val()
+            },
+            success: function(data) {
+              response(data);
             }
           });
+        },
+        minLength: 0,
+        select: function(event, ui) {
+          //log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+        }
+      });
+
+      $("input[id^='c_loc']").typeahead(null, {
+        name: 'regions',
+        display: 'name',
+        source: regions,
+        hint: true,
+        highlight: true,
+        minLength: 2,
+        limit: Infinity,
+        templates: {
+          /*empty: [
+              '<div class="tt-empty-message">',
+                  'No Companies matched your input',
+              '</div>'
+          ].join('\n'),*/
+        }
+      });
 
 
-        });
+      /*$( "input[id^='c_cert_title']" ).autocomplete({
+      	source: function( request, response ) {
+      	var x = $(this.element).prop("id");
+      	x = x.replace("c_cert_title", "");
+      	$.ajax( {
+      	  url: '<?php echo base_url(); ?>/welcome/searchtitlev3',
+      	  dataType: "JSON",
+      	  data: {
+      		term: request.term
+      	  },
+      	  success: function( data ) {
+      	    response( data );
+      	  }
+      	} );},
+      	minLength: 0,
+      	select: function( event, ui ) {
+      		//log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+      	}
+      });*/
 
-        $("select[id^='c_degree']").change(function(e) {
-          var c = ($(this).attr('id'));
-          c = c.replace("c_degree", "");
 
-          $("#c_title" + c).val('');
-          $("#c_prefix_title" + c).val('');
-        });
+      //Address
 
-        $('#editprofile').click(function(e) {
-          var valid = true;
-          var email = "";
+      $(document).on('click', '.address-item-remove-button', function() {
+        var changeConfirmation = confirm("Apakah anda yakin ingin menghapus?");
+        if (changeConfirmation) {
+          var targetId = $(this).data('id');
+          if (targetId != '1') {
+            var addressid = $('#addressid' + targetId).val();
+            if (addressid != '') {
+              $.ajax({
+                url: '<?php echo site_url('member/del_address') ?>',
+                dataType: "html",
+                type: "POST",
+                async: true, //false
+                data: {
+                  id: addressid
+                },
+                success: function(jsonObject, status) {
+                  console.log(jsonObject);
+                  if ((jsonObject != 'not valid')) {
+                    dataHTML = jsonObject;
+                  }
 
-          var fn = $('#fn');
-          var ln = $('#ln');
-          var gender = $('input[name="gender"]:checked').val(); // $('#c_work');
-          var warga_asing = $('input[name="warga_asing"]:checked').val();
-          var phone = $('#phone');
-          var birthplace = $('#birthplace');
-          var dob = $('#dob');
-          var typeid = $('input[name="typeid"]:checked').val();
-          var idnumber = $('#idnumber');
-          var website = $('#website');
-          var desc = $('#desc');
-          var is_public = document.getElementById("is_public").checked;
-          var is_datasend = document.getElementById("is_datasend").checked;
-
-          var email = document.getElementsByName('email[]');
-          var typeaddress = document.getElementsByName('typeaddress[]');
-          var address = document.getElementsByName('address[]');
-          var addressphone = document.getElementsByName('addressphone[]');
-          var addresscity = document.getElementsByName('addresscity[]');
-          var addressprovince = document.getElementsByName('addressprovince[]');
-          var addresszip = document.getElementsByName('addresszip[]');
-          var addressid = document.getElementsByName('addressid[]');
-          var mailingaddr = $('input[name="mailingaddr"]:checked').val();
-
-          var typephone = document.getElementsByName('typephone[]');
-          var phonem = document.getElementsByName('phonem[]');
-          var phoneid = document.getElementsByName('phoneid[]');
-
-          var typeemail = document.getElementsByName('typeemail[]');
-          var emailm = document.getElementsByName('emailm[]');
-          var emailid = document.getElementsByName('emailid[]');
-
-          /*for(key=0; key < addressphone.length; key++)  {
-          	if(addressphone[key].value == '')
-          	valid = false;
-          }
-          for(key=0; key < email.length; key++)  {
-          	if(email[key].value == '')
-          	valid = false;
-          }*/
-          for (key = 0; key < typeaddress.length; key++) {
-            if (typeaddress[key].value == '')
-              valid = false;
-          }
-          for (key = 0; key < address.length; key++) {
-            if (address[key].value == '')
-              valid = false;
-          }
-          for (key = 0; key < addressprovince.length; key++) {
-            if (addressprovince[key].value == '')
-              valid = false;
-          }
-          for (key = 0; key < addresscity.length; key++) {
-            if (addresscity[key].value == '')
-              valid = false;
-          }
-          for (key = 0; key < addresszip.length; key++) {
-            if (addresszip[key].value == '')
-              valid = false;
-          }
-          //custom
-          for (key = 0; key < email.length; key++) {
-            if (email[key].value != '' && isEmail(email[key].value) == false) {
-              alert('email not valid');
-              return false;
-            }
-          }
-          for (key = 0; key < addresszip.length; key++) {
-            if (addresszip[key].value != '' && isNumeric(addresszip[key].value) == false) {
-              alert('zip code not valid');
-              return false;
-            }
-          }
-
-          /*for(key=0; key < typephone.length; key++)  {
-          	if(typephone[key].value == '')
-          	valid = false;
-          }
-          for(key=0; key < phonem.length; key++)  {
-          	if(phonem[key].value == '')
-          	valid = false;
-          }
-          for(key=0; key < typeemail.length; key++)  {
-          	if(typeemail[key].value == '')
-          	valid = false;
-          }
-          for(key=0; key < emailm.length; key++)  {
-          	if(emailm[key].value == '')
-          	valid = false;
-          }*/
-
-          if (fn.val() != '' && phone.val() != '' && (idnumber.val()).trim() != '' && typeid != '' && dob.val() != '' && gender != '' && birthplace.val() != '' && mailingaddr != '' && valid == true) {
-            e.preventDefault();
-
-            var addressphonex = $('input[name="addressphone[]"]').map(function() {
-              return this.value;
-            }).get();
-            var emailx = $('input[name="email[]"]').map(function() {
-              return this.value;
-            }).get();
-            var typeaddressx = $('select[name="typeaddress[]"]').map(function() {
-              return this.value;
-            }).get();
-            var addressx = $('input[name="address[]"]').map(function() {
-              return this.value;
-            }).get();
-            var addresscityx = $('input[name="addresscity[]"]').map(function() {
-              return this.value;
-            }).get();
-            var addressprovincex = $('input[name="addressprovince[]"]').map(function() {
-              return this.value;
-            }).get();
-            var addresszipx = $('input[name="addresszip[]"]').map(function() {
-              return this.value;
-            }).get();
-            var addressidx = $('input[name="addressid[]"]').map(function() {
-              return this.value;
-            }).get();
-
-            var typephonex = $('select[name="typephone[]"]').map(function() {
-              return this.value;
-            }).get();
-            var phonemx = $('input[name="phonem[]"]').map(function() {
-              return this.value;
-            }).get();
-            var phoneidx = $('input[name="phoneid[]"]').map(function() {
-              return this.value;
-            }).get();
-
-            var typeemailx = $('select[name="typeemail[]"]').map(function() {
-              return this.value;
-            }).get();
-            var emailmx = $('input[name="emailm[]"]').map(function() {
-              return this.value;
-            }).get();
-            var emailidx = $('input[name="emailid[]"]').map(function() {
-              return this.value;
-            }).get();
-
-            var dataHTML = 'not valid';
-
-            $.ajax({
-              url: '<?php echo site_url('member/edit_profile') ?>',
-              dataType: "html",
-              type: "POST",
-              async: true, //false
-              data: {
-                fn: fn.val(),
-                ln: ln.val(),
-                phone: phone.val(),
-                dob: dob.val(),
-                website: website.val(),
-                desc: desc.val(),
-                is_public: is_public,
-                is_datasend: is_datasend,
-                gender: gender,
-                warga_asing: warga_asing,
-                birthplace: birthplace.val(),
-                typeid: typeid,
-                idnumber: idnumber.val(),
-                mailingaddr: mailingaddr,
-                'addressphone[]': addressphonex,
-                'email[]': emailx,
-                'typeaddress[]': typeaddressx,
-                'address[]': addressx,
-                'addresscity[]': addresscityx,
-                'addressprovince[]': addressprovincex,
-                'addresszip[]': addresszipx,
-                'addressid[]': addressidx,
-                'typeemail[]': typeemailx,
-                'typephone[]': typephonex,
-                'emailm[]': emailmx,
-                'phonem[]': phonemx,
-                'emailid[]': emailidx,
-                'phoneid[]': phoneidx
-              },
-              success: function(jsonObject, status) {
-                console.log(jsonObject);
-                if ((jsonObject != 'not valid')) {
-                  dataHTML = jsonObject;
+                  if (dataHTML == 'not valid')
+                    alert('not valid');
                 }
+              });
 
-                if (dataHTML == 'not valid')
-                  alert('Please filled required field');
-              }
-            });
-
-
-          } else {
-            alert('Please filled required field');
-          }
-        });
-
-        $('#editschool').click(function(e) {
-          var valid = true;
-
-          var c_school_type = document.getElementsByName('c_school_type[]');
-          var c_school = document.getElementsByName('c_school[]');
-          var c_dateattendstart = document.getElementsByName('c_dateattendstart[]');
-          var c_dateattendend = document.getElementsByName('c_dateattendend[]');
-          var c_degree = document.getElementsByName('c_degree[]');
-          var c_mayor = document.getElementsByName('c_mayor[]');
-          var c_fos = document.getElementsByName('c_fos[]');
-          var c_score = document.getElementsByName('c_score[]');
-          var c_title = document.getElementsByName('c_title[]');
-          var c_prefix_title = document.getElementsByName('c_prefix_title[]');
-          var c_actv = document.getElementsByName('c_actv[]');
-          var c_descedu = document.getElementsByName('c_descedu[]');
-          var schoolid = document.getElementsByName('schoolid[]');
-          var edu_image_url = document.getElementsByName('edu_image_url[]');
-
-          //Cert
-          var c_certname = document.getElementsByName('c_certname[]');
-          var c_certauth = document.getElementsByName('c_certauth[]');
-          var c_lic = document.getElementsByName('c_lic[]');
-          var c_url = document.getElementsByName('c_url[]');
-          var c_cert_title = document.getElementsByName('c_cert_title[]');
-          var c_certdate = document.getElementsByName('c_certdate[]');
-          var c_certyear = document.getElementsByName('c_certyear[]');
-          var c_certdate2 = document.getElementsByName('c_certdate2[]');
-          var c_certyear2 = document.getElementsByName('c_certyear2[]');
-          var c_certwork = document.getElementsByName('c_certwork[]');
-          var c_certdesc = document.getElementsByName('c_certdesc[]');
-          var certid = document.getElementsByName('certid[]');
-          var cert_image_url = document.getElementsByName('cert_image_url[]');
-
-          //console.log(addressphone);
-          for (key = 0; key < c_school_type.length; key++) {
-            if (c_school_type[key].value == '')
-              valid = false;
-          }
-          for (key = 0; key < c_school.length; key++) {
-            if (c_school[key].value == '')
-              valid = false;
-          }
-          for (key = 0; key < c_dateattendstart.length; key++) {
-            if (c_dateattendstart[key].value == '')
-              valid = false;
-          }
-          for (key = 0; key < c_dateattendend.length; key++) {
-            if (c_dateattendend[key].value == '')
-              valid = false;
-          }
-          /*for(key=0; key < c_degree.length; key++)  {
-          	if(c_degree[key].value == '')
-          	valid = false;
-          }
-          for(key=0; key < c_mayor.length; key++)  {
-          	if(c_mayor[key].value == '')
-          	valid = false;
-          }*/
-          for (key = 0; key < c_fos.length; key++) {
-            if (c_fos[key].value == '')
-              valid = false;
-          }
-
-
-          for (key = 0; key < c_score.length; key++) {
-            if (c_score[key].value == '' && c_school_type[key].value == '1')
-              valid = false;
-          }
-
-          /*for(key=0; key < c_title.length; key++)  {
-          	if(c_title[key].value == '')
-          	valid = false;
-          }*/
-
-
-          //custom
-          for (key = 0; key < c_dateattendstart.length; key++) {
-            if (c_dateattendstart[key].value != '' && isNumeric(c_dateattendstart[key].value) == false) {
-              alert('Tanggal tidak valid');
-              return false;
             }
-          }
-          for (key = 0; key < c_dateattendend.length; key++) {
-            if (c_dateattendend[key].value != '' && isNumeric(c_dateattendend[key].value) == false) {
-              alert('Tanggal tidak valid');
-              return false;
-            }
-          }
-          for (key = 0; key < c_dateattendstart.length; key++) {
-            if (c_dateattendstart[key].value != '' && isNumeric(c_dateattendstart[key].value) == true && c_dateattendend[key].value != '' && isNumeric(c_dateattendend[key].value) == true) {
-              if (parseInt(c_dateattendstart[key].value) > parseInt(c_dateattendend[key].value)) {
-                alert('Tanggal tidak valid');
-                return false;
-              }
-            }
-          }
-
-          for (key = 0; key < c_score.length; key++) {
-            if (c_score[key].value != '' && (isNumeric(c_score[key].value) == false && isFloat(c_score[key].value) == false)) {
-              alert('Nilai tidak valid');
-              return false;
-            }
+            $('.address-item[data-id="' + targetId + '"]').remove();
           }
 
 
-          /*
-          for(key=0; key < c_actv.length; key++)  {
-          	if(c_actv[key].value == '')
-          	valid = false;
-          }
-          for(key=0; key < c_descedu.length; key++)  {
-          	if(c_descedu[key].value == '')
-          	valid = false;
-          }*/
+        } else {
+          return false;
+        }
+      });
 
+      $(document).on('click', '.school-item-remove-button', function() {
+        var changeConfirmation = confirm("Apakah anda yakin ingin menghapus?");
+        if (changeConfirmation) {
+          var targetId = $(this).data('id');
+          if (targetId != '1') {
+            var schoolid = $('#schoolid' + targetId).val();
+            if (schoolid != '') {
+              $.ajax({
+                url: '<?php echo site_url('member/del_edu') ?>',
+                dataType: "html",
+                type: "POST",
+                async: true, //false
+                data: {
+                  id: schoolid
+                },
+                success: function(jsonObject, status) {
+                  console.log(jsonObject);
+                  if ((jsonObject != 'not valid')) {
+                    dataHTML = jsonObject;
+                  }
 
-
-
-          for (key = 0; key < c_certname.length; key++) {
-            if (c_certname[key].value != '' || c_certauth[key].value != '' || c_lic[key].value != '') {
-              if (c_certname[key].value == '')
-                valid = false;
-              if (c_certauth[key].value == '')
-                valid = false;
-              if (c_lic[key].value == '')
-                valid = false;
-              if (c_certdate[key].value == '')
-                valid = false;
-              if (c_certyear[key].value == '')
-                valid = false;
-              if ($(c_certwork[key]).is(':checked') == false && (c_certdate2[key].value == '' || c_certyear2[key].value == '')) {
-                valid = false;
-              }
-              /*if(cert_image_url[key].value == '')
-              	valid = false;*/
-            }
-          }
-
-          //custom
-          for (key = 0; key < c_certyear.length; key++) {
-            if (c_certyear[key].value != '' && isNumeric(c_certyear[key].value) == false) {
-              alert('Tanggal tidak valid');
-              return false;
-            }
-          }
-          for (key = 0; key < c_certyear2.length; key++) {
-            if (c_certyear2[key].value != '' && isNumeric(c_certyear2[key].value) == false) {
-              alert('Tanggal tidak valid');
-              return false;
-            }
-          }
-
-          for (key = 0; key < c_certyear.length; key++) {
-            if (c_certyear[key].value != '' && isNumeric(c_certyear[key].value) == true && c_certyear2[key].value != '' && isNumeric(c_certyear2[key].value) == true && c_certdate[key].value != '' && c_certdate2[key].value != '' && $(c_certwork[key]).is(':checked') == false) {
-              var s = new Date(c_certyear[key].value, c_certdate[key].value, 01);
-              var e = new Date(c_certyear2[key].value, c_certdate2[key].value, 01);
-              if (s > e) {
-                alert('Tanggal tidak valid');
-                return false;
-              }
-            }
-          }
-
-
-
-          if (valid == true) {
-            //e.preventDefault();
-
-            var c_certnamex = $('input[name="c_certname[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_certauthx = $('input[name="c_certauth[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_licx = $('input[name="c_lic[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_urlx = $('input[name="c_url[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_cert_titlex = $('input[name="c_cert_title[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_certdatex = $('select[name="c_certdate[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_certyearx = $('input[name="c_certyear[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_certdate2x = $('select[name="c_certdate2[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_certyear2x = $('input[name="c_certyear2[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_certworkx = $('input[name="c_certwork[]"]').map(function() {
-
-
-              return $(this).is(':checked');
-            }).get();
-            var c_certdescx = $('textarea[name="c_certdesc[]"]').map(function() {
-              return this.value;
-            }).get();
-            var schoolidx = $('input[name="schoolid[]"]').map(function() {
-              return this.value;
-            }).get();
-            var edu_image_urlx = $('input[name="edu_image_url[]"]').map(function() {
-              return this.value;
-            }).get();
-
-            var c_school_typex = $('select[name="c_school_type[]"]').map(function() {
-              return this.value;
-            }).get();
-
-            var c_schoolx = $('input[name="c_school[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_dateattendstartx = $('input[name="c_dateattendstart[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_dateattendendx = $('input[name="c_dateattendend[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_degreex = $('select[name="c_degree[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_mayorx = $('input[name="c_mayor[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_fosx = $('input[name="c_fos[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_scorex = $('input[name="c_score[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_titlex = $('input[name="c_title[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_prefix_titlex = $('input[name="c_prefix_title[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_actvx = $('input[name="c_actv[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_descedux = $('textarea[name="c_descedu[]"]').map(function() {
-              return this.value;
-            }).get();
-
-            var certidx = $('input[name="certid[]"]').map(function() {
-              return this.value;
-            }).get();
-
-            var cert_image_urlx = $('input[name="cert_image_url[]"]').map(function() {
-              return this.value;
-            }).get();
-
-            var dataHTML = 'not valid';
-
-            $.ajax({
-              url: '<?php echo site_url('member/edit_edu') ?>',
-              dataType: "html",
-              type: "POST",
-              async: true, //false ,
-              data: {
-                'type[]': c_school_typex,
-                'school[]': c_schoolx,
-                'dateattendstart[]': c_dateattendstartx,
-                'dateattendend[]': c_dateattendendx,
-                'degree[]': c_degreex,
-                'fos[]': c_fosx,
-                'score[]': c_scorex,
-                'title[]': c_titlex,
-                'title_prefix[]': c_prefix_titlex,
-                'actv[]': c_actvx,
-                'descedu[]': c_descedux,
-                'certname[]': c_certnamex,
-                'certauth[]': c_certauthx,
-                'lic[]': c_licx,
-                'url[]': c_urlx,
-                'cert_title[]': c_cert_titlex,
-                'certdate[]': c_certdatex,
-                'certyear[]': c_certyearx,
-                'certdate2[]': c_certdate2x,
-                'certyear2[]': c_certyear2x,
-                'certwork[]': c_certworkx,
-                'certdesc[]': c_certdescx,
-                'schoolid[]': schoolidx,
-                'certid[]': certidx,
-                'edu_image_url[]': edu_image_urlx,
-                'cert_image_url[]': cert_image_urlx,
-                'mayor[]': c_mayorx
-              },
-              success: function(jsonObject, status) {
-                console.log(jsonObject);
-                if ((jsonObject != 'not valid')) {
-                  dataHTML = jsonObject;
+                  if (dataHTML == 'not valid')
+                    alert('not valid');
                 }
+              });
 
-                if (dataHTML == 'not valid')
-                  alert('Please filled required field');
-              }
-            });
-
-
-          } else {
-            alert('Please filled required field');
-          }
-        });
-
-        $('#editExp').click(function(e) {
-          var valid = true;
-
-          var c_company = document.getElementsByName('c_company[]');
-          var c_title = document.getElementsByName('c_exptitle[]');
-          var c_loc = document.getElementsByName('c_loc[]');
-          var c_provinsi = document.getElementsByName('c_provinsi[]');
-          var c_negara = document.getElementsByName('c_negara[]');
-          var c_typetimeperiod = document.getElementsByName('c_typetimeperiod[]');
-          var c_year = document.getElementsByName('c_year[]');
-          var c_typetimeperiod2 = document.getElementsByName('c_typetimeperiod2[]');
-          var c_year2 = document.getElementsByName('c_year2[]');
-          var c_work = document.getElementsByName('c_work[]');
-          var c_actv = document.getElementsByName('c_actv[]');
-          var c_desc = document.getElementsByName('c_desc[]');
-          var expid = document.getElementsByName('expid[]');
-          var exp_image_url = document.getElementsByName('exp_image_url[]');
-
-          for (key = 0; key < c_company.length; key++) {
-            if (c_company[key].value == '')
-              valid = false;
-          }
-          for (key = 0; key < c_title.length; key++) {
-            if (c_title[key].value == '')
-              valid = false;
-          }
-          for (key = 0; key < c_loc.length; key++) {
-            if (c_loc[key].value == '')
-              valid = false;
-          }
-          for (key = 0; key < c_provinsi.length; key++) {
-            if (c_provinsi[key].value == '')
-              valid = false;
-          }
-          for (key = 0; key < c_negara.length; key++) {
-            if (c_negara[key].value == '')
-              valid = false;
-          }
-          for (key = 0; key < c_typetimeperiod.length; key++) {
-            if (c_typetimeperiod[key].value == '')
-              valid = false;
-          }
-          for (key = 0; key < c_year.length; key++) {
-            if (c_year[key].value == '')
-              valid = false;
-          }
-
-          for (key = 0; key < c_work.length; key++) {
-            if ($(c_work[key]).is(':checked') == false && (c_typetimeperiod2[key].value == '' || c_year2[key].value == '')) {
-              valid = false;
             }
-            //valid = false;
+            $('.school-item[data-id="' + targetId + '"]').remove();
           }
-          /*for(key=0; key < c_desc.length; key++)  {
-          	if(c_desc[key].value == '')
-          	valid = false;
-          }*/
+        } else {
+          return false;
+        }
+      });
 
+      $(document).on('click', '.cert-item-remove-button', function() {
+        var changeConfirmation = confirm("Apakah anda yakin ingin menghapus?");
+        if (changeConfirmation) {
+          var targetId = $(this).data('id');
+          if (targetId != '1') {
+            var certid = $('#certid' + targetId).val();
+            if (certid != '') {
+              $.ajax({
+                url: '<?php echo site_url('member/del_cert') ?>',
+                dataType: "html",
+                type: "POST",
+                async: true, //false
+                data: {
+                  id: certid
+                },
+                success: function(jsonObject, status) {
+                  console.log(jsonObject);
+                  if ((jsonObject != 'not valid')) {
+                    dataHTML = jsonObject;
+                  }
 
-          for (key = 0; key < c_year.length; key++) {
-            if (c_year[key].value != '' && isNumeric(c_year[key].value) == true && c_year2[key].value != '' && isNumeric(c_year2[key].value) == true && c_typetimeperiod[key].value != '' && c_typetimeperiod2[key].value != '' && $(c_work[key]).is(':checked') == false) {
-              var s = new Date(c_year[key].value, c_typetimeperiod[key].value, 01);
-              var e = new Date(c_year2[key].value, c_typetimeperiod2[key].value, 01);
-              if (s > e) {
-                alert('Tanggal tidak valid');
-                return false;
-              }
-            }
-          }
-
-          if (valid == true) {
-            //e.preventDefault();
-
-            var c_companyx = $('input[name="c_company[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_titlex = $('input[name="c_exptitle[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_locx = $('input[name="c_loc[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_negarax = $('input[name="c_negara[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_provinsix = $('input[name="c_provinsi[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_typetimeperiodx = $('select[name="c_typetimeperiod[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_yearx = $('input[name="c_year[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_typetimeperiod2x = $('select[name="c_typetimeperiod2[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_year2x = $('input[name="c_year2[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_workx = $('input[name="c_work[]"]').map(function() {
-
-
-              return $(this).is(':checked');
-            }).get();
-            var c_descx = $('textarea[name="c_desc[]"]').map(function() {
-              return this.value;
-            }).get();
-            var c_actvx = $('textarea[name="c_actv[]"]').map(function() {
-              return this.value;
-            }).get();
-            var expidx = $('input[name="expid[]"]').map(function() {
-              return this.value;
-            }).get();
-            var exp_image_urlx = $('input[name="exp_image_url[]"]').map(function() {
-              return this.value;
-            }).get();
-            var dataHTML = 'not valid';
-
-            $.ajax({
-              url: '<?php echo site_url('member/edit_exp') ?>',
-              dataType: "html",
-              type: "POST",
-              async: true, //false
-              data: {
-                'company[]': c_companyx,
-                'title[]': c_titlex,
-                'loc[]': c_locx,
-                'provinsi[]': c_provinsix,
-                'negara[]': c_negarax,
-                'typetimeperiod[]': c_typetimeperiodx,
-                'year[]': c_yearx,
-                'typetimeperiod2[]': c_typetimeperiod2x,
-                'year2[]': c_year2x,
-                'work[]': c_workx,
-                'actv[]': c_actvx,
-                'desc[]': c_descx,
-                'expid[]': expidx,
-                'exp_image_url[]': exp_image_urlx
-              },
-              success: function(jsonObject, status) {
-                console.log(jsonObject);
-                if ((jsonObject != 'not valid')) {
-                  dataHTML = jsonObject;
+                  if (dataHTML == 'not valid')
+                    alert('not valid');
                 }
+              });
 
-                if (dataHTML == 'not valid')
-                  alert('Please filled required field');
-              }
-            });
-
-
-          } else {
-            alert('Please filled required field');
+            }
+            $('.cert-item[data-id="' + targetId + '"]').remove();
           }
-        });
+
+        } else {
+          return false;
+        }
+
 
       });
 
-      function isEmail(email) {
-        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        return regex.test(email);
-      }
+      $(document).on('click', '.exp-item-remove-button', function() {
+        var changeConfirmation = confirm("Apakah anda yakin ingin menghapus?");
+        if (changeConfirmation) {
+          var targetId = $(this).data('id');
+          if (targetId != '1') {
+            var expid = $('#expid' + targetId).val();
+            if (expid != '') {
+              $.ajax({
+                url: '<?php echo site_url('member/del_exp') ?>',
+                dataType: "html",
+                type: "POST",
+                async: true, //false
+                data: {
+                  id: expid
+                },
+                success: function(jsonObject, status) {
+                  console.log(jsonObject);
+                  if ((jsonObject != 'not valid')) {
+                    dataHTML = jsonObject;
+                  }
 
-      function isNumeric(n) {
-        return !isNaN(parseFloat(n)) && isFinite(n);
-      }
+                  if (dataHTML == 'not valid')
+                    alert('not valid');
+                }
+              });
 
-      function isFloat(val) {
-        var floatRegex = /^-?\d+(?:[.,]\d*?)?$/;
-        if (!floatRegex.test(val))
-          return false;
-
-        val = parseFloat(val);
-        if (isNaN(val))
-          return false;
-        return true;
-      }
-
-      function upload_ktp() {
-        var formData = new FormData();
-        formData.append('ktp', $('#ktp')[0].files[0]);
-
-        $("#errUpload").html("");
-        $("#errUpload").addClass("loader");
-        $("#ktp").addClass("hide");
-
-        $.ajax({
-          url: "<?php echo site_url('member/ktp_upload') ?>",
-          type: 'POST',
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: function(data, textStatus, jqXHR) {
-            if (data.substring(0, 6) == '<input') {
-              $('#avatar').html($(data).fadeIn('slow'));
-              uploadFlag = 1;
-              $('#errUpload').html($('').fadeIn('slow'));
-            } else {
-              $('#errUpload').html($(data).fadeIn('slow'));
-              $('#avatar').html('');
-              $('#ktp').val('');
             }
-
-            $("#errUpload").removeClass("loader");
-            $("#ktp").removeClass("hide");
-            $('#ktp').val('');
-          },
-          error: function(jqXHR, textStatus, errorThrown) {
-            $('#errUpload').html($(textStatus).fadeIn('slow'));
-
-            $("#errUpload").removeClass("loader");
-            $("#ktp").removeClass("hide");
-            $('#ktp').val('');
-
+            $('.exp-item[data-id="' + targetId + '"]').remove();
           }
-        });
-      }
-
-      function upload_photo() {
-        var formData = new FormData();
-        formData.append('photo', $('#photo')[0].files[0]);
-
-        $("#errUpload2").html("");
-        $("#errUpload2").addClass("loader");
-        $("#photo").addClass("hide");
-
-        $.ajax({
-          url: "<?php echo site_url('member/photo_upload') ?>",
-          type: 'POST',
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: function(data, textStatus, jqXHR) {
-            if (data.substring(0, 6) == '<input') {
-              $('#avatar2').html($(data).fadeIn('slow'));
-              uploadFlag = 1;
-              $('#errUpload2').html($('').fadeIn('slow'));
-            } else {
-              $('#errUpload2').html($(data).fadeIn('slow'));
-              $('#avatar2').html('');
-              //$('#photo').val('');
-            }
-
-            $("#errUpload2").removeClass("loader");
-            $("#photo").removeClass("hide");
-            $('#photo').val('');
-          },
-          error: function(jqXHR, textStatus, errorThrown) {
-            $('#errUpload2').html($(textStatus).fadeIn('slow'));
-
-
-            $("#errUpload2").removeClass("loader");
-            $("#photo").removeClass("hide");
-            $('#photo').val('');
-          }
-        });
-      }
-
-      function upload_edu(edu) {
-        var formData = new FormData();
-        formData.append('file', $('#' + edu)[0].files[0]);
-
-        $('#errUpload' + edu).html("");
-        $('#errUpload' + edu).addClass("loader");
-        $('#' + edu).addClass("hide");
-
-        $.ajax({
-          url: "<?php echo site_url('member/edu_upload') ?>",
-          type: 'POST',
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: function(data, textStatus, jqXHR) {
-            if (data.substring(0, 6) == '<input') {
-              $('#avatar' + edu).html($(data).fadeIn('slow'));
-              uploadFlag = 1;
-              $('#errUpload' + edu).html($('').fadeIn('slow'));
-            } else {
-              $('#errUpload' + edu).html($(data).fadeIn('slow'));
-              $('#avatar' + edu).html('');
-              $('#' + edu).val('');
-            }
-
-            $('#errUpload' + edu).removeClass("loader");
-            $('#' + edu).removeClass("hide");
-            $('#' + edu).val('');
-
-          },
-          error: function(jqXHR, textStatus, errorThrown) {
-            $('#errUpload' + edu).html($(textStatus).fadeIn('slow'));
-            $('#' + edu).val('');
-
-            $('#errUpload' + edu).removeClass("loader");
-            $('#' + edu).removeClass("hide");
-            $('#' + edu).val('');
-
-          }
-        });
-      }
-
-      function upload_cert(cert) {
-        var formData = new FormData();
-        formData.append('file', $('#' + cert)[0].files[0]);
-
-        $('#errUpload' + cert).html("");
-        $('#errUpload' + cert).addClass("loader");
-        $('#' + cert).addClass("hide");
-
-        $.ajax({
-          url: "<?php echo site_url('member/cert_upload') ?>",
-          type: 'POST',
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: function(data, textStatus, jqXHR) {
-            if (data.substring(0, 6) == '<input') {
-              $('#avatar' + cert).html($(data).fadeIn('slow'));
-              uploadFlag = 1;
-              $('#errUpload' + cert).html($('').fadeIn('slow'));
-            } else {
-              $('#errUpload' + cert).html($(data).fadeIn('slow'));
-              $('#avatar' + cert).html('');
-              $('#' + cert).val('');
-            }
-
-            $('#errUpload' + cert).removeClass("loader");
-            $('#' + cert).removeClass("hide");
-            $('#' + cert).val('');
-          },
-          error: function(jqXHR, textStatus, errorThrown) {
-            $('#errUpload' + cert).html($(textStatus).fadeIn('slow'));
-            $('#' + cert).val('');
-
-            $('#errUpload' + cert).removeClass("loader");
-            $('#' + cert).removeClass("hide");
-            $('#' + cert).val('');
-          }
-        });
-      }
-
-      function upload_exp(exp) {
-        var formData = new FormData();
-        formData.append('file', $('#' + exp)[0].files[0]);
-
-        $('#errUpload' + exp).html("");
-        $('#errUpload' + exp).addClass("loader");
-        $('#' + exp).addClass("hide");
-
-        $.ajax({
-          url: "<?php echo site_url('member/exp_upload') ?>",
-          type: 'POST',
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: function(data, textStatus, jqXHR) {
-            if (data.substring(0, 6) == '<input') {
-              $('#avatar' + exp).html($(data).fadeIn('slow'));
-              uploadFlag = 1;
-              $('#errUpload' + exp).html($('').fadeIn('slow'));
-            } else {
-              $('#errUpload' + exp).html($(data).fadeIn('slow'));
-              $('#avatar' + exp).html('');
-              $('#' + exp).val('');
-            }
-
-            $('#errUpload' + exp).removeClass("loader");
-            $('#' + exp).removeClass("hide");
-            $('#' + exp).val('');
-          },
-          error: function(jqXHR, textStatus, errorThrown) {
-            $('#errUpload' + exp).html($(textStatus).fadeIn('slow'));
-            $('#' + exp).val('');
-
-            $('#errUpload' + exp).removeClass("loader");
-            $('#' + exp).removeClass("hide");
-            $('#' + exp).val('');
-          }
-        });
-      }
-
-      function upload_pernyataan(textid) {
-        var formData = new FormData();
-        formData.append(textid, $('#' + textid)[0].files[0]);
-
-        $("#errUpload_" + textid).html("");
-        $("#errUpload_" + textid).addClass("loader");
-        $("#" + textid).addClass("hide");
-
-        $.ajax({
-          url: "<?php echo site_url('member/"+textid+"_upload') ?>",
-          type: 'POST',
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: function(data, textStatus, jqXHR) {
-            if (data.substring(0, 6) == '<input') {
-              $('#avatar_' + textid).html($(data).fadeIn('slow'));
-              uploadFlag = 1;
-              $("#errUpload_" + textid).html($('').fadeIn('slow'));
-            } else {
-              $("#errUpload_" + textid).html($(data).fadeIn('slow'));
-              $('#avatar_' + textid).html('');
-              $('#' + textid).val('');
-            }
-
-            $("#errUpload_" + textid).removeClass("loader");
-            $("#" + textid).removeClass("hide");
-            $('#' + textid).val('');
-          },
-          error: function(jqXHR, textStatus, errorThrown) {
-            $("#errUpload_" + textid).html($(textStatus).fadeIn('slow'));
-
-            $("#errUpload_" + textid).removeClass("loader");
-            $("#" + textid).removeClass("hide");
-            $('#' + textid).val('');
-
-          }
-        });
-      }
-
-      function tipe_school(id) {
-        var temp = '';
-        if (id != 1) temp = id;
-
-        $('#c_prefix_title' + temp).val('');
-        $('#c_title' + temp).val('');
-
-        var c_school_type = $('#c_school_type' + temp).val();
-        var label_c_tahun = $('#label_c_tahun' + temp);
-        var label_c_fos = $('#label_c_fos' + temp);
-        var label_c_score = $('#label_c_score' + temp);
-        var targetId = $('#c_degree' + temp).val();
-
-        if (c_school_type == 1) {
-          $('#label_c_tahun' + temp).html('Tahun<span class="red"> *</span>');
-          $('#label_c_fos' + temp).html('Jurusan/Kejuruan<span class="red"> *</span>');
-          $('#label_c_score' + temp).html('IPK<span class="red"> *</span>');
-          $('#c_score' + temp).prop('required', true);
-
-          $('#c_degree' + temp).show();
-          $('#c_degree' + temp).prop('required', true);
-
-          $('#c_mayor' + temp).show();
-          $('#c_mayor' + temp).prop('required', true);
-
-          $('#label_c_tingkat' + temp).show();
-          $('#label_c_mayor' + temp).show();
-
-          $('#c_degree' + temp).find('option').remove();
-          $.fn.populate = function() {
-            $(this)
-              .append('<option value="D3">D3</option>')
-              .append('<option value="D4">D4</option>')
-              .append('<option value="S1">S1</option>')
-              .append('<option value="S2">S2</option>')
-              .append('<option value="S3">S3</option>')
-          }
-
-          $('#c_degree' + temp).populate();
         } else {
-          $('#label_c_tahun' + temp).html('Tahun Lulus<span class="red"> *</span>');
-          $('#label_c_fos' + temp).html('Nomor Sertifikat<span class="red"> *</span>');
-          $('#label_c_score' + temp).html('Nilai');
-          $('#c_score' + temp).prop('required', false);
+          return false;
+        }
 
-          $('#c_degree' + temp).find('option').remove();
+      });
 
-          $('#c_degree' + temp).hide();
-          $('#c_degree' + temp).prop('required', false);
 
-          $('#c_mayor' + temp).hide();
-          $('#c_mayor' + temp).prop('required', false);
+      $(document).on('click', '.email-item-remove-button', function() {
+        var changeConfirmation = confirm("Apakah anda yakin ingin menghapus?");
+        if (changeConfirmation) {
+          var targetId = $(this).data('id');
+          if (targetId != '1') {
+            var emailid = $('#emailid' + targetId).val();
+            if (emailid != '') {
+              $.ajax({
+                url: '<?php echo site_url('member/del_email') ?>',
+                dataType: "html",
+                type: "POST",
+                async: true, //false
+                data: {
+                  id: emailid
+                },
+                success: function(jsonObject, status) {
+                  console.log(jsonObject);
+                  if ((jsonObject != 'not valid')) {
+                    dataHTML = jsonObject;
+                  }
 
-          $('#label_c_tingkat' + temp).hide();
-          $('#label_c_mayor' + temp).hide();
+                  if (dataHTML == 'not valid')
+                    alert('not valid');
+                }
+              });
 
-          /*$.fn.populate = function() {
-            $(this)
-          	.append('<option value="IPP">IPP</option>')
-          	.append('<option value="IPM">IPM</option>')
-          	.append('<option value="IPU">IPU</option>')
+            }
+            $('.email-item[data-id="' + targetId + '"]').remove();
           }
 
-          $('#c_degree'+temp).populate();*/
-        }
 
-        //alert(label_c_tahun.innerHTML);
-      }
-
-      function cek_warga() {
-        var warga = $('input[name="warga_asing"]:checked').val();
-        if (warga == 1) {
-          $('#valid_warga[value="Citizen"]').attr('disabled', 'disabled');
-          $('input[name="typeid"][value="Passport"]').prop("checked", true);
-          $('.iswna').css('display', 'block');
         } else {
-          $('#valid_warga[value="Citizen"]').attr('disabled', false);
-          $('.iswna').css('display', 'none');
-
+          return false;
         }
-      }
-    </script>
-    <style>
-      .tt-query {
-        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-      }
+      });
 
-      .tt-hint {
-        color: #999
-      }
+      $(document).on('click', '.phone-item-remove-button', function() {
+        var changeConfirmation = confirm("Apakah anda yakin ingin menghapus?");
+        if (changeConfirmation) {
+          var targetId = $(this).data('id');
+          if (targetId != '1') {
+            var phoneid = $('#phoneid' + targetId).val();
+            if (phoneid != '') {
+              $.ajax({
+                url: '<?php echo site_url('member/del_phone') ?>',
+                dataType: "html",
+                type: "POST",
+                async: true, //false
+                data: {
+                  id: phoneid
+                },
+                success: function(jsonObject, status) {
+                  console.log(jsonObject);
+                  if ((jsonObject != 'not valid')) {
+                    dataHTML = jsonObject;
+                  }
 
-      .tt-menu {
-        /* used to be tt-dropdown-menu in older versions */
-        width: 422px;
-        margin-top: 4px;
-        padding: 4px 0;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        border: 1px solid rgba(0, 0, 0, 0.2);
-        -webkit-border-radius: 4px;
-        -moz-border-radius: 4px;
-        border-radius: 4px;
-        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-        -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-        box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-      }
+                  if (dataHTML == 'not valid')
+                    alert('not valid');
+                }
+              });
 
-      .tt-suggestion {
-        padding: 3px 20px;
-        line-height: 24px;
-      }
+            }
+            $('.phone-item[data-id="' + targetId + '"]').remove();
+          }
 
-      .tt-suggestion.tt-cursor,
-      .tt-suggestion:hover {
-        color: #fff;
-        background-color: #0097cf;
 
-      }
+        } else {
+          return false;
+        }
+      });
 
-      .tt-suggestion p {
-        margin: 0;
-      }
 
-      .red {
-        color: red;
-      }
+      $(document).on('click', "input[id^='c_certwork']", function() {
+        //alert('a');
+        //var a = document.getElementById("c_certwork").checked;
 
-      .loader {
-        border: 16px solid #f3f3f3;
-        /* Light grey */
-        border-top: 16px solid #3498db;
-        /* Blue */
-        border-radius: 50%;
-        width: 120px;
-        height: 120px;
-        animation: spin 2s linear infinite;
-      }
+        var a = $(this).is(':checked');
+        var targetId = $(this).attr('data-id');
+        var temp = "";
+        if (targetId != 1)
+          temp = targetId;
 
-      .hide {
-        display: none;
-      }
+        if (a == true) {
+          $('#is_presentcert1' + temp).css('display', 'none');
+          $('#is_presentcert2' + temp).css('display', 'none');
+        } else {
+          $('#is_presentcert1' + temp).css('display', 'block');
+          $('#is_presentcert2' + temp).css('display', 'block');
+        }
+      });
 
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
+      $(document).on('click', "input[id^='c_work']", function() {
+        //alert('a');
+        //var a = document.getElementById("c_certwork").checked;
+
+        var a = $(this).is(':checked');
+        var targetId = $(this).attr('data-id');
+        var temp = "";
+        if (targetId != 1)
+          temp = targetId;
+
+        if (a == true) {
+          $('#is_presentwork1' + temp).css('display', 'none');
+          $('#is_presentwork2' + temp).css('display', 'none');
+        } else {
+          $('#is_presentwork1' + temp).css('display', 'block');
+          $('#is_presentwork2' + temp).css('display', 'block');
+        }
+      });
+
+      $("input[id^='addresscity']").typeahead(null, {
+        name: 'regions',
+        display: 'name',
+        source: regions,
+        limit: 10,
+        minLength: 0,
+        templates: {
+          /*empty: [
+              '<div class="tt-empty-message">',
+                  'No Companies matched your input',
+              '</div>'
+          ].join('\n'),*/
+        }
+      }).bind('change blur', function() {
+        var text = $(this).val();
+        var id = $(this).prop('id');
+        id = id.replace("city", "province");
+
+        $.ajax({
+          url: "<?php echo base_url(); ?>welcome/fxsearchprovince?q=" + text,
+          success: function(result) {
+
+            if (result != "false") {
+              var x = JSON.parse(result);
+              $('#' + id).val(x[0].name);
+              //console.log($('#'+id));
+            }
+            //else updateTotalEstimatedChargeByFlag(text);
+            //console.log(result);
+          }
+        });
+
+
+      });
+
+      $("input[id^='addressprovince']").typeahead(null, {
+        name: 'provinces',
+        display: 'name',
+        source: provinces,
+        limit: 10,
+        minLength: 0,
+        templates: {
+          /*empty: [
+              '<div class="tt-empty-message">',
+                  'No Companies matched your input',
+              '</div>'
+          ].join('\n'),*/
+        }
+      });
+
+      $("input[id^='addresszip']").typeahead(null, {
+        name: 'kodepos',
+        display: 'name',
+        source: kodepos,
+        limit: 10,
+        minLength: 0,
+        templates: {
+          /*empty: [
+              '<div class="tt-empty-message">',
+                  'No Companies matched your input',
+              '</div>'
+          ].join('\n'),*/
+        }
+      }).bind('change blur', function() {
+        var text = $(this).val();
+        var id = $(this).prop('id');
+        var city = id.replace("zip", "city");
+        var province = id.replace("zip", "province");
+
+        $.ajax({
+          url: "<?php echo base_url(); ?>welcome/fxsearchcityprovincebyzip?q=" + text,
+          success: function(result) {
+
+            if (result != "false") {
+              var x = JSON.parse(result);
+              $('#' + city).val(x[0].city);
+              $('#' + province).val(x[0].province);
+              //console.log(x);
+            }
+          }
+        });
+
+
+      });
+
+      $("select[id^='c_degree']").change(function(e) {
+        var c = ($(this).attr('id'));
+        c = c.replace("c_degree", "");
+
+        $("#c_title" + c).val('');
+        $("#c_prefix_title" + c).val('');
+      });
+
+      $('#editprofile').click(function(e) {
+        var valid = true;
+        var email = "";
+
+        var fn = $('#fn');
+        var ln = $('#ln');
+        var gender = $('input[name="gender"]:checked').val(); // $('#c_work');
+        var warga_asing = $('input[name="warga_asing"]:checked').val();
+        var phone = $('#phone');
+        var birthplace = $('#birthplace');
+        var dob = $('#dob');
+        var typeid = $('input[name="typeid"]:checked').val();
+        var idnumber = $('#idnumber');
+        var website = $('#website');
+        var desc = $('#desc');
+        var is_public = document.getElementById("is_public").checked;
+        var is_datasend = document.getElementById("is_datasend").checked;
+
+        var email = document.getElementsByName('email[]');
+        var typeaddress = document.getElementsByName('typeaddress[]');
+        var address = document.getElementsByName('address[]');
+        var addressphone = document.getElementsByName('addressphone[]');
+        var addresscity = document.getElementsByName('addresscity[]');
+        var addressprovince = document.getElementsByName('addressprovince[]');
+        var addresszip = document.getElementsByName('addresszip[]');
+        var addressid = document.getElementsByName('addressid[]');
+        var mailingaddr = $('input[name="mailingaddr"]:checked').val();
+
+        var typephone = document.getElementsByName('typephone[]');
+        var phonem = document.getElementsByName('phonem[]');
+        var phoneid = document.getElementsByName('phoneid[]');
+
+        var typeemail = document.getElementsByName('typeemail[]');
+        var emailm = document.getElementsByName('emailm[]');
+        var emailid = document.getElementsByName('emailid[]');
+
+        /*for(key=0; key < addressphone.length; key++)  {
+        	if(addressphone[key].value == '')
+        	valid = false;
+        }
+        for(key=0; key < email.length; key++)  {
+        	if(email[key].value == '')
+        	valid = false;
+        }*/
+        for (key = 0; key < typeaddress.length; key++) {
+          if (typeaddress[key].value == '')
+            valid = false;
+        }
+        for (key = 0; key < address.length; key++) {
+          if (address[key].value == '')
+            valid = false;
+        }
+        for (key = 0; key < addressprovince.length; key++) {
+          if (addressprovince[key].value == '')
+            valid = false;
+        }
+        for (key = 0; key < addresscity.length; key++) {
+          if (addresscity[key].value == '')
+            valid = false;
+        }
+        for (key = 0; key < addresszip.length; key++) {
+          if (addresszip[key].value == '')
+            valid = false;
+        }
+        //custom
+        for (key = 0; key < email.length; key++) {
+          if (email[key].value != '' && isEmail(email[key].value) == false) {
+            alert('email not valid');
+            return false;
+          }
+        }
+        for (key = 0; key < addresszip.length; key++) {
+          if (addresszip[key].value != '' && isNumeric(addresszip[key].value) == false) {
+            alert('zip code not valid');
+            return false;
+          }
         }
 
-        100% {
-          transform: rotate(360deg);
+        /*for(key=0; key < typephone.length; key++)  {
+        	if(typephone[key].value == '')
+        	valid = false;
         }
-      }
-    </style>
+        for(key=0; key < phonem.length; key++)  {
+        	if(phonem[key].value == '')
+        	valid = false;
+        }
+        for(key=0; key < typeemail.length; key++)  {
+        	if(typeemail[key].value == '')
+        	valid = false;
+        }
+        for(key=0; key < emailm.length; key++)  {
+        	if(emailm[key].value == '')
+        	valid = false;
+        }*/
 
-    <script>
-      function previewFile(input, previewId) {
-        var file = input.files[0];
-        var preview = document.getElementById(previewId);
-        preview.innerHTML = ""; // reset
+        if (fn.val() != '' && phone.val() != '' && (idnumber.val()).trim() != '' && typeid != '' && dob.val() != '' && gender != '' && birthplace.val() != '' && mailingaddr != '' && valid == true) {
+          e.preventDefault();
 
-        if (file) {
-          var fileType = file.type;
+          var addressphonex = $('input[name="addressphone[]"]').map(function() {
+            return this.value;
+          }).get();
+          var emailx = $('input[name="email[]"]').map(function() {
+            return this.value;
+          }).get();
+          var typeaddressx = $('select[name="typeaddress[]"]').map(function() {
+            return this.value;
+          }).get();
+          var addressx = $('input[name="address[]"]').map(function() {
+            return this.value;
+          }).get();
+          var addresscityx = $('input[name="addresscity[]"]').map(function() {
+            return this.value;
+          }).get();
+          var addressprovincex = $('input[name="addressprovince[]"]').map(function() {
+            return this.value;
+          }).get();
+          var addresszipx = $('input[name="addresszip[]"]').map(function() {
+            return this.value;
+          }).get();
+          var addressidx = $('input[name="addressid[]"]').map(function() {
+            return this.value;
+          }).get();
 
-          if (fileType.match('image.*')) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-              preview.innerHTML = "<img src='" + e.target.result + "' class='img-thumbnail' width='200'>";
-            };
-            reader.readAsDataURL(file);
-          } else if (fileType === "application/pdf") {
-            preview.innerHTML = "<embed src='" + URL.createObjectURL(file) + "' type='application/pdf' width='100%' height='400px'>";
+          var typephonex = $('select[name="typephone[]"]').map(function() {
+            return this.value;
+          }).get();
+          var phonemx = $('input[name="phonem[]"]').map(function() {
+            return this.value;
+          }).get();
+          var phoneidx = $('input[name="phoneid[]"]').map(function() {
+            return this.value;
+          }).get();
+
+          var typeemailx = $('select[name="typeemail[]"]').map(function() {
+            return this.value;
+          }).get();
+          var emailmx = $('input[name="emailm[]"]').map(function() {
+            return this.value;
+          }).get();
+          var emailidx = $('input[name="emailid[]"]').map(function() {
+            return this.value;
+          }).get();
+
+          var dataHTML = 'not valid';
+
+          $.ajax({
+            url: '<?php echo site_url('member/edit_profile') ?>',
+            dataType: "html",
+            type: "POST",
+            async: true, //false
+            data: {
+              fn: fn.val(),
+              ln: ln.val(),
+              phone: phone.val(),
+              dob: dob.val(),
+              website: website.val(),
+              desc: desc.val(),
+              is_public: is_public,
+              is_datasend: is_datasend,
+              gender: gender,
+              warga_asing: warga_asing,
+              birthplace: birthplace.val(),
+              typeid: typeid,
+              idnumber: idnumber.val(),
+              mailingaddr: mailingaddr,
+              'addressphone[]': addressphonex,
+              'email[]': emailx,
+              'typeaddress[]': typeaddressx,
+              'address[]': addressx,
+              'addresscity[]': addresscityx,
+              'addressprovince[]': addressprovincex,
+              'addresszip[]': addresszipx,
+              'addressid[]': addressidx,
+              'typeemail[]': typeemailx,
+              'typephone[]': typephonex,
+              'emailm[]': emailmx,
+              'phonem[]': phonemx,
+              'emailid[]': emailidx,
+              'phoneid[]': phoneidx
+            },
+            success: function(jsonObject, status) {
+              console.log(jsonObject);
+              if ((jsonObject != 'not valid')) {
+                dataHTML = jsonObject;
+              }
+
+              if (dataHTML == 'not valid')
+                alert('Please filled required field');
+            }
+          });
+
+
+        } else {
+          alert('Please filled required field');
+        }
+      });
+
+      $('#editschool').click(function(e) {
+        var valid = true;
+
+        var c_school_type = document.getElementsByName('c_school_type[]');
+        var c_school = document.getElementsByName('c_school[]');
+        var c_dateattendstart = document.getElementsByName('c_dateattendstart[]');
+        var c_dateattendend = document.getElementsByName('c_dateattendend[]');
+        var c_degree = document.getElementsByName('c_degree[]');
+        var c_mayor = document.getElementsByName('c_mayor[]');
+        var c_fos = document.getElementsByName('c_fos[]');
+        var c_score = document.getElementsByName('c_score[]');
+        var c_title = document.getElementsByName('c_title[]');
+        var c_prefix_title = document.getElementsByName('c_prefix_title[]');
+        var c_actv = document.getElementsByName('c_actv[]');
+        var c_descedu = document.getElementsByName('c_descedu[]');
+        var schoolid = document.getElementsByName('schoolid[]');
+        var edu_image_url = document.getElementsByName('edu_image_url[]');
+
+        //Cert
+        var c_certname = document.getElementsByName('c_certname[]');
+        var c_certauth = document.getElementsByName('c_certauth[]');
+        var c_lic = document.getElementsByName('c_lic[]');
+        var c_url = document.getElementsByName('c_url[]');
+        var c_cert_title = document.getElementsByName('c_cert_title[]');
+        var c_certdate = document.getElementsByName('c_certdate[]');
+        var c_certyear = document.getElementsByName('c_certyear[]');
+        var c_certdate2 = document.getElementsByName('c_certdate2[]');
+        var c_certyear2 = document.getElementsByName('c_certyear2[]');
+        var c_certwork = document.getElementsByName('c_certwork[]');
+        var c_certdesc = document.getElementsByName('c_certdesc[]');
+        var certid = document.getElementsByName('certid[]');
+        var cert_image_url = document.getElementsByName('cert_image_url[]');
+
+        //console.log(addressphone);
+        for (key = 0; key < c_school_type.length; key++) {
+          if (c_school_type[key].value == '')
+            valid = false;
+        }
+        for (key = 0; key < c_school.length; key++) {
+          if (c_school[key].value == '')
+            valid = false;
+        }
+        for (key = 0; key < c_dateattendstart.length; key++) {
+          if (c_dateattendstart[key].value == '')
+            valid = false;
+        }
+        for (key = 0; key < c_dateattendend.length; key++) {
+          if (c_dateattendend[key].value == '')
+            valid = false;
+        }
+        /*for(key=0; key < c_degree.length; key++)  {
+        	if(c_degree[key].value == '')
+        	valid = false;
+        }
+        for(key=0; key < c_mayor.length; key++)  {
+        	if(c_mayor[key].value == '')
+        	valid = false;
+        }*/
+        for (key = 0; key < c_fos.length; key++) {
+          if (c_fos[key].value == '')
+            valid = false;
+        }
+
+
+        for (key = 0; key < c_score.length; key++) {
+          if (c_score[key].value == '' && c_school_type[key].value == '1')
+            valid = false;
+        }
+
+        /*for(key=0; key < c_title.length; key++)  {
+        	if(c_title[key].value == '')
+        	valid = false;
+        }*/
+
+
+        //custom
+        for (key = 0; key < c_dateattendstart.length; key++) {
+          if (c_dateattendstart[key].value != '' && isNumeric(c_dateattendstart[key].value) == false) {
+            alert('Tanggal tidak valid');
+            return false;
+          }
+        }
+        for (key = 0; key < c_dateattendend.length; key++) {
+          if (c_dateattendend[key].value != '' && isNumeric(c_dateattendend[key].value) == false) {
+            alert('Tanggal tidak valid');
+            return false;
+          }
+        }
+        for (key = 0; key < c_dateattendstart.length; key++) {
+          if (c_dateattendstart[key].value != '' && isNumeric(c_dateattendstart[key].value) == true && c_dateattendend[key].value != '' && isNumeric(c_dateattendend[key].value) == true) {
+            if (parseInt(c_dateattendstart[key].value) > parseInt(c_dateattendend[key].value)) {
+              alert('Tanggal tidak valid');
+              return false;
+            }
+          }
+        }
+
+        for (key = 0; key < c_score.length; key++) {
+          if (c_score[key].value != '' && (isNumeric(c_score[key].value) == false && isFloat(c_score[key].value) == false)) {
+            alert('Nilai tidak valid');
+            return false;
+          }
+        }
+
+
+        /*
+        for(key=0; key < c_actv.length; key++)  {
+        	if(c_actv[key].value == '')
+        	valid = false;
+        }
+        for(key=0; key < c_descedu.length; key++)  {
+        	if(c_descedu[key].value == '')
+        	valid = false;
+        }*/
+
+
+
+
+        for (key = 0; key < c_certname.length; key++) {
+          if (c_certname[key].value != '' || c_certauth[key].value != '' || c_lic[key].value != '') {
+            if (c_certname[key].value == '')
+              valid = false;
+            if (c_certauth[key].value == '')
+              valid = false;
+            if (c_lic[key].value == '')
+              valid = false;
+            if (c_certdate[key].value == '')
+              valid = false;
+            if (c_certyear[key].value == '')
+              valid = false;
+            if ($(c_certwork[key]).is(':checked') == false && (c_certdate2[key].value == '' || c_certyear2[key].value == '')) {
+              valid = false;
+            }
+            /*if(cert_image_url[key].value == '')
+            	valid = false;*/
+          }
+        }
+
+        //custom
+        for (key = 0; key < c_certyear.length; key++) {
+          if (c_certyear[key].value != '' && isNumeric(c_certyear[key].value) == false) {
+            alert('Tanggal tidak valid');
+            return false;
+          }
+        }
+        for (key = 0; key < c_certyear2.length; key++) {
+          if (c_certyear2[key].value != '' && isNumeric(c_certyear2[key].value) == false) {
+            alert('Tanggal tidak valid');
+            return false;
+          }
+        }
+
+        for (key = 0; key < c_certyear.length; key++) {
+          if (c_certyear[key].value != '' && isNumeric(c_certyear[key].value) == true && c_certyear2[key].value != '' && isNumeric(c_certyear2[key].value) == true && c_certdate[key].value != '' && c_certdate2[key].value != '' && $(c_certwork[key]).is(':checked') == false) {
+            var s = new Date(c_certyear[key].value, c_certdate[key].value, 01);
+            var e = new Date(c_certyear2[key].value, c_certdate2[key].value, 01);
+            if (s > e) {
+              alert('Tanggal tidak valid');
+              return false;
+            }
+          }
+        }
+
+
+
+        if (valid == true) {
+          //e.preventDefault();
+
+          var c_certnamex = $('input[name="c_certname[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_certauthx = $('input[name="c_certauth[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_licx = $('input[name="c_lic[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_urlx = $('input[name="c_url[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_cert_titlex = $('input[name="c_cert_title[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_certdatex = $('select[name="c_certdate[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_certyearx = $('input[name="c_certyear[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_certdate2x = $('select[name="c_certdate2[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_certyear2x = $('input[name="c_certyear2[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_certworkx = $('input[name="c_certwork[]"]').map(function() {
+
+
+            return $(this).is(':checked');
+          }).get();
+          var c_certdescx = $('textarea[name="c_certdesc[]"]').map(function() {
+            return this.value;
+          }).get();
+          var schoolidx = $('input[name="schoolid[]"]').map(function() {
+            return this.value;
+          }).get();
+          var edu_image_urlx = $('input[name="edu_image_url[]"]').map(function() {
+            return this.value;
+          }).get();
+
+          var c_school_typex = $('select[name="c_school_type[]"]').map(function() {
+            return this.value;
+          }).get();
+
+          var c_schoolx = $('input[name="c_school[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_dateattendstartx = $('input[name="c_dateattendstart[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_dateattendendx = $('input[name="c_dateattendend[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_degreex = $('select[name="c_degree[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_mayorx = $('input[name="c_mayor[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_fosx = $('input[name="c_fos[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_scorex = $('input[name="c_score[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_titlex = $('input[name="c_title[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_prefix_titlex = $('input[name="c_prefix_title[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_actvx = $('input[name="c_actv[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_descedux = $('textarea[name="c_descedu[]"]').map(function() {
+            return this.value;
+          }).get();
+
+          var certidx = $('input[name="certid[]"]').map(function() {
+            return this.value;
+          }).get();
+
+          var cert_image_urlx = $('input[name="cert_image_url[]"]').map(function() {
+            return this.value;
+          }).get();
+
+          var dataHTML = 'not valid';
+
+          $.ajax({
+            url: '<?php echo site_url('member/edit_edu') ?>',
+            dataType: "html",
+            type: "POST",
+            async: true, //false ,
+            data: {
+              'type[]': c_school_typex,
+              'school[]': c_schoolx,
+              'dateattendstart[]': c_dateattendstartx,
+              'dateattendend[]': c_dateattendendx,
+              'degree[]': c_degreex,
+              'fos[]': c_fosx,
+              'score[]': c_scorex,
+              'title[]': c_titlex,
+              'title_prefix[]': c_prefix_titlex,
+              'actv[]': c_actvx,
+              'descedu[]': c_descedux,
+              'certname[]': c_certnamex,
+              'certauth[]': c_certauthx,
+              'lic[]': c_licx,
+              'url[]': c_urlx,
+              'cert_title[]': c_cert_titlex,
+              'certdate[]': c_certdatex,
+              'certyear[]': c_certyearx,
+              'certdate2[]': c_certdate2x,
+              'certyear2[]': c_certyear2x,
+              'certwork[]': c_certworkx,
+              'certdesc[]': c_certdescx,
+              'schoolid[]': schoolidx,
+              'certid[]': certidx,
+              'edu_image_url[]': edu_image_urlx,
+              'cert_image_url[]': cert_image_urlx,
+              'mayor[]': c_mayorx
+            },
+            success: function(jsonObject, status) {
+              console.log(jsonObject);
+              if ((jsonObject != 'not valid')) {
+                dataHTML = jsonObject;
+              }
+
+              if (dataHTML == 'not valid')
+                alert('Please filled required field');
+            }
+          });
+
+
+        } else {
+          alert('Please filled required field');
+        }
+      });
+
+      $('#editExp').click(function(e) {
+        var valid = true;
+
+        var c_company = document.getElementsByName('c_company[]');
+        var c_title = document.getElementsByName('c_exptitle[]');
+        var c_loc = document.getElementsByName('c_loc[]');
+        var c_provinsi = document.getElementsByName('c_provinsi[]');
+        var c_negara = document.getElementsByName('c_negara[]');
+        var c_typetimeperiod = document.getElementsByName('c_typetimeperiod[]');
+        var c_year = document.getElementsByName('c_year[]');
+        var c_typetimeperiod2 = document.getElementsByName('c_typetimeperiod2[]');
+        var c_year2 = document.getElementsByName('c_year2[]');
+        var c_work = document.getElementsByName('c_work[]');
+        var c_actv = document.getElementsByName('c_actv[]');
+        var c_desc = document.getElementsByName('c_desc[]');
+        var expid = document.getElementsByName('expid[]');
+        var exp_image_url = document.getElementsByName('exp_image_url[]');
+
+        for (key = 0; key < c_company.length; key++) {
+          if (c_company[key].value == '')
+            valid = false;
+        }
+        for (key = 0; key < c_title.length; key++) {
+          if (c_title[key].value == '')
+            valid = false;
+        }
+        for (key = 0; key < c_loc.length; key++) {
+          if (c_loc[key].value == '')
+            valid = false;
+        }
+        for (key = 0; key < c_provinsi.length; key++) {
+          if (c_provinsi[key].value == '')
+            valid = false;
+        }
+        for (key = 0; key < c_negara.length; key++) {
+          if (c_negara[key].value == '')
+            valid = false;
+        }
+        for (key = 0; key < c_typetimeperiod.length; key++) {
+          if (c_typetimeperiod[key].value == '')
+            valid = false;
+        }
+        for (key = 0; key < c_year.length; key++) {
+          if (c_year[key].value == '')
+            valid = false;
+        }
+
+        for (key = 0; key < c_work.length; key++) {
+          if ($(c_work[key]).is(':checked') == false && (c_typetimeperiod2[key].value == '' || c_year2[key].value == '')) {
+            valid = false;
+          }
+          //valid = false;
+        }
+        /*for(key=0; key < c_desc.length; key++)  {
+        	if(c_desc[key].value == '')
+        	valid = false;
+        }*/
+
+
+        for (key = 0; key < c_year.length; key++) {
+          if (c_year[key].value != '' && isNumeric(c_year[key].value) == true && c_year2[key].value != '' && isNumeric(c_year2[key].value) == true && c_typetimeperiod[key].value != '' && c_typetimeperiod2[key].value != '' && $(c_work[key]).is(':checked') == false) {
+            var s = new Date(c_year[key].value, c_typetimeperiod[key].value, 01);
+            var e = new Date(c_year2[key].value, c_typetimeperiod2[key].value, 01);
+            if (s > e) {
+              alert('Tanggal tidak valid');
+              return false;
+            }
+          }
+        }
+
+        if (valid == true) {
+          //e.preventDefault();
+
+          var c_companyx = $('input[name="c_company[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_titlex = $('input[name="c_exptitle[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_locx = $('input[name="c_loc[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_negarax = $('input[name="c_negara[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_provinsix = $('input[name="c_provinsi[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_typetimeperiodx = $('select[name="c_typetimeperiod[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_yearx = $('input[name="c_year[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_typetimeperiod2x = $('select[name="c_typetimeperiod2[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_year2x = $('input[name="c_year2[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_workx = $('input[name="c_work[]"]').map(function() {
+
+
+            return $(this).is(':checked');
+          }).get();
+          var c_descx = $('textarea[name="c_desc[]"]').map(function() {
+            return this.value;
+          }).get();
+          var c_actvx = $('textarea[name="c_actv[]"]').map(function() {
+            return this.value;
+          }).get();
+          var expidx = $('input[name="expid[]"]').map(function() {
+            return this.value;
+          }).get();
+          var exp_image_urlx = $('input[name="exp_image_url[]"]').map(function() {
+            return this.value;
+          }).get();
+          var dataHTML = 'not valid';
+
+          $.ajax({
+            url: '<?php echo site_url('member/edit_exp') ?>',
+            dataType: "html",
+            type: "POST",
+            async: true, //false
+            data: {
+              'company[]': c_companyx,
+              'title[]': c_titlex,
+              'loc[]': c_locx,
+              'provinsi[]': c_provinsix,
+              'negara[]': c_negarax,
+              'typetimeperiod[]': c_typetimeperiodx,
+              'year[]': c_yearx,
+              'typetimeperiod2[]': c_typetimeperiod2x,
+              'year2[]': c_year2x,
+              'work[]': c_workx,
+              'actv[]': c_actvx,
+              'desc[]': c_descx,
+              'expid[]': expidx,
+              'exp_image_url[]': exp_image_urlx
+            },
+            success: function(jsonObject, status) {
+              console.log(jsonObject);
+              if ((jsonObject != 'not valid')) {
+                dataHTML = jsonObject;
+              }
+
+              if (dataHTML == 'not valid')
+                alert('Please filled required field');
+            }
+          });
+
+
+        } else {
+          alert('Please filled required field');
+        }
+      });
+
+    });
+
+    function isEmail(email) {
+      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+      return regex.test(email);
+    }
+
+    function isNumeric(n) {
+      return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+
+    function isFloat(val) {
+      var floatRegex = /^-?\d+(?:[.,]\d*?)?$/;
+      if (!floatRegex.test(val))
+        return false;
+
+      val = parseFloat(val);
+      if (isNaN(val))
+        return false;
+      return true;
+    }
+
+    function upload_ktp() {
+      var formData = new FormData();
+      formData.append('ktp', $('#ktp')[0].files[0]);
+
+      $("#errUpload").html("");
+      $("#errUpload").addClass("loader");
+      $("#ktp").addClass("hide");
+
+      $.ajax({
+        url: "<?php echo site_url('member/ktp_upload') ?>",
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(data, textStatus, jqXHR) {
+          if (data.substring(0, 6) == '<input') {
+            $('#avatar').html($(data).fadeIn('slow'));
+            uploadFlag = 1;
+            $('#errUpload').html($('').fadeIn('slow'));
           } else {
-            preview.innerHTML = "<p class='text-danger'>Format tidak didukung.</p>";
+            $('#errUpload').html($(data).fadeIn('slow'));
+            $('#avatar').html('');
+            $('#ktp').val('');
           }
+
+          $("#errUpload").removeClass("loader");
+          $("#ktp").removeClass("hide");
+          $('#ktp').val('');
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          $('#errUpload').html($(textStatus).fadeIn('slow'));
+
+          $("#errUpload").removeClass("loader");
+          $("#ktp").removeClass("hide");
+          $('#ktp').val('');
+
+        }
+      });
+    }
+
+
+
+    function upload_edu(edu) {
+      var formData = new FormData();
+      formData.append('file', $('#' + edu)[0].files[0]);
+
+      $('#errUpload' + edu).html("");
+      $('#errUpload' + edu).addClass("loader");
+      $('#' + edu).addClass("hide");
+
+      $.ajax({
+        url: "<?php echo site_url('member/edu_upload') ?>",
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(data, textStatus, jqXHR) {
+          if (data.substring(0, 6) == '<input') {
+            $('#avatar' + edu).html($(data).fadeIn('slow'));
+            uploadFlag = 1;
+            $('#errUpload' + edu).html($('').fadeIn('slow'));
+          } else {
+            $('#errUpload' + edu).html($(data).fadeIn('slow'));
+            $('#avatar' + edu).html('');
+            $('#' + edu).val('');
+          }
+
+          $('#errUpload' + edu).removeClass("loader");
+          $('#' + edu).removeClass("hide");
+          $('#' + edu).val('');
+
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          $('#errUpload' + edu).html($(textStatus).fadeIn('slow'));
+          $('#' + edu).val('');
+
+          $('#errUpload' + edu).removeClass("loader");
+          $('#' + edu).removeClass("hide");
+          $('#' + edu).val('');
+
+        }
+      });
+    }
+
+    function upload_cert(cert) {
+      var formData = new FormData();
+      formData.append('file', $('#' + cert)[0].files[0]);
+
+      $('#errUpload' + cert).html("");
+      $('#errUpload' + cert).addClass("loader");
+      $('#' + cert).addClass("hide");
+
+      $.ajax({
+        url: "<?php echo site_url('member/cert_upload') ?>",
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(data, textStatus, jqXHR) {
+          if (data.substring(0, 6) == '<input') {
+            $('#avatar' + cert).html($(data).fadeIn('slow'));
+            uploadFlag = 1;
+            $('#errUpload' + cert).html($('').fadeIn('slow'));
+          } else {
+            $('#errUpload' + cert).html($(data).fadeIn('slow'));
+            $('#avatar' + cert).html('');
+            $('#' + cert).val('');
+          }
+
+          $('#errUpload' + cert).removeClass("loader");
+          $('#' + cert).removeClass("hide");
+          $('#' + cert).val('');
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          $('#errUpload' + cert).html($(textStatus).fadeIn('slow'));
+          $('#' + cert).val('');
+
+          $('#errUpload' + cert).removeClass("loader");
+          $('#' + cert).removeClass("hide");
+          $('#' + cert).val('');
+        }
+      });
+    }
+
+    function upload_exp(exp) {
+      var formData = new FormData();
+      formData.append('file', $('#' + exp)[0].files[0]);
+
+      $('#errUpload' + exp).html("");
+      $('#errUpload' + exp).addClass("loader");
+      $('#' + exp).addClass("hide");
+
+      $.ajax({
+        url: "<?php echo site_url('member/exp_upload') ?>",
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(data, textStatus, jqXHR) {
+          if (data.substring(0, 6) == '<input') {
+            $('#avatar' + exp).html($(data).fadeIn('slow'));
+            uploadFlag = 1;
+            $('#errUpload' + exp).html($('').fadeIn('slow'));
+          } else {
+            $('#errUpload' + exp).html($(data).fadeIn('slow'));
+            $('#avatar' + exp).html('');
+            $('#' + exp).val('');
+          }
+
+          $('#errUpload' + exp).removeClass("loader");
+          $('#' + exp).removeClass("hide");
+          $('#' + exp).val('');
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          $('#errUpload' + exp).html($(textStatus).fadeIn('slow'));
+          $('#' + exp).val('');
+
+          $('#errUpload' + exp).removeClass("loader");
+          $('#' + exp).removeClass("hide");
+          $('#' + exp).val('');
+        }
+      });
+    }
+
+    function upload_pernyataan(textid) {
+      var formData = new FormData();
+      formData.append(textid, $('#' + textid)[0].files[0]);
+
+      $("#errUpload_" + textid).html("");
+      $("#errUpload_" + textid).addClass("loader");
+      $("#" + textid).addClass("hide");
+
+      $.ajax({
+        url: "<?php echo site_url('member/"+textid+"_upload') ?>",
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(data, textStatus, jqXHR) {
+          if (data.substring(0, 6) == '<input') {
+            $('#avatar_' + textid).html($(data).fadeIn('slow'));
+            uploadFlag = 1;
+            $("#errUpload_" + textid).html($('').fadeIn('slow'));
+          } else {
+            $("#errUpload_" + textid).html($(data).fadeIn('slow'));
+            $('#avatar_' + textid).html('');
+            $('#' + textid).val('');
+          }
+
+          $("#errUpload_" + textid).removeClass("loader");
+          $("#" + textid).removeClass("hide");
+          $('#' + textid).val('');
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          $("#errUpload_" + textid).html($(textStatus).fadeIn('slow'));
+
+          $("#errUpload_" + textid).removeClass("loader");
+          $("#" + textid).removeClass("hide");
+          $('#' + textid).val('');
+
+        }
+      });
+    }
+
+    function tipe_school(id) {
+      var temp = '';
+      if (id != 1) temp = id;
+
+      $('#c_prefix_title' + temp).val('');
+      $('#c_title' + temp).val('');
+
+      var c_school_type = $('#c_school_type' + temp).val();
+      var label_c_tahun = $('#label_c_tahun' + temp);
+      var label_c_fos = $('#label_c_fos' + temp);
+      var label_c_score = $('#label_c_score' + temp);
+      var targetId = $('#c_degree' + temp).val();
+
+      if (c_school_type == 1) {
+        $('#label_c_tahun' + temp).html('Tahun<span class="red"> *</span>');
+        $('#label_c_fos' + temp).html('Jurusan/Kejuruan<span class="red"> *</span>');
+        $('#label_c_score' + temp).html('IPK<span class="red"> *</span>');
+        $('#c_score' + temp).prop('required', true);
+
+        $('#c_degree' + temp).show();
+        $('#c_degree' + temp).prop('required', true);
+
+        $('#c_mayor' + temp).show();
+        $('#c_mayor' + temp).prop('required', true);
+
+        $('#label_c_tingkat' + temp).show();
+        $('#label_c_mayor' + temp).show();
+
+        $('#c_degree' + temp).find('option').remove();
+        $.fn.populate = function() {
+          $(this)
+            .append('<option value="D3">D3</option>')
+            .append('<option value="D4">D4</option>')
+            .append('<option value="S1">S1</option>')
+            .append('<option value="S2">S2</option>')
+            .append('<option value="S3">S3</option>')
+        }
+
+        $('#c_degree' + temp).populate();
+      } else {
+        $('#label_c_tahun' + temp).html('Tahun Lulus<span class="red"> *</span>');
+        $('#label_c_fos' + temp).html('Nomor Sertifikat<span class="red"> *</span>');
+        $('#label_c_score' + temp).html('Nilai');
+        $('#c_score' + temp).prop('required', false);
+
+        $('#c_degree' + temp).find('option').remove();
+
+        $('#c_degree' + temp).hide();
+        $('#c_degree' + temp).prop('required', false);
+
+        $('#c_mayor' + temp).hide();
+        $('#c_mayor' + temp).prop('required', false);
+
+        $('#label_c_tingkat' + temp).hide();
+        $('#label_c_mayor' + temp).hide();
+
+        /*$.fn.populate = function() {
+          $(this)
+        	.append('<option value="IPP">IPP</option>')
+        	.append('<option value="IPM">IPM</option>')
+        	.append('<option value="IPU">IPU</option>')
+        }
+
+        $('#c_degree'+temp).populate();*/
+      }
+
+      //alert(label_c_tahun.innerHTML);
+    }
+
+    function cek_warga() {
+      var warga = $('input[name="warga_asing"]:checked').val();
+      if (warga == 1) {
+        $('#valid_warga[value="Citizen"]').attr('disabled', 'disabled');
+        $('input[name="typeid"][value="Passport"]').prop("checked", true);
+        $('.iswna').css('display', 'block');
+      } else {
+        $('#valid_warga[value="Citizen"]').attr('disabled', false);
+        $('.iswna').css('display', 'none');
+
+      }
+    }
+  </script>
+  <style>
+    .tt-query {
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+      -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    }
+
+    .tt-hint {
+      color: #999
+    }
+
+    .tt-menu {
+      /* used to be tt-dropdown-menu in older versions */
+      width: 422px;
+      margin-top: 4px;
+      padding: 4px 0;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      border-radius: 4px;
+      -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+      -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    }
+
+    .tt-suggestion {
+      padding: 3px 20px;
+      line-height: 24px;
+    }
+
+    .tt-suggestion.tt-cursor,
+    .tt-suggestion:hover {
+      color: #fff;
+      background-color: #0097cf;
+
+    }
+
+    .tt-suggestion p {
+      margin: 0;
+    }
+
+    .red {
+      color: red;
+    }
+
+    .loader {
+      border: 16px solid #f3f3f3;
+      /* Light grey */
+      border-top: 16px solid #3498db;
+      /* Blue */
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      animation: spin 2s linear infinite;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+
+  <script>
+    function upload_photo() {
+      var formData = new FormData();
+      formData.append('photo', $('#photo')[0].files[0]);
+
+      $("#errUpload2").html("");
+      $("#errUpload2").addClass("loader");
+      $("#photo").addClass("hide");
+
+      $.ajax({
+        url: "<?php echo site_url('member/photo_upload') ?>",
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(data, textStatus, jqXHR) {
+          if (data.substring(0, 6) == '<input') {
+            $('#avatar2').html($(data).fadeIn('slow'));
+            uploadFlag = 1;
+            $('#errUpload2').html($('').fadeIn('slow'));
+          } else {
+            $('#errUpload2').html($(data).fadeIn('slow'));
+            $('#avatar2').html('');
+            //$('#photo').val('');
+          }
+
+          $("#errUpload2").removeClass("loader");
+          $("#photo").removeClass("hide");
+          $('#photo').val('');
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          $('#errUpload2').html($(textStatus).fadeIn('slow'));
+
+
+          $("#errUpload2").removeClass("loader");
+          $("#photo").removeClass("hide");
+          $('#photo').val('');
+        }
+      });
+    }
+  </script>
+
+  <script>
+    function previewFile(input, previewId) {
+      var file = input.files[0];
+      var preview = document.getElementById(previewId);
+      preview.innerHTML = ""; // reset
+
+      if (file) {
+        var fileType = file.type;
+
+        if (fileType.match('image.*')) {
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            preview.innerHTML = "<img src='" + e.target.result + "' class='img-thumbnail' width='200'>";
+          };
+          reader.readAsDataURL(file);
+        } else if (fileType === "application/pdf") {
+          preview.innerHTML = "<embed src='" + URL.createObjectURL(file) + "' type='application/pdf' width='100%' height='400px'>";
+        } else {
+          preview.innerHTML = "<p class='text-danger'>Format tidak didukung.</p>";
         }
       }
-    </script>
+    }
+  </script>
