@@ -1153,6 +1153,50 @@ class Member extends CI_Controller
 		$this->load->view('member/profile_view', $data);
 	}
 
+
+	//Secure File Access BY Rizal
+	public function idcard_file($filename = '')
+	{
+		// Pastikan sudah login
+		if (!$this->session->userdata('user_id')) {
+			redirect('auth/login');
+		}
+
+		// Cegah path traversal
+		$filename = basename($filename);
+
+		$user_id = $this->session->userdata('user_id');
+
+		// --- Validasi file terhadap user_profiles ---
+		$this->db->where('user_id', $user_id);
+		$this->db->where('id_file', $filename);
+		$row = $this->db->get('user_profiles')->row();
+
+		if (!$row) {
+			// Kalau bukan file miliknya
+			show_error('Anda tidak berhak mengakses file ini', 403);
+			return;
+		}
+
+		// Path file di server
+		$filepath = FCPATH . 'assets/uploads/' . $filename;
+
+		if (file_exists($filepath)) {
+			$mime = mime_content_type($filepath);
+			header('Content-Type: ' . $mime);
+			header('Content-Length: ' . filesize($filepath));
+			header('Cache-Control: private');
+			header('Content-Disposition: inline; filename="' . $filename . '"');
+			readfile($filepath);
+			exit;
+		} else {
+			show_404();
+		}
+	}
+
+
+
+
 	function profile_old()
 	{
 		if ($this->session->userdata('user_id') == '') {
@@ -5618,26 +5662,24 @@ EOD;
 		// ambil no_kta dari member berdasarkan user_id
 		$member = $this->simpan_model->cari_di_member($id);
 		if ($member && !empty($member->no_kta)) {
-			$nokta = trim($member->no_kta);
+			$id = trim($member->no_kta);
+			$nokta = $id;
 		}
 
-		// buat varian nokta: padded ke 6 digit + beberapa alternatif (tanpa leading zeros, substring)
-		$nokta1 = $nokta !== '' ? str_pad($nokta, 6, '0', STR_PAD_LEFT) : '';
+		// buat varian nokta: padded ke 6 digit + beberapa alternatif
+		$id = $nokta !== '' ? str_pad($nokta, 6, '0', STR_PAD_LEFT) : '';
 		$variants = [];
-		if ($nokta1 !== '') {
-			$variants[] = $nokta1;
-			$variants[] = ltrim($nokta1, '0');               // tanpa leading zeros
-			if (strlen($nokta1) >= 5) $variants[] = substr($nokta1, 1, 5);
-			if (strlen($nokta1) >= 4) $variants[] = substr($nokta1, 2, 4);
+		if ($id !== '') {
+			$variants[] = $id;
+			$variants[] = ltrim($id, '0');               // tanpa leading zeros
+			if (strlen($id) >= 5) $variants[] = substr($id, 1, 5);
+			if (strlen($id) >= 4) $variants[] = substr($id, 2, 4);
 		}
-		// bersihkan dan unikkan varian
-		$variants = array_values(array_unique(array_filter($variants, function ($v) {
-			return $v !== '' && $v !== null;
-		})));
+		$variants = array_values(array_unique(array_filter($variants)));
 
-		// ambil nama (coba pake nokta1 dulu, lalu nokta original)
+		// ambil nama
 		$cari_nama = null;
-		if ($nokta1 !== '') $cari_nama = $this->simpan_model->ambil_nama($nokta1);
+		if ($id !== '') $cari_nama = $this->simpan_model->ambil_nama($id);
 		if (!$cari_nama && $nokta !== '') $cari_nama = $this->simpan_model->ambil_nama($nokta);
 		if ($cari_nama) {
 			$namad = $cari_nama->namad ?? '';
@@ -5645,11 +5687,10 @@ EOD;
 			$nama = trim($namad . ' ' . $namab);
 		}
 
-		// inisialisasi data default supaya view tidak error
+		// inisialisasi data default
 		$data = array_merge($data, [
 			'nama' => $nama,
 			'nokta' => $nokta,
-			'nokta1' => $nokta1,
 			'kode_apec' => '',
 			'nosip' => '',
 			'noreg' => '',
@@ -5660,7 +5701,7 @@ EOD;
 			'no_aer' => '',
 			'grade' => '',
 			'url_aer' => '',
-			// skip & stri default = null
+			// skip & stri default
 			'sk_skip' => null,
 			'skip_from' => null,
 			'skip_thru' => null,
@@ -5674,7 +5715,7 @@ EOD;
 			'stri_thru' => null
 		]);
 
-		// helper: cari dengan varian sampai ketemu (mengembalikan object hasil atau null)
+		// helper cari data
 		$try_find = function ($methodName) use ($variants) {
 			foreach ($variants as $v) {
 				$c = $this->simpan_model->{$methodName}($v);
@@ -5706,32 +5747,35 @@ EOD;
 			$data['no_aer'] = $c->no_aer ?? '';
 			$data['grade'] = $c->grade ?? '';
 			$data['url_aer'] = $c->url_aer ?? '';
-			// hati-hati: kalau AER punya nama, jangan overwrite nama utama kecuali memang ingin begitu
 			if (!empty($c->nama)) $data['nama'] = $c->nama;
 		}
 
-		// SKIP & STRI (sertifikat terakhir)
-		$c = $try_find('cari_di_member_serti_akhir');
-		if ($c) {
-			$data['sk_skip']   = $c->skip_sk ?? null;
-			$data['skip_from'] = $c->skip_from_date ?? null;
-			$data['skip_thru'] = $c->skip_thru_date ?? null;
-			$data['skip_id']   = $c->skip_id ?? null;
-			$data['cert_type'] = $c->certificate_type ?? null;
+		// SKIP & STRI ? hanya kalau ada sertifikat
+		if ($this->simpan_model->cek_sertifikat_member($id)) {
+			$c = $try_find('cari_di_member_serti_akhir');
+			if ($c && !empty($c->skip_id)) {
+				$data['sk_skip']   = $c->skip_sk ?? null;
+				$data['skip_from'] = $c->skip_from_date ?? null;
+				$data['skip_thru'] = $c->skip_thru_date ?? null;
+				$data['skip_id']   = $c->skip_id ?? null;
+				$data['cert_type'] = $c->certificate_type ?? null;
 
-			// mapping tipe sertifikat
-			$ct = $data['cert_type'];
-			$data['cert_ket'] = ($ct == 1) ? 'IPP' : (($ct == 2) ? 'IPM' : (($ct == 3) ? 'IPU' : null));
+				$ct = $data['cert_type'];
+				$data['cert_ket'] = ($ct == 1) ? 'IPP' : (($ct == 2) ? 'IPM' : (($ct == 3) ? 'IPU' : null));
 
-			$data['stri_id']   = $c->stri_id ?? null;
-			$data['stri_sk']   = $c->stri_sk ?? null;
-			$data['stri_tipe'] = $c->stri_tipe ?? null;
-			$data['stri_from'] = $c->stri_from_date ?? null;
-			$data['stri_thru'] = $c->stri_thru_date ?? null;
+				$data['stri_id']   = $c->stri_id ?? null;
+				$data['stri_sk']   = $c->stri_sk ?? null;
+				$data['stri_tipe'] = $c->stri_tipe ?? null;
+				$data['stri_from'] = $c->stri_from_date ?? null;
+				$data['stri_thru'] = $c->stri_thru_date ?? null;
+			}
 		}
+
+
 
 		$this->load->view('member/sertifikat_aplikan', $data);
 	}
+
 
 
 
@@ -6221,12 +6265,11 @@ EOD;
 					if ($size < (710000)) {
 						//$actual_image_name = time().substr(str_replace(" ", "_", $txt), 5).".".$ext;
 
-						//Untuk membuat nama file photo menjadi format TGL_PHOTO_IDUSER.JPG/PNG/PDF
 						$actual_image_name = time() . "_PHOTO_" . $this->session->userdata('user_id') . "." . $extx;
 
 						$config['upload_path'] = './assets/uploads/';
 						$config['allowed_types'] = '*';
-						$config['max_size']	= '710'; //Maksimal ukuran file foto 700kb
+						$config['max_size']	= '710';
 						$config['file_name'] = $actual_image_name;
 
 						$this->load->library('upload', $config);
