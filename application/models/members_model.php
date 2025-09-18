@@ -5177,14 +5177,10 @@ user_pkb.is_upgrade_paid,user_pkb.createddate,user_pkb.createdby,user_pkb.modifi
 			if ($v['data'] == "endyear" && $v['search']['value'] != '') {
 				$this->db->like("endyear", $v['search']['value']);
 			}
-			// filter tanggal (di luar like, pakai where)
-			if ($v['data'] == "startyear") {
-				if (!empty($filter['sk_start_date']) && !empty($filter['sk_end_date'])) {
-					$this->db->where("DATE(startyear) >=", $filter['sk_start_date']);
-					$this->db->where("DATE(startyear) <=", $filter['sk_end_date']);
-				}
-			}
 		}
+
+
+
 
 		foreach ($filter as $v => $w) {
 			if ($v == 'status') {
@@ -5196,12 +5192,17 @@ user_pkb.is_upgrade_paid,user_pkb.createddate,user_pkb.createdby,user_pkb.modifi
 				$this->db->where(('LPAD(user_cert.ip_bk, 2, "0") like "' . $w . '%"'), null);
 			} else if ($v == 'hkk') {
 				$this->db->where(('LPAD(user_cert.ip_c, 2, "0") like "' . $w . '%"'), null);
-			} else if ($v == 'sk_start_date') {
-				$this->db->where(("DATE(user_cert.createddate)>='" . $w . "'"), null);
-			} else if ($v == 'sk_end_date') {
-				$this->db->where(("DATE(user_cert.createddate)<='" . $w . "'"), null);
+			} else if ($v == 'sk_start_date' && !empty($w) && empty($filter['sk_end_date'])) {
+				// hanya 1 tanggal diisi → exact match
+				$this->db->where("DATE(user_cert.startyear) = ", $w);
+			} else if ($v == 'sk_start_date' && !empty($w) && !empty($filter['sk_end_date'])) {
+				// kalau ada start & end date → pakai BETWEEN
+				$this->db->where("DATE(user_cert.startyear) >=", $w);
+			} else if ($v == 'sk_end_date' && !empty($w) && !empty($filter['sk_start_date'])) {
+				$this->db->where("DATE(user_cert.startyear) <=", $w);
 			}
 		}
+
 
 		$this->db->order_by($order_field, $order_ascdesc);
 		//$this->db->order_by("sk_end", "desc");

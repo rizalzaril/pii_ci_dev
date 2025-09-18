@@ -7925,10 +7925,10 @@ EOD;
 		$filter['hkk'] = $_POST['filter_hkk'];
 		$filter['cab'] = $_POST['filter_cab'];
 
-		// if ($_POST['sk_start_date'] != '')
-		// 	$filter['sk_start_date'] = $_POST['sk_start_date'];
-		// if ($_POST['sk_end_date'] != '')
-		// 	$filter['sk_end_date'] = $_POST['sk_end_date'];
+		if ($_POST['sk_start_date'] != '')
+		$filter['sk_start_date'] = $_POST['sk_start_date'];
+	if ($_POST['sk_end_date'] != '')
+		$filter['sk_end_date'] = $_POST['sk_end_date'];
 
 
 
