@@ -38,20 +38,25 @@
     #notif-list {
       display: none;
       position: absolute;
-      right: 0;
       margin-top: 10px;
       background: #fff;
-      width: 300px;
+      width: 500px;
       border: 1px solid #ddd;
       border-radius: 5px;
       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
       list-style: none;
       padding: 0;
       z-index: 1000;
+
+      max-height: 500px;
+      /* batas tinggi box */
+      overflow-y: auto;
+      /* aktifkan scroll vertikal */
     }
 
+
     #notif-list li {
-      padding: 10px;
+      padding: 15px;
       border-bottom: 1px solid #eee;
       font-size: 14px;
     }

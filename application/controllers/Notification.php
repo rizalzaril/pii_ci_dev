@@ -28,7 +28,7 @@ class Notification extends CI_Controller
   {
     $query = $this->db->order_by('id', 'DESC')
       // ->where('is_read', 0)
-      ->get('notifications', 5);
+      ->get('notifications'); // batasi hanya 10 notifikasi terbaru
     echo json_encode($query->result());
   }
 
