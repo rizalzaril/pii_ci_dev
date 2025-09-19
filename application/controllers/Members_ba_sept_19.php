@@ -1,6 +1,7 @@
-<?php
 
-<?php if (! defined('BASEPATH')) exit('No direct script access allowed');
+
+<?php 
+if (! defined('BASEPATH')) exit('No direct script access allowed');
 require_once(APPPATH . 'libraries/phpass-0.1/PasswordHash.php');
 
 const __BYPASS_AUTH_FOR_TEST__ = FALSE;
@@ -20927,7 +20928,6 @@ EOD;
 
 	function lapkeu()
 	{
-
 		$this->load->model('Members_model');
 		$data_lapkeu = $this->members_model->get_user_transfer();
 		$data['data_lapkeu'] = $lapkeu;
