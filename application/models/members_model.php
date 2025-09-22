@@ -648,36 +648,47 @@ class Members_Model extends CI_Model
 
 	public function get_all_members_v2($per_page, $page, $bk, $wil, $is_kolektif)
 	{
-		$this->db->select('users.id as ID, (select no_kta from members where person_id=users.id limit 1) as no_kta, ' .
-			'users.email, user_profiles.firstname, user_profiles.lastname, user_profiles.gender, user_profiles.idcard, ' .
-			'user_profiles.dob, users.user_status as sts, (select code_wilayah from members ' .
-			'where person_id=users.id limit 1) as cab,(select code_bk_hkk from members where person_id=users.id limit 1) as bk, ' .
-			'(select code_hkk from members where person_id=users.id limit 1) as hkk, ' .
-			'(select from_date from members where person_id=users.id limit 1) as from_date, ' .
-			'(select thru_date from members where person_id=users.id limit 1) as thru_date, ' .
-			'(select jenis_anggota from members where person_id=users.id limit 1) as jenis_anggota, ' .
-			'(select id from user_cert where user_id=users.id and status=2 and endyear>curdate() limit 1) as ip, ' .
-			'user_profiles.kolektif_ids, (select name from m_kolektif where status=1 and id=user_profiles.kolektif_name_id) as kolektif_name, ' .
-			'warga_asing,username,kolektif_name_id');
+		$this->db->select('
+    users.id as ID,
+    m.no_kta,
+    users.email,
+    user_profiles.firstname,
+    user_profiles.lastname,
+    user_profiles.gender,
+    user_profiles.idcard,
+    user_profiles.dob,
+    users.user_status as sts,
+    m.code_wilayah as cab,
+    m.code_bk_hkk as bk,
+    m.code_hkk as hkk,
+    m.from_date,
+    m.thru_date,
+    m.jenis_anggota,
+    (select id from user_cert where user_id=users.id and status=2 and endyear>curdate() limit 1) as ip,
+    user_profiles.kolektif_ids,
+    m_kolektif.name as kolektif_name,
+    user_profiles.warga_asing,
+    users.username,
+    user_profiles.kolektif_name_id
+');
 		$this->db->from('user_profiles');
 		$this->db->join('users', 'user_profiles.user_id = users.id', 'left');
-		$this->db->join('members', 'members.person_id = user_profiles.user_id', 'left');
-		//-------------------------------------------------------------------------------------------------- Tambahan by IP -----		
+		$this->db->join('members m', 'm.person_id = user_profiles.user_id', 'left');
+		$this->db->join('m_kolektif', 'm_kolektif.id = user_profiles.kolektif_name_id and m_kolektif.status = 1', 'left');
+
+		//-------------------------------------------------------------------------------------------------- Tambahan by IP -----        
 		if (strlen(trim($bk)) != 0) {
-			$this->db->join('members', 'user_profiles.user_id = members.person_id', 'left');
-			//		$this->db->where('members.code_bk_hkk', $bk) ; 
-			$this->db->where('LPAD(members.code_bk_hkk,2,"0")', $bk); //LPAD( code_bk_hkk, 2, '0' )
+			$this->db->where('LPAD(m.code_bk_hkk,2,"0")', $bk);
 		}
 		if (strlen(trim($wil)) != 0) {
 			if (strlen(trim($wil)) != 2) {
-				$this->db->join('members', 'user_profiles.user_id = members.person_id', 'left');
-				$this->db->where('members.code_wilayah', $wil); 				// untuk perbaikan tampilan per cabang tambahan by Ip		
+				$this->db->where('m.code_wilayah', $wil);   // per cabang tambahan by Ip
 			}
 			if (strlen(trim($wil)) == 2) {
-				$this->db->join('members', 'user_profiles.user_id = members.person_id', 'left');
-				$this->db->where('members.wil_id', $wil); 				// untuk perbaikan tampilan per cabang tambahan by Ip		
+				$this->db->where('m.wil_id', $wil);         // per wilayah tambahan by Ip
 			}
 		}
+
 		//---------------------------------------------------------------------------------------------------------------------		
 
 
@@ -5192,17 +5203,12 @@ user_pkb.is_upgrade_paid,user_pkb.createddate,user_pkb.createdby,user_pkb.modifi
 				$this->db->where(('LPAD(user_cert.ip_bk, 2, "0") like "' . $w . '%"'), null);
 			} else if ($v == 'hkk') {
 				$this->db->where(('LPAD(user_cert.ip_c, 2, "0") like "' . $w . '%"'), null);
-			} else if ($v == 'sk_start_date' && !empty($w) && empty($filter['sk_end_date'])) {
-				// hanya 1 tanggal diisi → exact match
-				$this->db->where("DATE(user_cert.startyear) = ", $w);
-			} else if ($v == 'sk_start_date' && !empty($w) && !empty($filter['sk_end_date'])) {
-				// kalau ada start & end date → pakai BETWEEN
-				$this->db->where("DATE(user_cert.startyear) >=", $w);
-			} else if ($v == 'sk_end_date' && !empty($w) && !empty($filter['sk_start_date'])) {
-				$this->db->where("DATE(user_cert.startyear) <=", $w);
+			} else if ($v == 'sk_start_date') {
+				$this->db->where(("DATE(user_cert.startyear)>='" . $w . "'"), null);
+			} else if ($v == 'sk_end_date') {
+				$this->db->where(("DATE(user_cert.startyear)<='" . $w . "'"), null);
 			}
 		}
-
 
 		$this->db->order_by($order_field, $order_ascdesc);
 		//$this->db->order_by("sk_end", "desc");
@@ -6405,5 +6411,237 @@ user_pkb.is_upgrade_paid,user_pkb.createddate,user_pkb.createdby,user_pkb.modifi
 	public function save_data_lap_temp($data_insert_lap_temp)
 	{
 		return $this->db->insert('laporan_skip_temp', $data_insert_lap_temp);
+	}
+
+	var $table = 'user_transfer'; // sesuaikan
+	var $column_order = array(null, 'tgl_pengajuan', 'cab', 'bk', 'no_kta');
+	var $column_search = array('firstname', 'lastname', 'email', 'no_kta');
+	var $order = array('tgl_pengajuan' => 'desc');
+
+
+	// ✅ Query utama untuk datatables
+	private function _get_datatables_query($is_kolektif = false, $bk = "", $wil = "")
+	{
+		$this->db->select('
+        users.id as ID,
+        users.username as no_kta,
+        users.email,
+        user_profiles.firstname,
+        user_profiles.lastname,
+        user_profiles.gender,
+        user_profiles.idcard,
+        user_profiles.dob,
+        users.user_status as sts,
+        user_profiles.warga_asing,
+        user_profiles.sertifikat_legal,
+        user_profiles.tanda_bukti,
+        user_profiles.surat_dukungan,
+        user_profiles.surat_pernyataan,
+        user_profiles.surat_ijin_domisili,
+
+        ut_last.atasnama as payname,
+        ut_last.tgl as paydate,
+        ut_last.description as paydesc,
+        ut_last.bukti as payfile,
+        ut_last.status as paystatus,
+
+        ut_last.iuranpangkal as payiuranpangkal,
+        ut_last.iurantahunan as payiurantahunan,
+        ut_last.sukarelaanggota as paysukarelaanggota,
+        ut_last.sukarelagedung as paysukarelagedung,
+        ut_last.sukarelaperpus as paysukarelaperpus,
+        ut_last.sukarelaceps as paysukarelaceps,
+        ut_last.sukarelatotal as paysukarelatotal,
+        ut_last.id as payid,
+
+        uc_last.lic_num as sip_lic_num,
+        uc_last.startyear as sip_startyear,
+        uc_last.endyear as sip_endyear,
+
+        (SELECT x.id FROM user_transfer x WHERE x.pay_type=2 AND x.user_id = user_profiles.user_id ORDER BY x.createddate DESC LIMIT 1) as id_pay_cek,
+        (SELECT y.id_pay FROM user_transfer x JOIN log_her_kta y ON y.id_pay=x.id WHERE x.pay_type=2 AND x.user_id=user_profiles.user_id ORDER BY x.createddate DESC LIMIT 1) as id_pay,
+
+        (SELECT from_date FROM user_transfer x JOIN log_her_kta y ON y.id_pay=x.id WHERE x.pay_type=2 AND x.user_id=user_profiles.user_id ORDER BY x.createddate DESC LIMIT 1) as plan_from_date,
+        (SELECT thru_date FROM user_transfer x JOIN log_her_kta y ON y.id_pay=x.id WHERE x.pay_type=2 AND x.user_id=user_profiles.user_id ORDER BY x.createddate DESC LIMIT 1) as plan_thru_date,
+
+        ut_last.vnv_status,
+        ut_last.remark,
+
+        (SELECT code_wilayah FROM members WHERE person_id=users.id LIMIT 1) as cab,
+        (SELECT code_bk_hkk FROM members WHERE person_id=users.id LIMIT 1) as bk,
+        (SELECT from_date FROM members WHERE person_id=users.id LIMIT 1) as from_date,
+        (SELECT thru_date FROM members WHERE person_id=users.id LIMIT 1) as thru_date,
+
+        ut_last.createddate as tgl_pengajuan
+    ');
+
+		$this->db->from('user_profiles');
+		$this->db->join('users', 'user_profiles.user_id = users.id', 'left');
+
+		// ✅ Ambil transfer terakhir per user
+		$this->db->join("(
+        SELECT t1.* FROM user_transfer t1
+        INNER JOIN (
+            SELECT user_id, MAX(createddate) as last_created
+            FROM user_transfer
+            WHERE pay_type=2
+            GROUP BY user_id
+        ) t2 ON t1.user_id = t2.user_id AND t1.createddate = t2.last_created
+    ) ut_last", 'ut_last.user_id = users.id', 'left', false);
+
+		// ✅ Ambil cert terakhir per user
+		$this->db->join("(
+        SELECT c1.* FROM user_cert c1
+        INNER JOIN (
+            SELECT user_id, MAX(endyear) as last_year
+            FROM user_cert
+            WHERE status=2
+            GROUP BY user_id
+        ) c2 ON c1.user_id = c2.user_id AND c1.endyear = c2.last_year
+    ) uc_last", 'uc_last.user_id = users.id', 'left', false);
+
+		$this->db->join('log_her_kta log', 'log.id_pay = ut_last.id', 'left');
+
+		$this->db->where('users.id in (select user_id from user_transfer where pay_type=2)', null, false);
+
+		// ✅ Filter kolektif
+		if ($is_kolektif) {
+			$str = '';
+			$str2 = '';
+			$i = 0;
+			$i2 = 0;
+
+			if (is_array($bk)) {
+				foreach ($bk as $val) {
+					$str .= ($i == 0 ? '' : ' OR ') . "LPAD(code_bk_hkk, 2, '0') LIKE '" . $val . "%'";
+					$i++;
+				}
+			} elseif ($bk != "") {
+				$str .= " LPAD(code_bk_hkk, 2, '0') LIKE '" . $bk . "%'";
+			}
+
+			if (is_array($wil)) {
+				foreach ($wil as $val) {
+					$str2 .= ($i2 == 0 ? '' : ' OR ') . "LPAD(code_wilayah, 4, '0') LIKE '" . $val . "%'";
+					$i2++;
+				}
+			} elseif ($wil != "") {
+				$str2 .= " LPAD(code_wilayah, 4, '0') LIKE '" . $wil . "%'";
+			}
+
+			$this->db->group_start();
+			if ($str != '') $this->db->where("user_profiles.user_id IN (SELECT person_id FROM members WHERE $str)", null, false);
+			if ($str2 != '') $this->db->or_where("user_profiles.user_id IN (SELECT person_id FROM members WHERE $str2)", null, false);
+			$this->db->group_end();
+		}
+
+		// ✅ Filter search DataTables
+		if (!empty($_POST['search']['value'])) {
+			$this->db->group_start();
+			$this->db->like('user_profiles.firstname', $_POST['search']['value']);
+			$this->db->or_like('user_profiles.lastname', $_POST['search']['value']);
+			$this->db->or_like('users.username', $_POST['search']['value']);
+			$this->db->group_end();
+		}
+
+		// ✅ Custom order by vnv_status
+		$this->db->order_by("(CASE
+        WHEN ut_last.vnv_status = 1 THEN 2
+        WHEN ut_last.vnv_status = 2 THEN 1
+        WHEN ut_last.vnv_status = 0 THEN 0
+        ELSE 1 END)", "ASC");
+		$this->db->order_by("ut_last.status", "asc");
+		$this->db->order_by("ut_last.createddate", "asc");
+
+		// ✅ Order bawaan DataTables
+		if (isset($_POST['order'])) {
+			$this->db->order_by(
+				$_POST['columns'][$_POST['order']['0']['column']]['data'],
+				$_POST['order']['0']['dir']
+			);
+		}
+	}
+
+
+	// ✅ Ambil data untuk DataTables
+	public function get_her_kta($is_kolektif = false, $bk = "", $wil = "")
+	{
+		$this->_get_datatables_query($is_kolektif, $bk, $wil);
+
+		$length = isset($_POST['length']) ? (int)$_POST['length'] : 10;
+		$start  = isset($_POST['start']) ? (int)$_POST['start'] : 0;
+
+		if ($length != -1) {
+			$this->db->limit($length, $start);
+		}
+
+		return $this->db->get()->result();
+	}
+
+	// ✅ hitung data setelah filter (ringan, tanpa join berat)
+	public function count_filtered_her($is_kolektif = false, $bk = "", $wil = "")
+	{
+		$this->db->select('users.id');
+		$this->db->from('users');
+		$this->db->join('user_profiles', 'user_profiles.user_id = users.id', 'left');
+		$this->db->join('members m', 'm.person_id = users.id', 'left');
+
+		if ($is_kolektif && !empty($bk)) {
+			$this->db->where_in("LPAD(m.code_bk_hkk,2,'0')", (array)$bk, false);
+		}
+		if ($is_kolektif && !empty($wil)) {
+			$this->db->where_in("LPAD(m.code_wilayah,4,'0')", (array)$wil, false);
+		}
+
+		if (!empty($_POST['search']['value'])) {
+			$this->db->group_start();
+			$this->db->like('user_profiles.firstname', $_POST['search']['value']);
+			$this->db->or_like('user_profiles.lastname', $_POST['search']['value']);
+			$this->db->or_like('users.username', $_POST['search']['value']);
+			$this->db->group_end();
+		}
+
+		return $this->db->count_all_results();
+	}
+
+	// ✅ hitung total semua data (tanpa filter)
+	public function count_all_her($bk = null, $wil = null, $is_kolektif = false)
+	{
+		$this->db->from('users');
+		$this->db->join('user_profiles', 'user_profiles.user_id = users.id', 'left');
+		$this->db->where('users.id IN (SELECT user_id FROM user_transfer WHERE pay_type = 2)', null, false);
+
+		if ($is_kolektif) {
+			$conditions = [];
+
+			if (!empty($bk)) {
+				$bk_array = is_array($bk) ? $bk : [$bk];
+				$bk_cond = [];
+				foreach ($bk_array as $val) {
+					$bk_cond[] = "LPAD(code_bk_hkk, 2, '0') LIKE '" . $val . "%'";
+				}
+				$conditions[] = 'user_profiles.user_id IN (SELECT person_id FROM members WHERE ' . implode(' OR ', $bk_cond) . ')';
+			}
+
+			if (!empty($wil)) {
+				$wil_array = is_array($wil) ? $wil : [$wil];
+				$wil_cond = [];
+				foreach ($wil_array as $val) {
+					$wil_cond[] = "LPAD(code_wilayah, 4, '0') LIKE '" . $val . "%'";
+				}
+				$conditions[] = 'user_profiles.user_id IN (SELECT person_id FROM members WHERE ' . implode(' OR ', $wil_cond) . ')';
+			}
+
+			if (!empty($conditions)) {
+				$this->db->group_start();
+				$this->db->where($conditions[0], null, false);
+				if (isset($conditions[1])) {
+					$this->db->or_where($conditions[1], null, false);
+				}
+				$this->db->group_end();
+			}
+		}
+
+		return $this->db->count_all_results();
 	}
 }
