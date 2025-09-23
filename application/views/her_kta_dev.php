@@ -249,29 +249,55 @@
 									?>
 									</strong> </div>
 
+								<style>
+									.table-sm td,
+									.table-sm th {
+										padding: .2rem;
+										/* kecilkan padding */
+									}
+								</style>
 
-								<table id="example2" style="font-size: 11px;" class="table table-bordered table-hover">
-									<thead>
-										<tr>
-											<th>Tanggal Pengajuan</th>
-											<th>Wilayah | Cabang</th>
-											<th>BK / HKK</th>
-											<th>No KTA</th>
-											<th>Period</th>
-											<th>Name/Email Address</th>
-											<th>Date of Birth</th>
-											<th>SIP</th>
-											<th>Warga</th>
-											<th>Dokumen</th>
-											<th>Payment Status</th>
-											<th>Deskripsi</th>
-											<th>Total Transfer</th>
-											<th>Bukti Transfer</th>
-											<th>Action</th>
-										</tr>
-									</thead>
-									<tbody></tbody>
-								</table>
+								<div id="tableOverlay" style="
+											display:none;
+											position:absolute;
+											top:0;
+											left:0;
+											width:100%;
+											height:100%;
+											background:rgba(255,255,255,0.8);
+											z-index:999;
+											text-align:center;
+											padding-top:100px;
+									">
+									<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+									<span style="font-size:18px;">Loading data...</span>
+								</div>
+
+								<div class="table-responsive" style="position:relative;">
+									<table id="example2" style="font-size: 12px;" class="table table-sm table-bordered table-hover">
+										<thead>
+											<tr>
+												<th>Tanggal Pengajuan</th>
+												<th>Wilayah | Cabang</th>
+												<th>BK / HKK</th>
+												<th>No KTA</th>
+												<th>Period</th>
+												<th>Name/Email Address</th>
+												<th>Date of Birth</th>
+												<th>SIP</th>
+												<th>Warga</th>
+												<th>Dokumen</th>
+												<th>Payment Status</th>
+												<th>Deskripsi</th>
+												<th>Total Transfer</th>
+												<th>Bukti Transfer</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+								</div>
+
 
 							</div>
 
@@ -479,14 +505,20 @@
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 	<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
+	<style>
+		/* kasih jarak bawah untuk area top (length, pagination, filter) */
+		div.dataTables_wrapper div.top {
+			margin-bottom: 10px;
+			/* bisa kamu atur misalnya 15px */
+		}
+	</style>
 
 	<script>
 		// aktifkan noConflict agar $ tidak bentrok
 		var jqDT = jQuery.noConflict(true);
 
 		jqDT(document).ready(function() {
-			jqDT('#example2').DataTable({
+			var table = jqDT('#example2').DataTable({
 				"processing": true,
 				"serverSide": true,
 				"ajax": {
@@ -541,10 +573,25 @@
 					{
 						"data": "action"
 					}
-				]
+				],
+
+				"dom": '<"top"lpf>rt<"bottom"ip><"clear">'
+				// "l" = length menu, "p" = pagination, "f" = filter (search box)
+				// "t" = table, "i" = information
+			});
+
+			// event: sebelum Ajax jalankan → tampilkan overlay
+			table.on('preXhr.dt', function() {
+				jqDT('#tableOverlay').show();
+			});
+
+			// event: sesudah Ajax selesai → sembunyikan overlay
+			table.on('xhr.dt', function() {
+				jqDT('#tableOverlay').hide();
 			});
 		});
 	</script>
+
 
 
 	<?php $this->load->view('admin/common/footer'); ?>

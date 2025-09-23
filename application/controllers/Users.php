@@ -98,7 +98,7 @@ class Users extends CI_Controller
 		}
 
 		$this->load->view('header'); // 
-		
+
 		$this->load->view('acpe_details_view', $data);
 		$this->load->view('footer'); // opsional
 	}

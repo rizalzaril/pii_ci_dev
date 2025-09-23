@@ -921,11 +921,17 @@ class Members extends CI_Controller
 	public function get_her()
 	{
 		$this->load->model('Members_model');
-		$list = $this->Members_model->get_her_kta();
-
 		$this->load->model('main_mod');
+
+		$start  = intval($this->input->get("start"));
+		$length = intval($this->input->get("length"));
+
+		// Ambil data her registrasi
+		$list = $this->Members_model->get_her_kta($start, $length);
+
+		// Ambil kode BK & Wilayah dari admin
 		$admin = $this->main_mod->msrquery(
-			'SELECT code_bk_hkk AS bk, code_wilayah AS wil FROM admin WHERE id = ' . $this->session->userdata('admin_id')
+			'SELECT code_bk_hkk AS bk, code_wilayah AS wil FROM admin WHERE id = ' . intval($this->session->userdata('admin_id'))
 		)->result();
 
 		$bk  = isset($admin[0]->bk) ? $admin[0]->bk : "";
@@ -938,39 +944,32 @@ class Members extends CI_Controller
 
 		$data = array();
 		foreach ($list as $row) {
-
-			// Inisialisasi variabel supaya tidak undefined
 			$bukti_transfer = '';
 			$status_vnv     = '';
 			$dokumen        = '';
 			$action         = '';
 
-			//Bukti transfer
-			if ($this->session->userdata('type') != "11" && $row->payfile) {
+			// === Bukti transfer ===
+			if ($this->session->userdata('type') != "11" && !empty($row->payfile)) {
 				$bukti_transfer = $row->payname . '<br>' . $row->paydate . '<br>'
 					. '<a target="_blank" href="' . base_url('assets/uploads/pay/' . $row->payfile) . '">download</a>';
 			}
 
-			// if ($this->session->userdata('type') != "11" && $row->payfile) {
-			// 	$bukti_transfer = $row->payname . '<br>' . $row->paydate . '<br>'
-			// 		. '<a target="_blank" href="' . base_url('assets/uploads/pay/' . $row->payfile) . '">download</a>';
-			// }
-
-			// Status verifikasi dokumen
+			// === Status verifikasi dokumen ===
 			if ($row->vnv_status == '1') {
 				$status_vnv = '<span class="label label-success">Dokumen Valid</span>';
 			} elseif ($row->vnv_status == '2') {
 				$status_vnv = '<span class="label label-danger">Dokumen Not Valid</span><br>' . $row->remark;
-			} elseif ($row->id_pay != '' && $row->id_pay == $row->id_pay_cek) {
+			} elseif (!empty($row->id_pay) && $row->id_pay == $row->id_pay_cek) {
 				$status_vnv = '<span class="label label-success">Dokumen Valid</span>';
 			}
 
-			// Dokumen
+			// === Dokumen ===
 			$docs = [
-				'sertifikat_legal' => 'Sertifikat Legal',
-				'tanda_bukti' => 'Tanda Bukti',
-				'surat_dukungan' => 'Surat Dukungan',
-				'surat_pernyataan' => 'Surat Pernyataan',
+				'sertifikat_legal'   => 'Sertifikat Legal',
+				'tanda_bukti'        => 'Tanda Bukti',
+				'surat_dukungan'     => 'Surat Dukungan',
+				'surat_pernyataan'   => 'Surat Pernyataan',
 				'surat_ijin_domisili' => 'Surat Ijin Domisili'
 			];
 			foreach ($docs as $field => $label) {
@@ -979,24 +978,29 @@ class Members extends CI_Controller
 				}
 			}
 
-			// Action
+			// === Action ===
 			if (in_array($this->session->userdata('type'), ["0", "2", "14", "9"])) {
-				if ($row->id_pay != "" && $row->id_pay != $row->id_pay_cek || $row->id_pay == "") {
+				if (($row->id_pay != "" && $row->id_pay != $row->id_pay_cek) || $row->id_pay == "") {
 					$action = '<a href="javascript:;" class="btn btn-xs btn-primary" 
-													onClick="load_quick_period(\'' . $row->ID . '\',\'' . $row->from_date . '\',\'' . $row->thru_date . '\',\'' . $row->payid . '\')">Set Period</a> | 
-												 <a href="javascript:;" class="btn btn-xs btn-danger" 
-													onClick="load_quick_status(\'' . $row->payid . '\')">Reject</a>';
+                              onClick="load_quick_period(\'' . $row->ID . '\',\'' . $row->from_date . '\',\'' . $row->thru_date . '\',\'' . $row->payid . '\')">Set Period</a> | 
+                           <a href="javascript:;" class="btn btn-xs btn-danger" 
+                              onClick="load_quick_status(\'' . $row->payid . '\')">Reject</a>';
 				} else {
 					$action = $row->plan_from_date . ' - ' . $row->plan_thru_date;
 				}
 			}
 
-			// Tambahkan ke array data
+			// === Tambahkan ke array data ===
 			$data[] = array(
 				"tgl_pengajuan"  => $row->tgl_pengajuan,
-				"cab"            => str_pad($row->cab, 4, '0', STR_PAD_LEFT),
-				"bk"             => str_pad($row->bk, 3, '0', STR_PAD_LEFT),
-				"no_kta"         => str_pad($row->no_kta, 6, '0', STR_PAD_LEFT),
+				// "cab"            => str_pad($row->cab, 4, '0', STR_PAD_LEFT),
+				// "bk"             => str_pad($row->bk, 3, '0', STR_PAD_LEFT),
+				// "no_kta"         => str_pad($row->no_kta, 6, '0', STR_PAD_LEFT),
+
+				"cab"    => str_pad((string)($row->cab ?? '0'), 4, '0', STR_PAD_LEFT),
+				"bk"     => str_pad((string)($row->bk ?? '0'), 3, '0', STR_PAD_LEFT),
+				"no_kta" => str_pad((string)($row->no_kta ?? '0'), 6, '0', STR_PAD_LEFT),
+
 				"period"         => $row->from_date . ' - ' . $row->thru_date,
 				"name_email"     => '<a href="' . base_url('admin/members/details/' . $row->ID) . '">' . $row->firstname . ' ' . $row->lastname . '</a><br>' . $row->email,
 				"dob"            => $row->dob,
@@ -1005,24 +1009,25 @@ class Members extends CI_Controller
 				"dokumen"        => $dokumen,
 				"paystatus"      => $this->status_payment($row) . ' ' . $status_vnv,
 				"paydesc"        => $row->paydesc,
-				"total_transfer" => $row->paysukarelatotal,
+				"total_transfer" => '<span class="badge">' . ($row->paysukarelatotal ?? 0) . '</span>',
 				"bukti_transfer" => $bukti_transfer,
 				"action"         => $action
 			);
 		}
 
-
+		// === Hitung total data ===
 		$total_rows = $this->Members_model->record_count_her_kta('users', $bk, $wil, $is_kolektif);
 
 		$output = array(
 			"draw"            => intval($this->input->post('draw')),
 			"recordsTotal"    => $this->Members_model->count_all_her('users', $bk, $wil, $is_kolektif),
-			"recordsFiltered" => $this->Members_model->count_filtered_her(),
+			"recordsFiltered" => $this->Members_model->count_filtered_her('users', $bk, $wil, $is_kolektif),
 			"data"            => $data
 		);
 
 		echo json_encode($output);
 	}
+
 
 
 
@@ -2460,11 +2465,12 @@ EOD;
 
 	function setpayment()
 	{
-		$akses = array("0", "8", "9");
+		$akses = array("0", "8", "9", "1");
 		if (!in_array($this->session->userdata('type'), $akses)) {
 			if (
 				$this->session->userdata('admin_id') != $this->special_admin_673 && $this->session->userdata('admin_id') != $this->special_admin_675
 				&& $this->session->userdata('admin_id') != $this->special_admin_780 && $this->session->userdata('admin_id') != $this->special_admin_782
+				&& $this->session->userdata('admin_id') != $this->special_admin_672
 			) {
 				$this->session->set_flashdata('error', $this->access_deny_msg());
 				redirect('admin/dashboard');

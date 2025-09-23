@@ -1222,17 +1222,27 @@ re
                   </thead>
                   <tbody>
                     <?php
+
+
+                    //Explode helper that returns empty array if string is null or empty
+                    function safe_explode(string $delimiter, ?string $string): array
+                    {
+                      return $string !== null && $string !== ''
+                        ? explode($delimiter, $string)
+                        : [];
+                    }
+
                     if ($result):
                       foreach ($result as $row):
                         //print_r($row);						
-                        $score_id = explode(",", $row->score_id);
-                        $score = explode(",", $row->score);
-                        $wajib1_score = explode(",", $row->wajib1_score_);
-                        $wajib2_score = explode(",", $row->wajib2_score_);
-                        $wajib3_score = explode(",", $row->wajib3_score_);
-                        $wajib4_score = explode(",", $row->wajib4_score_);
-                        $pilihan_score = explode(",", $row->pilihan_score_);
-                        $keputusan = explode(",", $row->keputusan);
+                        $score_id = safe_explode(",", $row->score_id);
+                        $score = safe_explode(",", $row->score);
+                        $wajib1_score = safe_explode(",", $row->wajib1_score_);
+                        $wajib2_score = safe_explode(",", $row->wajib2_score_);
+                        $wajib3_score = safe_explode(",", $row->wajib3_score_);
+                        $wajib4_score = safe_explode(",", $row->wajib4_score_);
+                        $pilihan_score = safe_explode(",", $row->pilihan_score_);
+                        $keputusan = safe_explode(",", $row->keputusan);
                         $w1_total = 0;
                         $w2_total = 0;
                         $w3_total = 0;
@@ -1628,7 +1638,8 @@ re
                                               //------------------------------------------------------------------------------------------------ Tambahan by IP ----------------------------------------
                                               if ($row->status_faip == '6' || $row->status_faip == '3' || $row->status_faip == '9' || $row->status_faip == '11') {
                                                 if ($row->need_revisi == '1') {
-                                                  echo '<br><br>' . trim($row->revisi_note) . '<br>';
+                                                  //Edited by Rizal
+                                                  // echo '<br><br>' . trim($row->revisi_note) . '<br>';
                                                 }
                                               }
                                               //---------------------------------------------------------------------------------------------------------------------------------------------------------------							   
@@ -1645,7 +1656,7 @@ re
                                 <b><?php echo $row->remarks; ?></b>
                               <?php
                                             } else if ($row->status_faip == '13') {
-                                              $temp_ = $this->main_mod->msrquery('select * from user_approval where faip_id=' . $row->id . ' order by seq asc')->result();
+                                              $temp_ = $this->main_mod->msrquery('select * from user_approval where faip_id=' . $row->id . ' order by    asc')->result();
                               ?>
                                 <b><?php echo $row->status_name; ?></b>
                                 <br /><br />
@@ -1755,31 +1766,38 @@ foreach(new RecursiveIteratorIterator($proses) as $file)
 print_r($tampil);	exit() ;
 */
 
-                                $urlSkip = base_url() . 'admin/members/skip_file' . $skipnee;
+
+                                $urlSkip = base_url() . 'admin/members/skip_file/' . $skipnee;
                                 ?>
                                 &nbsp;<a class="btn btn-primary btn-xs" href="<?= $urlSkip  ?>" target="_blank">Download SKIP</a>
-
                               <?php  } ?>
                               <!- ------------------------------------------------------------------------------------------------------------------------------------------------- ->
                                 <?php
+                                //STATUS FAIP 1 = VERIFIKASI & VALIDASI
                                 if ($showPaymentInfo && ($row->status_faip >= 1)) {
-                                ?><a href="javascript:;" class="btn btn-primary btn-xs" onClick="load_quick_PaymentDetail('<?php echo $row->id; ?>');">Payment Info</a><?php
-                                                                                                                                                                      }
-                                                                                                                                                                      if ($showRevisi && $row->status_faip <= 6) {
-                                                                                                                                                                        if ($row->need_revisi == '0') {
-                                                                                                                                                                        ?><a href="javascript:;" class="btn btn-primary btn-xs" onClick="load_quick_revisi('<?php echo $row->id; ?>');">Revisi</a> <?php
-                                                                                                                                                                                                                                                                                                  } else if ($row->need_revisi == '1') {
-                                                                                                                                                                                                                                                                                                    echo '<br />' . $row->revisi_note;
-                                                                                                                                                                                                                                                                                                  }
-                                                                                                                                                                                                                                                                                                } else if ($showRevisi && ($row->status_faip >= 6 && $row->status_faip <= 8)) {
-                                                                                                                                                                                                                                                                                                  if ($row->need_revisi == '0') {
-                                                                                                                                                                                                                                                                                                    ?><a href="javascript:;" class="btn btn-primary btn-xs" onClick="load_quick_revisi('<?php echo $row->id; ?>');">Revisi</a><?php
-                                                                                                                                                                                                                                                                                                                                                                                                                            } else if ($row->need_revisi == '1') {
-                                                                                                                                                                                                                                                                                                                                                                                                                              echo '<br />' . $row->revisi_note;
-                                                                                                                                                                                                                                                                                                                                                                                                                            }
-                                                                                                                                                                                                                                                                                                                                                                                                                          }
+                                ?><a href="javascript:;" class="btn btn-primary btn-xs" onClick="load_quick_PaymentDetail('<?php echo $row->id; ?>');">Payment Info</a>
 
-                                                                                                                                                                                                                                                                                                                                                                                                                              ?>
+                                  <?php
+                                }
+                                if ($showRevisi && $row->status_faip <= 6) {
+                                  if ($row->need_revisi == '0') {
+                                  ?>
+                                    <a href="javascript:;" class="btn btn-primary btn-xs" onClick="load_quick_revisi('<?php echo $row->id; ?>');">Revisi</a>
+                                  <?php
+                                  } else if ($row->need_revisi == '1') {
+                                    echo '<br />' . $row->revisi_note;
+                                  }
+                                } else if ($showRevisi && ($row->status_faip >= 6 && $row->status_faip <= 8)) {
+                                  if ($row->need_revisi == '0') {
+                                  ?>
+                                    <a href="javascript:;" class="btn btn-primary btn-xs" onClick="load_quick_revisi('<?php echo $row->id; ?>');">Revisi</a>
+                                <?php
+                                  } else if ($row->need_revisi == '1') {
+                                    echo '<br />' . $row->revisi_note;
+                                  }
+                                }
+
+                                ?>
                                 <?php
                                 // Change/Set BK
                                 if ($showChangeBK) {
@@ -1788,8 +1806,9 @@ print_r($tampil);	exit() ;
                                   // //($this->session->userdata('type')=="0" || $this->session->userdata('type')=="1") && $row->status_faip!='12'  
                                 ?>
                                   <a href="javascript:;" class="btn btn-primary btn-xs" onClick="load_quick_profile_view8('<?php echo $row->id; ?>','<?php echo str_pad($row->bidang, 3, '0', STR_PAD_LEFT); ?>');">
-                                    Change BK</a><?php
-                                                }  ?>
+                                    Change BK</a>
+                                <?php
+                                }  ?>
                                 <?php
                                 if ($row->is_manual == "1") {
                                 ?>
